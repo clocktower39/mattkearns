@@ -1,6 +1,6 @@
 import { Box, CardMedia, Container, Grid, Typography, makeStyles } from '@material-ui/core';
 import { Code, EmojiPeople, Work, Subject, GitHub, LinkedIn, Instagram } from '@material-ui/icons';
-import img from './img/IMG_1288.jpg';
+import img from './img/IMG_1290.jpg';
 import './App.css';
 
 const useStyle = makeStyles({
@@ -14,8 +14,8 @@ const useStyle = makeStyles({
     color: 'white',
   },
   Box: {
-    height: '150px',
-    width: '150px',
+    height: '125px',
+    width: '125px',
   },
   cardMedia: {
     height: 0,
