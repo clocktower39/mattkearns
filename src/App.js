@@ -3,7 +3,7 @@ import { Code, EmojiPeople, Work, Subject, GitHub, LinkedIn, Instagram } from '@
 import img from './img/IMG_1290.jpg';
 import './App.css';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme =>({
   root: {
     position: 'relative',
     minHeight: '100vh',
@@ -16,6 +16,7 @@ const useStyle = makeStyles({
     borderRadius: '25px 25px 0 0',
     marginTop: '12.5px',
     color: 'white',
+    order: 1,
   },
   TitleHeader:{
     paddingLeft: '12.5px',
@@ -27,9 +28,17 @@ const useStyle = makeStyles({
   sidebar: {
     backgroundColor: '#EDEDED',
     textAlign: 'center',
+    order: 2,
+    [theme.breakpoints.down('sm')]: {
+      order: 4,
+    },
+  },
+  sidebarSection: {
+    paddingBottom: '7.5px',
   },
   main: {
     backgroundColor: '#FEFEFE',
+    order: 3,
   },
   mainSubDescriptioin: {
     paddingLeft: '35px',
@@ -39,7 +48,7 @@ const useStyle = makeStyles({
     paddingLeft: '35px',
     paddingBottom: '7.5px',
   },
-})
+}))
 
 function App() {
   const classes = useStyle();
@@ -60,31 +69,31 @@ function App() {
           </Grid>
         </Grid>
 
-        <Grid container item xs={4} className={classes.sidebar}>
+        <Grid container item sm={12} md={4} className={classes.sidebar}>
           <Grid item xs={12}>
-            <Grid container item xs={12} justify="center">
+            <Grid item xs={12} className={classes.sidebarSection}>
               <Typography variant="h5">CONTACT</Typography>
             </Grid>
 
             <Typography variant="subtitle1">Phone</Typography>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.sidebarSection}>
               <Typography variant="caption">555-555-5555</Typography>
             </Grid>
 
             <Typography variant="subtitle1">Email</Typography>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.sidebarSection}>
               <Typography variant="caption">matt@fakeemail.com</Typography>
             </Grid>
 
-            <Typography variant="subtitle1">Home</Typography>
-            <Grid item xs={12}>
+            {/* <Typography variant="subtitle1">Home</Typography>
+            <Grid item xs={12} className={classes.sidebarSection}>
               <Typography variant="caption">
                 123 W Main Street Athens Greece
               </Typography>
-            </Grid>
+            </Grid> */}
 
             <Typography variant="subtitle1">Skills</Typography>
-            <Grid container item xs={12}>
+            <Grid container item xs={12} className={classes.sidebarSection}>
               <Grid item xs={12} md={6}>
                 <Typography variant="caption">Javascript</Typography>
               </Grid>
@@ -118,7 +127,7 @@ function App() {
             </Grid>
 
             <Typography variant="subtitle1">Social Media</Typography>
-            <Grid container item xs={12}>
+            <Grid container item xs={12} className={classes.sidebarSection}>
               <Grid item xs={12}>
                 <Typography variant="caption">
                   <GitHub />
@@ -138,7 +147,7 @@ function App() {
           </Grid>
         </Grid>
 
-        <Grid container item xs={8} className={classes.main}>
+        <Grid container item sm={12} md={8} className={classes.main}>
 
           <Typography variant="h5">
             <EmojiPeople /> About Me
