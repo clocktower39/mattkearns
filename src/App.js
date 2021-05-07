@@ -61,7 +61,7 @@ function App() {
         </Grid>
 
         <Grid container item xs={4} className={classes.sidebar}>
-          <Grid container item xs={12} justify="center">
+          <Grid item xs={12}>
             <Grid container item xs={12} justify="center">
               <Typography variant="h5">CONTACT</Typography>
             </Grid>
