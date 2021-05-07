@@ -1,5 +1,5 @@
 import { Box, CardMedia, Container, Grid, Typography, makeStyles } from '@material-ui/core';
-import { Code, EmojiPeople, Work, Subject } from '@material-ui/icons';
+import { Code, EmojiPeople, Work, Subject, GitHub, LinkedIn, Instagram } from '@material-ui/icons';
 import img from './img/IMG_1288.jpg';
 import './App.css';
 
@@ -20,7 +20,7 @@ const useStyle = makeStyles({
   cardMedia: {
     height: 0,
     paddingTop: '100%',
-    borderRadius: '50%'
+    borderRadius: '50%',
   },
   sidebar: {
     backgroundColor: '#EDEDED',
@@ -96,9 +96,9 @@ function App() {
 
               <Typography variant='subtitle1'>Social Media</Typography>
               <Grid container item xs={12}>
-                <Grid item xs={12} ><Typography variant='caption'>Github</Typography></Grid>
-                <Grid item xs={12} ><Typography variant='caption'>Linkedin</Typography></Grid>
-                <Grid item xs={12} ><Typography variant='caption'>Instagram</Typography></Grid>
+                <Grid item xs={12} ><Typography variant='caption'><GitHub/></Typography></Grid>
+                <Grid item xs={12} ><Typography variant='caption'><LinkedIn/></Typography></Grid>
+                <Grid item xs={12} ><Typography variant='caption'><Instagram/></Typography></Grid>
               </Grid>
             </Grid>
         </Grid>
