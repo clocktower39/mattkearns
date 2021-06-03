@@ -12,6 +12,7 @@ const useStyle = makeStyles(theme =>({
     minHeight: '100vh',
   },
   Title: {
+    fontWeight: 500,
     backgroundColor: '#2D3D4C',
     borderRadius: '25px 25px 0 0',
     marginTop: '12.5px',
@@ -47,6 +48,13 @@ const useStyle = makeStyles(theme =>({
   mainSubDescriptioinTasks: {
     paddingLeft: '35px',
     paddingBottom: '7.5px',
+    '& p':{
+      paddingBottom: '7.5px',
+    }
+  },
+  exampleLinks: {
+    textDecoration: 'none',
+    color: 'black',
   },
 }))
 
@@ -166,21 +174,21 @@ function App() {
           </Typography>
           <Grid container item xs={12} className={classes.mainSubDescriptioin}>
             <Grid item xs={12}>
-              <Typography variant="subtitle1">
-                Random Schedule Generator
+              <Typography variant="subtitle1"><a className={classes.exampleLinks} href="https://mattkearns.dev/random-schedule-generator">
+                Random Schedule Generator</a>
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="subtitle1">Fitness Exercises App</Typography>
+              <Typography variant="subtitle1"><a className={classes.exampleLinks} href="https://mattkearns.dev/fitness-exercises/">Fitness Exercises App</a></Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="subtitle1">Makeup Site</Typography>
+              <Typography variant="subtitle1"><a className={classes.exampleLinks} href="https://madeupbymaria.com">Makeup Site</a></Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="subtitle1">Social Picture App</Typography>
+              <Typography variant="subtitle1"><a className={classes.exampleLinks} href="https://mattkearns.dev/social-picture-app/">Social Picture App</a></Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="subtitle1">Messenger App</Typography>
+              <Typography variant="subtitle1"><a className={classes.exampleLinks} href="https://mattkearns.dev/message">Messenger App</a></Typography>
             </Grid>
           </Grid>
 
@@ -193,13 +201,13 @@ function App() {
               Operation Support Lead
             </Typography>
             <Grid item xs={12} className={classes.mainSubDescriptioinTasks}>
-              <Typography variant="body2">Developed web tools to automate reports for program service level agreements</Typography>
-              <Typography variant="body2">Collaborated with client management team and CVS Chain headquarters Pharmacy representatives via conference calls</Typography>
-              <Typography variant="body2">Liaison between REMS department and IT for program system issues</Typography>
-              <Typography variant="body2">Monitored, coordinated and evaluated program service levels using call management systems to ensure contractual commitments were consistently met</Typography>
-              <Typography variant="body2">Acted as supervisory support to the call center for escalated calls from health care providers, pharmacies, patients and other stakeholders.</Typography>
-              <Typography variant="body2">Identified patterns of performance and system issues then escalated to the appropriate leadership</Typography>
-              <Typography variant="body2">Evaluated unresolved issues and escalated to the appropriate party if necessary</Typography>
+              <Typography variant="body2">-Developed web tools to automate reports for program service level agreements</Typography>
+              <Typography variant="body2">-Collaborated with client management team and CVS Chain headquarters Pharmacy representatives via conference calls</Typography>
+              <Typography variant="body2">-Liaison between REMS department and IT for program system issues</Typography>
+              <Typography variant="body2">-Monitored, coordinated and evaluated program service levels using call management systems to ensure contractual commitments were consistently met</Typography>
+              <Typography variant="body2">-Acted as supervisory support to the call center for escalated calls from health care providers, pharmacies, patients and other stakeholders.</Typography>
+              <Typography variant="body2">-Identified patterns of performance and system issues then escalated to the appropriate leadership</Typography>
+              <Typography variant="body2">-Evaluated unresolved issues and escalated to the appropriate party if necessary</Typography>
               <Typography variant="body2"></Typography>
             </Grid>
 
@@ -207,29 +215,29 @@ function App() {
               REMS Support Representative
             </Typography>
             <Grid item xs={12} className={classes.mainSubDescriptioinTasks}>
-              <Typography variant="body2">Supported multiple REMS programs</Typography>
-              <Typography variant="body2">Answer inbound calls regarding REMS requirements</Typography>
-              <Typography variant="body2">Assist REMS stakeholder with registration, enrollment, certification processing</Typography>
-              <Typography variant="body2">Unlock REMS web accounts and generate temporary password for REMS stakeholders</Typography>
-              <Typography variant="body2">Access REMS stakeholders web account that request web assistance</Typography>
-              <Typography variant="body2">Identify potential adverse events and product complaints to the appropriate REMS drug manufacturer</Typography>
+              <Typography variant="body2">-Supported multiple REMS programs</Typography>
+              <Typography variant="body2">-Answer inbound calls regarding REMS requirements</Typography>
+              <Typography variant="body2">-Assist REMS stakeholder with registration, enrollment, certification processing</Typography>
+              <Typography variant="body2">-Unlock REMS web accounts and generate temporary password for REMS stakeholders</Typography>
+              <Typography variant="body2">-Access REMS stakeholders web account that request web assistance</Typography>
+              <Typography variant="body2">-Identify potential adverse events and product complaints to the appropriate REMS drug manufacturer</Typography>
             </Grid>
 
             <Typography variant="subtitle1">Ranch Hand</Typography>
             <Grid item xs={12} className={classes.mainSubDescriptioinTasks}>
-              <Typography variant="body2">Supervised guest safety during river interactions and ranch stays</Typography>
-              <Typography variant="body2">Documented and reported any property damage or customer concerns and completed requested services to resolve</Typography>
-              <Typography variant="body2">Maintained equipment and ranch structures</Typography>
+              <Typography variant="body2">-Supervised guest safety during river interactions and ranch stays</Typography>
+              <Typography variant="body2">-Documented and reported any property damage or customer concerns and completed requested services to resolve</Typography>
+              <Typography variant="body2">-Maintained equipment and ranch structures</Typography>
             </Grid>
             
             <Typography variant="subtitle1">
               Initial Loss Reporting Representative
             </Typography>
             <Grid item xs={12} className={classes.mainSubDescriptioinTasks}>
-              <Typography variant="body2">Communicate with customers and associates by phone, mobile app, click-to-chat and Internet reporting</Typography>
-              <Typography variant="body2">Gather and document loss information</Typography>
-              <Typography variant="body2">Handle a large volume of calls in a collaborative team setting</Typography>
-              <Typography variant="body2">Use State Farm systems and technology</Typography>
+              <Typography variant="body2">-Communicate with customers and associates by phone, mobile app, click-to-chat and Internet reporting</Typography>
+              <Typography variant="body2">-Gather and document loss information</Typography>
+              <Typography variant="body2">-Handle a large volume of calls in a collaborative team setting</Typography>
+              <Typography variant="body2">-Use State Farm systems and technology</Typography>
             </Grid>
           </Grid>
 
@@ -239,10 +247,10 @@ function App() {
           <Grid container item className={classes.mainSubDescriptioin}>
               <Typography variant="subtitle1">FreeCodeCamp</Typography>
             <Grid item xs={12} className={classes.mainSubDescriptioinTasks}>
-              <Typography variant="body2">Responsive Web Design Certification</Typography>
-              <Typography variant="body2">JavaScript Algorithms and Data Structures Certification</Typography>
-              <Typography variant="body2">Front End Libraries Certification</Typography>
-              <Typography variant="body2">Data Visualization Certification</Typography>
+              <Typography variant="body2">-Responsive Web Design Certification</Typography>
+              <Typography variant="body2">-JavaScript Algorithms and Data Structures Certification</Typography>
+              <Typography variant="body2">-Front End Libraries Certification</Typography>
+              <Typography variant="body2">-Data Visualization Certification</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="subtitle1">
