@@ -8,44 +8,7 @@ import {
 } from "@material-ui/core";
 import ProjectCard from "./ProjectCard";
 import headshot from "../img/IMG_1290.jpg";
-import scheduleGeneratorImg from "../img/schedule-generator-img.jpg";
-import exerciseAppImg from "../img/exerciseBWImg.jpg";
-import makeupImg from "../img/makeupImg.jpg";
-import socialPhotoAppImg from "../img/socialPhotoAppImg.jpg";
-import bonfireImg from "../img/bonfireImg.jpg";
-
-const projects = [
-  {
-    name: "Bonfire",
-    link: "https://mattkearns.dev/message",
-    img: bonfireImg,
-    desc: "Message app using socket.io for real time updates, JWT for authentication, mongoDB for storage",
-  },
-  {
-    name: "Schedule Generator",
-    link: "https://mattkearns.dev/random-schedule-generator",
-    img: scheduleGeneratorImg,
-    desc: "Creates a daily schedule based on a weighted system and availablility",
-  },
-  {
-    name: "Fitness Exercises App",
-    link: "https://mattkearns.dev/fitness-exercises",
-    img: exerciseAppImg,
-    desc: "Lists fitness exercises by muscle group and provides a description",
-  },
-  {
-    name: "Social Picture App",
-    link: "https://mattkearns.dev/social-picture-app/",
-    img: socialPhotoAppImg,
-    desc: "Instagram mock application",
-  },
-  {
-    name: "Makeup Site",
-    link: "https://madeupbymaria.com",
-    img: makeupImg,
-    desc: "Client makeup site portfolio and contact",
-  },
-];
+import { projects } from '../states';
 
 const useStyles = makeStyles({
   root: {
@@ -120,25 +83,28 @@ export default function Home() {
         </Grid>
       </Container>
 
-      <Container maxWidth="md" style={{ backgroundColor: "#50fbdf" }}>
-        <Typography variant="h3" className={classes.sectionTitle}>
-          Projects
-        </Typography>
-        <Grid container spacing={3}>
-          {projects.map((project) => (
-            <Grid item xs={12} sm={6}>
-              <ProjectCard project={project} />
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+      <div style={{ backgroundColor: "#50fbdf" }}>
+        <Container maxWidth="md">
+          <Typography variant="h3" className={classes.sectionTitle}>
+            Projects
+          </Typography>
+          <Grid container spacing={3}>
+            {projects.map((project) => (
+              <Grid item xs={12} sm={6}>
+                <ProjectCard project={project} />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </div>
 
       <Container maxWidth="md">
         <Typography variant="h3" className={classes.sectionTitle}>
           Movies, Music, Video Games, Books
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}></Grid>
+          <Grid item xs={12} sm={6}>
+          </Grid>
         </Grid>
       </Container>
 
