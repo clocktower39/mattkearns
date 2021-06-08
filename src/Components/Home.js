@@ -108,7 +108,7 @@ export default function Home() {
                 >
                   I'm a self taught{" "}
                   <span className={classes.accent}>full stack developer</span>.
-                  passionate hacker and tinkerer.
+                  passionate hacker and love to break everything down...even if I end up just plain breaking it.
                 </Typography>
               </Grid>
             </Grid>
@@ -119,8 +119,8 @@ export default function Home() {
         </Grid>
       </Container>
 
-      <Typography variant="h3" className={classes.sectionTitle} >Projects</Typography>
       <Container maxWidth="md">
+      <Typography variant="h3" className={classes.sectionTitle} >Projects</Typography>
         <Grid container spacing={3}>
           {projects.map((project) => (
             <Grid item xs={12} sm={6}>
@@ -130,7 +130,7 @@ export default function Home() {
         </Grid>
       </Container>
       <Divider />
-      <Typography variant="h3">Movies, Music, Video Games</Typography>
+      <Typography variant="h3">Movies, Music, Video Games, Books</Typography>
       <Divider />
       <Typography variant="h3">Social Media</Typography>
       <Divider />

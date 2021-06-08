@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Typography,
@@ -8,28 +8,42 @@ import {
   Card,
   makeStyles,
 } from "@material-ui/core";
+import { useSpring, animated } from "react-spring";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100%",
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   },
   media: {
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
   cardContent: {
-      flexGrow: 1,
-      alignItems: 'flex-end',
-  }
+    flexGrow: 1,
+    alignItems: "flex-end",
+  },
 }));
 
+const AnimatedCard = animated(Card);
+
 export default function RecipeReviewCard(props) {
+  const [flip, setFlip] = useState(false);
+
   const classes = useStyles();
+  const springStyle = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    delay: 200,
+    config: {
+      frequency: 3
+    },
+    onRest: () => setFlip(!flip),
+  });
 
   return (
-    <Card className={classes.root}>
+    <AnimatedCard className={classes.root} style={springStyle}>
       <CardMedia
         className={classes.media}
         image={props.project.img}
@@ -61,6 +75,6 @@ export default function RecipeReviewCard(props) {
           Open in New Tab
         </Button>
       </CardActions>
-    </Card>
+    </AnimatedCard>
   );
 }
