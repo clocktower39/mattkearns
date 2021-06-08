@@ -2,7 +2,6 @@ import React from "react";
 import {
   Avatar,
   Container,
-  Divider,
   Grid,
   Typography,
   makeStyles,
@@ -10,7 +9,7 @@ import {
 import ProjectCard from "./ProjectCard";
 import headshot from "../img/IMG_1290.jpg";
 import scheduleGeneratorImg from "../img/schedule-generator-img.jpg";
-import exerciseAppImg from "../img/exerciseAppImg.jpg";
+import exerciseAppImg from "../img/exerciseBWImg.jpg";
 import makeupImg from "../img/makeupImg.jpg";
 import socialPhotoAppImg from "../img/socialPhotoAppImg.jpg";
 import bonfireImg from "../img/bonfireImg.jpg";
@@ -60,6 +59,7 @@ const useStyles = makeStyles({
   headshot: {
     height: "175px",
     width: "175px",
+    outline: "3px solid white",
   },
   accent: {
     color: "#50fbdf",
@@ -70,8 +70,8 @@ const useStyles = makeStyles({
   sectionTitle: {
     color: "#5927E5",
     fontFamily: "Odibee Sans, cursive",
-    padding: '50px',
-  }
+    padding: "50px",
+  },
 });
 
 export default function Home() {
@@ -108,7 +108,8 @@ export default function Home() {
                 >
                   I'm a self taught{" "}
                   <span className={classes.accent}>full stack developer</span>.
-                  passionate hacker and love to break everything down...even if I end up just plain breaking it.
+                  passionate hacker and love to break everything down...even if
+                  I end up just plain breaking it.
                 </Typography>
               </Grid>
             </Grid>
@@ -119,8 +120,10 @@ export default function Home() {
         </Grid>
       </Container>
 
-      <Container maxWidth="md">
-      <Typography variant="h3" className={classes.sectionTitle} >Projects</Typography>
+      <Container maxWidth="md" style={{ backgroundColor: "#50fbdf" }}>
+        <Typography variant="h3" className={classes.sectionTitle}>
+          Projects
+        </Typography>
         <Grid container spacing={3}>
           {projects.map((project) => (
             <Grid item xs={12} sm={6}>
@@ -129,11 +132,24 @@ export default function Home() {
           ))}
         </Grid>
       </Container>
-      <Divider />
-      <Typography variant="h3">Movies, Music, Video Games, Books</Typography>
-      <Divider />
-      <Typography variant="h3">Social Media</Typography>
-      <Divider />
+
+      <Container maxWidth="md">
+        <Typography variant="h3" className={classes.sectionTitle}>
+          Movies, Music, Video Games, Books
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}></Grid>
+        </Grid>
+      </Container>
+
+      <Container maxWidth="md">
+        <Typography variant="h3" className={classes.sectionTitle}>
+          Social Media
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}></Grid>
+        </Grid>
+      </Container>
     </div>
   );
 }

@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     alignItems: "flex-end",
   },
+  cardTypography: {
+    fontFamily: "Odibee Sans, cursive",
+  },
 }));
 
 const AnimatedCard = animated(Card);
@@ -33,8 +36,8 @@ export default function RecipeReviewCard(props) {
 
   const classes = useStyles();
   const springStyle = useSpring({
-    to: { opacity: 1 },
     from: { opacity: 0 },
+    to: { opacity: 1 },
     delay: 200,
     config: {
       frequency: 3
@@ -50,26 +53,24 @@ export default function RecipeReviewCard(props) {
         title={props.project.name}
       />
       <CardContent className={classes.cardContent}>
-        <Typography gutterBottom variant="h5" component="h2">
+        <Typography className={classes.cardTypography} gutterBottom variant="h5" component="h2">
           {props.project.name}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.cardTypography} variant="body1" color="textSecondary" component="p">
           {props.project.desc}
         </Typography>
       </CardContent>
       <CardActions>
         <Button
-          variant="contained"
+          variant="outlined"
           size="small"
-          color="primary"
           onClick={() => (window.location.href = props.project.link)}
         >
           Open
         </Button>
         <Button
-          variant="contained"
+          variant="outlined"
           size="small"
-          color="primary"
           onClick={() => window.open(props.project.link, "_blank")}
         >
           Open in New Tab
