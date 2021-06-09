@@ -6,9 +6,10 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
+import { ExpandMore } from "@material-ui/icons";
 import ProjectCard from "./ProjectCard";
 import headshot from "../img/IMG_1290.jpg";
-import { projects } from '../states';
+import { projects } from "../states";
 
 const useStyles = makeStyles({
   root: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles({
   headshot: {
     height: "175px",
     width: "175px",
-    outline: "3px solid white",
+    border: "3px solid white",
   },
   accent: {
     color: "#50fbdf",
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
     height: "100vh",
   },
   sectionTitle: {
-    color: "#5927E5",
+    // color: "#5927E5",
     fontFamily: "Odibee Sans, cursive",
     padding: "50px",
   },
@@ -42,8 +43,9 @@ export default function Home() {
   return (
     <div className={classes.root}>
       <Container maxWidth="md" className={classes.section}>
-        <Grid container alignItems="center" style={{ height: "100%" }}>
+        <Grid container alignItems="" style={{ height: "100%" }}>
           <Grid container justify="center" alignItems="center">
+            <Grid item container justify="center" xs={12}></Grid>
             <Grid container item xs={6}>
               <Grid item xs={12}>
                 <Typography
@@ -79,11 +81,14 @@ export default function Home() {
             <Grid justify="center" container item xs={12} sm={4}>
               <Avatar alt="pic" src={headshot} className={classes.headshot} />
             </Grid>
+            <Grid item container justify="center" xs={12}>
+              <ExpandMore style={{ fontSize: '115px' }} />
+            </Grid>
           </Grid>
         </Grid>
       </Container>
 
-      <div style={{ backgroundColor: "#50fbdf" }}>
+      <div style={{ backgroundColor: "#008B74" }}>
         <Container maxWidth="md">
           <Typography variant="h3" className={classes.sectionTitle}>
             Projects
@@ -103,8 +108,7 @@ export default function Home() {
           Movies, Music, Video Games, Books
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-          </Grid>
+          <Grid item xs={12} sm={6}></Grid>
         </Grid>
       </Container>
 
