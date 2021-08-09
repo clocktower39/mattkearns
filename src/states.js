@@ -1,8 +1,8 @@
 import scheduleGeneratorImg from "./img/schedule-generator-img.jpg";
 import exerciseAppImg from "./img/exerciseBWImg.jpg";
-import makeupImg from "./img/makeupImg.jpg";
 import socialPhotoAppImg from "./img/socialPhotoAppImg.jpg";
 import bonfireImg from "./img/bonfireImg.jpg";
+import medicationImg from "./img/medication.jpg";
 
 export const projects = [
   {
@@ -30,10 +30,10 @@ export const projects = [
     desc: "Instagram mock application",
   },
   {
-    name: "Makeup Site",
-    link: "https://madeupbymaria.com",
-    img: makeupImg,
-    desc: "Client makeup site portfolio and contact",
+    name: "Medication Tracking System",
+    link: "https://mattkearns.dev/medication-tracking-system/",
+    img: medicationImg,
+    desc: "Application to monitor and track patient blood levels",
   },
 ];
 

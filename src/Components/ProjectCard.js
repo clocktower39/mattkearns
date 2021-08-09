@@ -72,9 +72,9 @@ export default function RecipeReviewCard(props) {
         <Button
           variant="outlined"
           size="small"
-          onClick={() => window.open(props.project.link, "_blank")}
+          onClick={() => window.open("https://www.github.com/clocktower39", "_blank")}
         >
-          Open in New Tab
+          Source
         </Button>
       </CardActions>
     </AnimatedCard>

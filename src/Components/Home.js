@@ -11,7 +11,7 @@ import ProjectCard from "./ProjectCard";
 import headshot from "../img/IMG_1290.jpg";
 import { projects } from "../states";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     height: "100vh",
     backgroundColor: "#5927E5",
@@ -36,7 +36,20 @@ const useStyles = makeStyles({
     fontFamily: "Odibee Sans, cursive",
     padding: "50px",
   },
-});
+  ExpandMore: {
+    animation: `$myEffect 3000ms ${theme.transitions.easing.easeInOut}`
+  },
+  "@keyframes myEffect": {
+    "0%": {
+      opacity: 0,
+      transform: "translateY(-150%)"
+    },
+    "100%": {
+      opacity: 1,
+      transform: "translateY(0)"
+    }
+  },
+}));
 
 export default function Home() {
   const classes = useStyles();
@@ -82,7 +95,7 @@ export default function Home() {
               <Avatar alt="pic" src={headshot} className={classes.headshot} />
             </Grid>
             <Grid item container justify="center" xs={12}>
-              <ExpandMore style={{ fontSize: '115px' }} />
+              <ExpandMore className={classes.ExpandMore} style={{ fontSize: '115px' }} />
             </Grid>
           </Grid>
         </Grid>
