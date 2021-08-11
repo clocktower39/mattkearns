@@ -178,7 +178,7 @@ export default function Resume() {
               <Grid container item xs={12} className={classes.mainSubDescriptioin}>
                 <Grid item xs={12}>
                   <Typography variant="h6"><a className={classes.exampleLinks} href="https://mattkearns.dev/random-schedule-generator">Random Schedule Generator</a></Typography>
-                  <Typography variant="subtitle1"> -Creates a daily schedule based on a weighted system and availablility</Typography>
+                  <Typography variant="subtitle1"> -Single page app that creates a daily schedule based on a weighted system and availablility</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Typography variant="h6"><a className={classes.exampleLinks} href="https://mattkearns.dev/fitness-exercises/">Fitness Exercises App</a></Typography>
@@ -257,6 +257,7 @@ export default function Resume() {
                   <Typography variant="body2">-JavaScript Algorithms and Data Structures Certification</Typography>
                   <Typography variant="body2">-Front End Libraries Certification</Typography>
                   <Typography variant="body2">-Data Visualization Certification</Typography>
+                  <Typography variant="body2">-APIs and Microservices Certification</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Typography variant="subtitle1">

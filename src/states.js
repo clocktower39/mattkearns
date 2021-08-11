@@ -8,30 +8,50 @@ export const projects = [
   {
     name: "Bonfire",
     link: "https://mattkearns.dev/message",
+    github:{
+      client: 'https://github.com/clocktower39/message-react-redux',
+      server: 'https://github.com/clocktower39/message-server',
+    },
     img: bonfireImg,
     desc: "Message app using socket.io for real time updates, JWT for authentication, mongoDB for storage",
   },
   {
     name: "Schedule Generator",
     link: "https://mattkearns.dev/random-schedule-generator",
+    github:{
+      client: 'https://github.com/clocktower39/react-scheduler',
+      server: null,
+    },
     img: scheduleGeneratorImg,
     desc: "Creates a daily schedule based on a weighted system and availablility",
   },
   {
     name: "Fitness Exercises App",
     link: "https://mattkearns.dev/fitness-exercises",
+    github:{
+      client: 'https://github.com/clocktower39/Fitness-Exercises',
+      server: null,
+    },
     img: exerciseAppImg,
     desc: "Lists fitness exercises by muscle group and provides a description",
   },
   {
     name: "Social Picture App",
     link: "https://mattkearns.dev/social-picture-app/",
+    github:{
+      client: 'https://github.com/clocktower39/social-picture-app',
+      server: 'https://github.com/clocktower39/social-server-pic-app',
+    },
     img: socialPhotoAppImg,
     desc: "Instagram mock application",
   },
   {
     name: "Medication Tracking System",
     link: "https://mattkearns.dev/medication-tracking-system/",
+    github:{
+      client: 'https://github.com/clocktower39/medication-client',
+      server: 'https://github.com/clocktower39/medication-server',
+    },
     img: medicationImg,
     desc: "Application to monitor and track patient blood levels",
   },

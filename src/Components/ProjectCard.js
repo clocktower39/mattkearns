@@ -6,9 +6,10 @@ import {
   CardContent,
   CardMedia,
   Card,
+  Fade,
   makeStyles,
 } from "@material-ui/core";
-import { useSpring, animated } from "react-spring";
+import VizSensor from 'react-visibility-sensor';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,53 +31,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AnimatedCard = animated(Card);
 
 export default function RecipeReviewCard(props) {
-  const [flip, setFlip] = useState(false);
-
   const classes = useStyles();
-  const springStyle = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    delay: 200,
-    config: {
-      frequency: 3
-    },
-    onRest: () => setFlip(!flip),
-  });
+  let [active, setActive] = useState(false);
 
   return (
-    <AnimatedCard className={classes.root} style={springStyle}>
-      <CardMedia
-        className={classes.media}
-        image={props.project.img}
-        title={props.project.name}
-      />
-      <CardContent className={classes.cardContent}>
-        <Typography className={classes.cardTypography} gutterBottom variant="h5" component="h2">
-          {props.project.name}
-        </Typography>
-        <Typography className={classes.cardTypography} variant="body1" color="textSecondary" component="p">
-          {props.project.desc}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => (window.location.href = props.project.link)}
-        >
-          Open
-        </Button>
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => window.open("https://www.github.com/clocktower39", "_blank")}
-        >
-          Source
-        </Button>
-      </CardActions>
-    </AnimatedCard>
+    <VizSensor
+      onChange={(isVisible) => {
+        if(isVisible)setActive(true);
+      }}>
+      <Fade in={active} timeout={1500}>
+        <Card className={classes.root}>
+          <CardMedia
+            className={classes.media}
+            image={props.project.img}
+            title={props.project.name}
+          />
+          <CardContent className={classes.cardContent}>
+            <Typography className={classes.cardTypography} gutterBottom variant="h5" component="h2">
+              {props.project.name}
+            </Typography>
+            <Typography className={classes.cardTypography} variant="body1" color="textSecondary" component="p">
+              {props.project.desc}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => (window.location.href = props.project.link)}
+            >
+              Open
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => window.open("https://www.github.com/clocktower39", "_blank")}
+            >
+              Source
+            </Button>
+          </CardActions>
+        </Card>
+      </Fade>
+    </VizSensor>
   );
 }
