@@ -8,8 +8,9 @@ import {
 } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
 import ProjectCard from "./ProjectCard";
+import GameList from "./GameList";
 import headshot from "../img/IMG_1290.jpg";
-import { projects } from "../states";
+import { projects, games } from "../states";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -121,7 +122,11 @@ export default function Home() {
           Movies, Music, Video Games, Books
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}></Grid>
+          {games.map(game => (
+              <Grid item xs={3}>
+            <GameList game={game} />
+              </Grid>
+          ))}
         </Grid>
       </Container>
 
