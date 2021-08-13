@@ -65,7 +65,7 @@ export default function Resume() {
           <Grid container spacing={3} className={classes.gridContainer}>
             <Grid xs={12} item container className={classes.Title}>
     
-              <Grid container item xs={4} justify="center">
+              <Grid container item xs={4} justifyContent="center">
               <Avatar alt="pic" src={img} className={classes.headshot} />
               </Grid>
     

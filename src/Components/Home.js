@@ -74,9 +74,9 @@ export default function Home() {
   return (
     <div className={classes.root}>
       <Container maxWidth="md" className={classes.section}>
-        <Grid container alignItems="" style={{ height: "100%" }}>
-          <Grid container justify="center" alignItems="center">
-            <Grid item container justify="center" xs={12}></Grid>
+        <Grid container style={{ height: "100%" }}>
+          <Grid container justifyContent="center" alignItems="center">
+            <Grid item container justifyContent="center" xs={12}></Grid>
             <Grid container item xs={6}>
               <Grid item xs={12}>
                 <Typography
@@ -109,10 +109,10 @@ export default function Home() {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid justify="center" container item xs={12} sm={4}>
+            <Grid justifyContent="center" container item xs={12} sm={4}>
               <Avatar alt="pic" src={headshot} className={classes.headshot} />
             </Grid>
-            <Grid item container justify="center" xs={12}>
+            <Grid item container justifyContent="center" xs={12}>
               <ExpandMore className={classes.ExpandMore} style={{ fontSize: '115px' }} />
             </Grid>
           </Grid>
@@ -126,7 +126,7 @@ export default function Home() {
           </Typography>
           <Grid container spacing={3}>
             {projects.map((project) => (
-              <Grid item xs={6} sm={4}>
+              <Grid item xs={6} sm={4} key={project.name}>
                 <ProjectCard project={project} />
               </Grid>
             ))}
@@ -141,7 +141,7 @@ export default function Home() {
           </Typography>
           <Grid container spacing={3}>
             {games.map(game => (
-              <Grid item md={3} xs={4}>
+              <Grid item md={3} xs={4} key={game.title}>
                 <GameList game={game} />
               </Grid>
             ))}
