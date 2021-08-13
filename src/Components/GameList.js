@@ -35,7 +35,7 @@ export default function GameList(props) {
   return (
     <VizSensor
       onChange={(isVisible) => {
-        if(isVisible)setActive(true);
+        if (isVisible) setActive(true);
       }}>
       <Grow in={active} timeout={1500}>
         <Card className={classes.root}>

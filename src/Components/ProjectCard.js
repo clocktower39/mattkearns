@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "69%", // 16:9 == '56.25%'
   },
   cardContent: {
     flexGrow: 1,
@@ -39,7 +39,7 @@ export default function RecipeReviewCard(props) {
   return (
     <VizSensor
       onChange={(isVisible) => {
-        if(isVisible)setActive(true);
+        if (isVisible) setActive(true);
       }}>
       <Fade in={active} timeout={1500}>
         <Card className={classes.root}>

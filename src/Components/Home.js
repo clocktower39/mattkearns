@@ -102,14 +102,14 @@ export default function Home() {
         </Grid>
       </Container>
 
-      <div style={{ backgroundColor: "#008B74" }}>
+      <div style={{ backgroundColor: "#008B74", }}>
         <Container maxWidth="md">
           <Typography variant="h3" className={classes.sectionTitle}>
             Projects
           </Typography>
           <Grid container spacing={3}>
             {projects.map((project) => (
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={6} sm={4}>
                 <ProjectCard project={project} />
               </Grid>
             ))}
@@ -117,18 +117,20 @@ export default function Home() {
         </Container>
       </div>
 
-      <Container maxWidth="md">
-        <Typography variant="h3" className={classes.sectionTitle}>
-          Movies, Music, Video Games, Books
-        </Typography>
-        <Grid container spacing={3}>
-          {games.map(game => (
-              <Grid item xs={3}>
-            <GameList game={game} />
+      <div style={{ background: "linear-gradient(#008B74, #5927E5)", paddingTop: '100px', }}>
+        <Container maxWidth="md">
+          <Typography variant="h3" className={classes.sectionTitle}>
+            Movies, Music, Video Games, Books
+          </Typography>
+          <Grid container spacing={3}>
+            {games.map(game => (
+              <Grid item md={3} xs={4}>
+                <GameList game={game} />
               </Grid>
-          ))}
-        </Grid>
-      </Container>
+            ))}
+          </Grid>
+        </Container>
+      </div>
 
       <Container maxWidth="md">
         <Typography variant="h3" className={classes.sectionTitle}>
