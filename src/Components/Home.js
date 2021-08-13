@@ -3,10 +3,11 @@ import {
   Avatar,
   Container,
   Grid,
+  IconButton,
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import { ExpandMore } from "@material-ui/icons";
+import { ExpandMore, LinkedIn, GitHub, Instagram } from "@material-ui/icons";
 import ProjectCard from "./ProjectCard";
 import GameList from "./GameList";
 import headshot from "../img/IMG_1290.jpg";
@@ -54,6 +55,22 @@ const useStyles = makeStyles(theme => ({
 
 export default function Home() {
   const classes = useStyles();
+
+  const handleSocialLink = (type) => {
+    switch (type) {
+      case 'github':
+        window.location.href = 'https://github.com/clocktower39';
+        break;
+      case 'linkedIn':
+        window.location.href = 'https://www.linkedin.com/in/matthew-kearns-6b8865117/';
+        break;
+      case 'instagram':
+        window.location.href = 'https://www.instagram.com/kearns39/';
+        break;
+      default:
+        break;
+    }
+  }
   return (
     <div className={classes.root}>
       <Container maxWidth="md" className={classes.section}>
@@ -117,7 +134,7 @@ export default function Home() {
         </Container>
       </div>
 
-      <div style={{ background: "linear-gradient(#008B74, #5927E5)", paddingTop: '100px', }}>
+      <div style={{ background: "linear-gradient(#008B74, #5927E5)", padding: '100px 0', }}>
         <Container maxWidth="md">
           <Typography variant="h3" className={classes.sectionTitle}>
             Movies, Music, Video Games, Books
@@ -132,14 +149,19 @@ export default function Home() {
         </Container>
       </div>
 
-      <Container maxWidth="md">
-        <Typography variant="h3" className={classes.sectionTitle}>
-          Social Media
-        </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}></Grid>
-        </Grid>
-      </Container>
+      <div style={{ backgroundColor: "#000" }}>
+        <Container maxWidth="md">
+          <Typography variant="h3" className={classes.sectionTitle}>
+            Social Media
+          </Typography>
+          <Grid container spacing={3} justifyContent="center">
+            <Grid item ><IconButton onClick={() => handleSocialLink('github')} ><GitHub style={{ fontSize: '35px', color: 'white', }} /></IconButton></Grid>
+            <Grid item ><IconButton onClick={() => handleSocialLink('linkedIn')} ><LinkedIn style={{ fontSize: '35px', color: 'white', }} /></IconButton></Grid>
+            <Grid item ><IconButton onClick={() => handleSocialLink('instagram')} ><Instagram style={{ fontSize: '35px', color: 'white', }} /></IconButton></Grid>
+            <Grid container item xs={12} justifyContent="center"><Typography variant="body1" style={{ fontSize: '10px', }}>Copyright © 2021 MattKearns.dev - All Rights Reserved.</Typography></Grid>
+          </Grid>
+        </Container>
+      </div>
     </div>
   );
 }
