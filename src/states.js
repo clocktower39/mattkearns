@@ -7,12 +7,22 @@ import medicationImg from "./img/medication.jpg";
 import halo from './img/posters/976730_library_600x900.jpg'
 import fallout4 from './img/posters/377160_library_600x900.jpg'
 import r6s from './img/posters/359550_library_600x900.jpg'
-import skyrim from './img/posters/489830_library_600x900.jpg'
-import portal2 from './img/posters/620_library_600x900.jpg'
 import alyx from './img/posters/546560_library_600x900.jpg'
-import wolfenstein from './img/posters/201810_library_600x900.jpg'
-import amoungUs from './img/posters/945360_library_600x900.jpg'
-import tabletop from './img/posters/286160_library_600x900.jpg'
+// import skyrim from './img/posters/489830_library_600x900.jpg'
+// import portal2 from './img/posters/620_library_600x900.jpg'
+// import wolfenstein from './img/posters/201810_library_600x900.jpg'
+// import amoungUs from './img/posters/945360_library_600x900.jpg'
+// import tabletop from './img/posters/286160_library_600x900.jpg'
+
+import pulpFiction from './img/posters/pulpFiction_library_600x900.jpg'
+import southPark from './img/posters/south_park_bigger_longer_and_uncut_library_600x900.jpg'
+import donnieDarko from './img/posters/donnie_darko_library_600x900.jpg'
+import truman  from './img/posters/truman_library_600x900.jpg'
+
+import blindWatchmaker  from './img/posters/blindWatchmaker_library_600x900.jpg'
+import unweavingTheRainbow  from './img/posters/unweavingTheRainbow_library_600x900.jpg'
+import code  from './img/posters/code_library_600x900.jpg'
+import cryptography  from './img/posters/cryptography_library_600x900.jpg'
 
 export const projects = [
   {
@@ -67,6 +77,24 @@ export const projects = [
   },
 ];
 
+export const books = [
+  {
+    title: "The Blind Watchmaker",
+    poster: blindWatchmaker,
+  },
+  {
+    title: "Unweaving The Rainbow",
+    poster: unweavingTheRainbow,
+  },
+  {
+    title: "Code: The Hidden Language of Computer Hardware and Software",
+    poster: code,
+  },
+  {
+    title: "Cryptography: A Very Short Introduction",
+    poster: cryptography,
+  },
+]
 
 export const games = [
   {
@@ -82,52 +110,63 @@ export const games = [
     poster: r6s,
   },
   {
-    title: 'Skyrim',
-    poster: skyrim,
-  },
-  {
-    title: 'Portal 2',
-    poster: portal2,
-  },
-  {
     title: 'Alyx',
     poster: alyx,
   },
-  {
-    title: 'Wolfenstein',
-    poster: wolfenstein,
-  },
-  {
-    title: 'Amoung Us',
-    poster: amoungUs,
-  },
-  {
-    title: 'Tabletop Simulator',
-    poster: tabletop,
-  },
-];
+  // {
+  //   title: 'Skyrim',
+  //   poster: skyrim,
+  // },
+  // {
+  //   title: 'Portal 2',
+  //   poster: portal2,
+  // },
+  // {
+  //   title: 'Wolfenstein',
+  //   poster: wolfenstein,
+  // },
+  // {
+  //   title: 'Amoung Us',
+  //   poster: amoungUs,
+  // },
+  // {
+  //   title: 'Tabletop Simulator',
+  //   poster: tabletop,
+  // },
+]
 
 export const movies = [
-  { title: "South Park Bigger" },
-  { title: "Longer & Uncut" },
-  { title: "Idiocracy" },
-  { title: "Truman" },
-  { title: "The Matrix" },
-  { title: "Words Words Words" },
-  { title: "What." },
-  { title: "Django Unchained" },
-  { title: "Pulp Fiction" },
-  { title: "Nightcrawler" },
-  { title: "Donnie Darko" },
-  { title: "Fired Up" },
-  { title: "Gattaca" },
-  { title: "Gran Torino" },
-  { title: "Inglourious Basterds" },
-  { title: "The Lego Movie" },
-  { title: "Shutter Island" },
-  { title: "Silver Linings Playbook" },
-  { title: "Step Brothers" },
-  { title: "Team America World Police" },
+  {
+    title: 'Pulp Fiction',
+    poster: pulpFiction,
+  },
+  {
+    title: "South Park Bigger Longer & Uncut",
+    poster: southPark,
+  },
+  {
+    title: "Donnie Darko",
+    poster: donnieDarko,
+  },
+  {
+    title: "The Truman Show",
+    poster: truman,
+  },
+  // { title: "Idiocracy" },
+  // { title: "The Matrix" },
+  // { title: "Words Words Words" },
+  // { title: "What." },
+  // { title: "Django Unchained" },
+  // { title: "Nightcrawler" },
+  // { title: "Fired Up" },
+  // { title: "Gattaca" },
+  // { title: "Gran Torino" },
+  // { title: "Inglourious Basterds" },
+  // { title: "The Lego Movie" },
+  // { title: "Shutter Island" },
+  // { title: "Silver Linings Playbook" },
+  // { title: "Step Brothers" },
+  // { title: "Team America World Police" },
 ];
 
 export const tvShows = [
@@ -156,4 +195,10 @@ export const inspirational = [
   { firstName: "Alan", lastName: "Turning", medium: "computing" },
   { firstName: "Jay", lastName: "Freeman", medium: "developer" },
   { firstName: "Ian", lastName: "Beer", medium: "security" },
+];
+
+export const list = [
+  ...books,
+  ...movies,
+  ...games,
 ];

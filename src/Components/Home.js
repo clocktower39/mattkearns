@@ -9,9 +9,9 @@ import {
 } from "@material-ui/core";
 import { ExpandMore, LinkedIn, GitHub, Instagram } from "@material-ui/icons";
 import ProjectCard from "./ProjectCard";
-import GameList from "./GameList";
+import FavoritesList from "./FavoritesList";
 import headshot from "../img/IMG_1290.jpg";
-import { projects, games } from "../states";
+import { projects, list } from "../states";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -137,12 +137,12 @@ export default function Home() {
       <div style={{ background: "linear-gradient(#008B74, #5927E5)", padding: '100px 0', }}>
         <Container maxWidth="md">
           <Typography variant="h3" className={classes.sectionTitle}>
-            Movies, Music, Video Games, Books
+            Books, Movies, & Video Games
           </Typography>
           <Grid container spacing={3}>
-            {games.map(game => (
-              <Grid item md={3} xs={4} key={game.title}>
-                <GameList game={game} />
+            {list.map(item => (
+              <Grid item md={3} xs={4} key={item.title}>
+                <FavoritesList item={item} />
               </Grid>
             ))}
           </Grid>

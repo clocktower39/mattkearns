@@ -41,8 +41,8 @@ export default function GameList(props) {
         <Card className={classes.root}>
           <CardMedia
             className={classes.media}
-            image={props.game.poster}
-            title={props.game.title}
+            image={props.item.poster}
+            title={props.item.title}
           />
         </Card>
       </Grow>
