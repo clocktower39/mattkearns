@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useRef } from "react";
 import {
   Button,
   Typography,
@@ -6,10 +7,11 @@ import {
   CardContent,
   CardMedia,
   Card,
+  Grid,
   Grow,
   makeStyles,
 } from "@material-ui/core";
-import VizSensor from 'react-visibility-sensor';
+import useOnScreen from '../Hooks/useOnScreen';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,49 +33,59 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
-  let [active, setActive] = useState(false);
+  const ref = useRef();
+  const onScreen = useOnScreen(ref, "-300px");
 
   return (
-    <VizSensor
-      onChange={(isVisible) => {
-        if (isVisible) setActive(true);
-      }}>
-      <Grow in={active} timeout={1500}>
-        <Card className={classes.root}>
-          <CardMedia
-            className={classes.media}
-            image={props.project.img}
-            title={props.project.name}
-          />
-          <CardContent className={classes.cardContent}>
-            <Typography className={classes.cardTypography} gutterBottom variant="h5" component="h2">
-              {props.project.name}
-            </Typography>
-            <Typography className={classes.cardTypography} variant="body1" color="textSecondary" component="p">
-              {props.project.desc}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={() => (window.location.href = props.project.link)}
-            >
-              Open
-            </Button>
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={() => window.open("https://www.github.com/clocktower39", "_blank")}
-            >
-              Source
-            </Button>
-          </CardActions>
-        </Card>
-      </Grow>
-    </VizSensor>
+      <Grid item xs={6} sm={4} ref={ref} >
+        <Grow in={onScreen} timeout={1250}>
+          <Card className={classes.root}>
+            <CardMedia
+              className={classes.media}
+              image={props.project.img}
+              title={props.project.name}
+            />
+            <CardContent className={classes.cardContent}>
+              <Typography
+                className={classes.cardTypography}
+                gutterBottom
+                variant="h5"
+                component="h2"
+              >
+                {props.project.name}
+              </Typography>
+              <Typography
+                className={classes.cardTypography}
+                variant="body1"
+                color="textSecondary"
+                component="p"
+              >
+                {props.project.desc}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => (window.location.href = props.project.link)}
+              >
+                Open
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() =>
+                  window.open("https://www.github.com/clocktower39", "_blank")
+                }
+              >
+                Source
+              </Button>
+            </CardActions>
+          </Card>
+        </Grow>
+      </Grid>
   );
 }
+

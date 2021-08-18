@@ -13,7 +13,7 @@ import FavoritesList from "./FavoritesList";
 import headshot from "../img/IMG_1290.jpg";
 import { projects, list } from "../states";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
     backgroundColor: "#5927E5",
@@ -39,17 +39,17 @@ const useStyles = makeStyles(theme => ({
     padding: "50px",
   },
   ExpandMore: {
-    animation: `$myEffect 3000ms ${theme.transitions.easing.easeInOut}`
+    animation: `$myEffect 3000ms ${theme.transitions.easing.easeInOut}`,
   },
   "@keyframes myEffect": {
     "0%": {
       opacity: 0,
-      transform: "translateY(-150%)"
+      transform: "translateY(-150%)",
     },
     "100%": {
       opacity: 1,
-      transform: "translateY(0)"
-    }
+      transform: "translateY(0)",
+    },
   },
 }));
 
@@ -58,19 +58,20 @@ export default function Home() {
 
   const handleSocialLink = (type) => {
     switch (type) {
-      case 'github':
-        window.location.href = 'https://github.com/clocktower39';
+      case "github":
+        window.location.href = "https://github.com/clocktower39";
         break;
-      case 'linkedIn':
-        window.location.href = 'https://www.linkedin.com/in/matthew-kearns-6b8865117/';
+      case "linkedIn":
+        window.location.href =
+          "https://www.linkedin.com/in/matthew-kearns-6b8865117/";
         break;
-      case 'instagram':
-        window.location.href = 'https://www.instagram.com/kearns39/';
+      case "instagram":
+        window.location.href = "https://www.instagram.com/kearns39/";
         break;
       default:
         break;
     }
-  }
+  };
   return (
     <div className={classes.root}>
       <Container maxWidth="md" className={classes.section}>
@@ -113,35 +114,41 @@ export default function Home() {
               <Avatar alt="pic" src={headshot} className={classes.headshot} />
             </Grid>
             <Grid item container justifyContent="center" xs={12}>
-              <ExpandMore className={classes.ExpandMore} style={{ fontSize: '115px' }} />
+              <ExpandMore
+                className={classes.ExpandMore}
+                style={{ fontSize: "115px" }}
+              />
             </Grid>
           </Grid>
         </Grid>
       </Container>
 
-      <div style={{ backgroundColor: "#008B74", }}>
+      <div style={{ backgroundColor: "#008B74" }}>
         <Container maxWidth="md">
           <Typography variant="h3" className={classes.sectionTitle}>
             Projects
           </Typography>
           <Grid container spacing={3}>
             {projects.map((project) => (
-              <Grid item xs={6} sm={4} key={project.name}>
-                <ProjectCard project={project} />
-              </Grid>
+              <ProjectCard key={project.name} project={project} />
             ))}
           </Grid>
         </Container>
       </div>
 
-      <div style={{ background: "linear-gradient(#008B74, #5927E5)", padding: '100px 0', }}>
+      <div
+        style={{
+          background: "linear-gradient(#008B74, #5927E5)",
+          padding: "100px 0",
+        }}
+      >
         <Container maxWidth="md">
           <Typography variant="h3" className={classes.sectionTitle}>
             Books, Movies, & Video Games
           </Typography>
-          <Grid container spacing={3}>
-            {list.map(item => (
-              <Grid item md={3} xs={4} key={item.title}>
+          <Grid container spacing={2}>
+            {list.map((item) => (
+              <Grid item xs={3} key={item.title}>
                 <FavoritesList item={item} />
               </Grid>
             ))}
@@ -155,10 +162,26 @@ export default function Home() {
             Social Media
           </Typography>
           <Grid container spacing={3} justifyContent="center">
-            <Grid item ><IconButton onClick={() => handleSocialLink('github')} ><GitHub style={{ fontSize: '35px', color: 'white', }} /></IconButton></Grid>
-            <Grid item ><IconButton onClick={() => handleSocialLink('linkedIn')} ><LinkedIn style={{ fontSize: '35px', color: 'white', }} /></IconButton></Grid>
-            <Grid item ><IconButton onClick={() => handleSocialLink('instagram')} ><Instagram style={{ fontSize: '35px', color: 'white', }} /></IconButton></Grid>
-            <Grid container item xs={12} justifyContent="center"><Typography variant="body1" style={{ fontSize: '10px', }}>Copyright © 2021 MattKearns.dev - All Rights Reserved.</Typography></Grid>
+            <Grid item>
+              <IconButton onClick={() => handleSocialLink("github")}>
+                <GitHub style={{ fontSize: "35px", color: "white" }} />
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <IconButton onClick={() => handleSocialLink("linkedIn")}>
+                <LinkedIn style={{ fontSize: "35px", color: "white" }} />
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <IconButton onClick={() => handleSocialLink("instagram")}>
+                <Instagram style={{ fontSize: "35px", color: "white" }} />
+              </IconButton>
+            </Grid>
+            <Grid container item xs={12} justifyContent="center">
+              <Typography variant="body1" style={{ fontSize: "10px" }}>
+                Copyright © 2021 MattKearns.dev - All Rights Reserved.
+              </Typography>
+            </Grid>
           </Grid>
         </Container>
       </div>

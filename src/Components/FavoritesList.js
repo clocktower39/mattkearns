@@ -1,6 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { CardMedia, Card, Slide, makeStyles } from "@material-ui/core";
+import useOnScreen from '../Hooks/useOnScreen'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,27 +40,4 @@ export default function GameList(props) {
       </Slide>
     </div>
   );
-}
-
-// Hook
-function useOnScreen(ref) {
-  // State and setter for storing whether element is visible
-  const [isIntersecting, setIntersecting] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      // Update our state when observer callback fires
-      if(entry.isIntersecting){
-        setIntersecting(entry.isIntersecting);
-      }
-    });
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-    return () => {
-      observer.unobserve(ref.current);
-    };
-  }, []); // Empty array ensures that effect is only run on mount and unmount
-
-  return isIntersecting;
 }
