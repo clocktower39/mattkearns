@@ -2,7 +2,7 @@ import scheduleGeneratorImg from "./img/schedule-generator-img.jpg";
 import exerciseAppImg from "./img/exerciseBWImg.jpg";
 import socialPhotoAppImg from "./img/socialPhotoAppImg.jpg";
 import bonfireImg from "./img/bonfireImg.jpg";
-import medicationImg from "./img/medication01.jpg";
+import medicationImg from "./img/medication.jpg";
 
 import halo from './img/posters/976730_library_600x900.jpg'
 import fallout4 from './img/posters/377160_library_600x900.jpg'
