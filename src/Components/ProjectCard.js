@@ -6,7 +6,7 @@ import {
   CardContent,
   CardMedia,
   Card,
-  Fade,
+  Grow,
   makeStyles,
 } from "@material-ui/core";
 import VizSensor from 'react-visibility-sensor';
@@ -41,7 +41,7 @@ export default function RecipeReviewCard(props) {
       onChange={(isVisible) => {
         if (isVisible) setActive(true);
       }}>
-      <Fade in={active} timeout={1500}>
+      <Grow in={active} timeout={1500}>
         <Card className={classes.root}>
           <CardMedia
             className={classes.media}
@@ -73,7 +73,7 @@ export default function RecipeReviewCard(props) {
             </Button>
           </CardActions>
         </Card>
-      </Fade>
+      </Grow>
     </VizSensor>
   );
 }
