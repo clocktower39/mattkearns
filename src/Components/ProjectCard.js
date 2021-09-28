@@ -41,6 +41,7 @@ export default function RecipeReviewCard(props) {
   return (
       <Grid item xs={6} sm={4} ref={ref} >
         <Grow in={onScreen} timeout={1250}>
+          <div>
           <Card className={classes.root}>
             <CardMedia
               className={classes.media}
@@ -84,6 +85,7 @@ export default function RecipeReviewCard(props) {
               </Button>
             </CardActions>
           </Card>
+          </div>
         </Grow>
       </Grid>
   );

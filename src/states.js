@@ -1,6 +1,6 @@
 import scheduleGeneratorImg from "./img/schedule-generator-img.jpg";
 import exerciseAppImg from "./img/exerciseBWImg.jpg";
-import socialPhotoAppImg from "./img/socialPhotoAppImg.jpg";
+// import socialPhotoAppImg from "./img/socialPhotoAppImg.jpg";
 import bonfireImg from "./img/bonfireImg.jpg";
 import medicationImg from "./img/medication.jpg";
 
@@ -54,16 +54,6 @@ export const projects = [
     },
     img: exerciseAppImg,
     desc: "Lists fitness exercises by muscle group and provides a description",
-  },
-  {
-    name: "Social Picture App",
-    link: "https://mattkearns.dev/social-picture-app/",
-    github: {
-      client: 'https://github.com/clocktower39/social-picture-app',
-      server: 'https://github.com/clocktower39/social-server-pic-app',
-    },
-    img: socialPhotoAppImg,
-    desc: "Instagram mock application",
   },
   {
     name: "Medication Tracking System",

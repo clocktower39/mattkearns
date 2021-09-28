@@ -144,7 +144,7 @@ export default function Home() {
       >
         <Container maxWidth="md">
           <Typography variant="h3" className={classes.sectionTitle}>
-            Books, Movies, & Video Games
+            Favorite Books, Movies, & Video Games
           </Typography>
           <Grid container spacing={2}>
             {list.map((item) => (
