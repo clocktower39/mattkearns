@@ -9,8 +9,8 @@ import {
   Card,
   Grid,
   Grow,
-  makeStyles,
-} from "@material-ui/core";
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import useOnScreen from '../Hooks/useOnScreen';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +39,7 @@ export default function RecipeReviewCard(props) {
   const onScreen = useOnScreen(ref, "-300px");
 
   return (
-      <Grid item xs={6} sm={4} ref={ref} >
+      <Grid item container xs={6} sm={4} ref={ref} >
         <Grow in={onScreen} timeout={1250}>
           <div>
           <Card className={classes.root}>
@@ -54,6 +54,7 @@ export default function RecipeReviewCard(props) {
                 gutterBottom
                 variant="h5"
                 component="h2"
+                style={{fontFamily: "Odibee Sans, cursive",}}
               >
                 {props.project.name}
               </Typography>
@@ -62,6 +63,7 @@ export default function RecipeReviewCard(props) {
                 variant="body1"
                 color="textSecondary"
                 component="p"
+                style={{fontFamily: "Odibee Sans, cursive",}}
               >
                 {props.project.desc}
               </Typography>

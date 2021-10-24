@@ -5,9 +5,9 @@ import {
   Grid,
   IconButton,
   Typography,
-  makeStyles,
-} from "@material-ui/core";
-import { ExpandMore, LinkedIn, GitHub, Instagram } from "@material-ui/icons";
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { ExpandMore, LinkedIn, GitHub, Instagram } from '@mui/icons-material';
 import ProjectCard from "./ProjectCard";
 import FavoritesList from "./FavoritesList";
 import headshot from "../img/IMG_1290.jpg";
@@ -22,9 +22,10 @@ const useStyles = makeStyles((theme) => ({
   introTypography: {
     fontFamily: "Odibee Sans, cursive",
   },
+  headshotContainer:{
+    justifyContent: 'center',
+  },
   headshot: {
-    height: "175px",
-    width: "175px",
     border: "3px solid white",
   },
   accent: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "50px",
   },
   ExpandMore: {
-    animation: `$myEffect 3000ms ${theme.transitions.easing.easeInOut}`,
+    animation: `$myEffect 3000ms cubic-bezier(0.4, 0, 0.2, 1)`,
   },
   "@keyframes myEffect": {
     "0%": {
@@ -76,14 +77,15 @@ export default function Home() {
     <div className={classes.root}>
       <Container maxWidth="md" className={classes.section}>
         <Grid container style={{ height: "100%" }}>
-          <Grid container justifyContent="center" alignItems="center">
-            <Grid item container justifyContent="center" xs={12}></Grid>
+          <Grid container style={{justifyContent: "center", alignItems: "center"}} >
+            <Grid item container style={{justifyContent: "center"}} xs={12}></Grid>
             <Grid container item xs={6}>
               <Grid item xs={12}>
                 <Typography
                   display="inline"
                   variant="h6"
                   className={`${classes.accent} ${classes.introTypography}`}
+                  style={{fontFamily: "Odibee Sans, cursive",}}
                 >
                   Hi, my name is
                 </Typography>
@@ -93,6 +95,7 @@ export default function Home() {
                   display="inline"
                   variant="h3"
                   className={classes.introTypography}
+                  style={{fontFamily: "Odibee Sans, cursive",}}
                 >
                   Matt Kearns.
                 </Typography>
@@ -101,7 +104,8 @@ export default function Home() {
                 <Typography
                   display="inline"
                   variant="h6"
-                  className={`${classes.introTypography}`}
+                  className={classes.introTypography}
+                  style={{fontFamily: "Odibee Sans, cursive",}}
                 >
                   I'm a self taught{" "}
                   <span className={classes.accent}>full stack developer</span>.
@@ -110,10 +114,10 @@ export default function Home() {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid justifyContent="center" container item xs={12} sm={4}>
-              <Avatar alt="pic" src={headshot} className={classes.headshot} />
+            <Grid className={classes.headshotContainer} container item xs={12} sm={4}>
+              <Avatar alt="pic" src={headshot} className={classes.headshot} sx={{ width: 175, height: 175 }} />
             </Grid>
-            <Grid item container justifyContent="center" xs={12}>
+            <Grid item container style={{justifyContent: "center"}} xs={12}>
               <ExpandMore
                 className={classes.ExpandMore}
                 style={{ fontSize: "115px" }}
@@ -125,7 +129,7 @@ export default function Home() {
 
       <div style={{ backgroundColor: "#008B74" }}>
         <Container maxWidth="md">
-          <Typography variant="h3" className={classes.sectionTitle}>
+          <Typography variant="h3" className={classes.sectionTitle} style={{fontFamily: "Odibee Sans, cursive",}}>
             Projects
           </Typography>
           <Grid container spacing={3}>
@@ -143,7 +147,7 @@ export default function Home() {
         }}
       >
         <Container maxWidth="md">
-          <Typography variant="h3" className={classes.sectionTitle}>
+          <Typography variant="h3" className={classes.sectionTitle} style={{fontFamily: "Odibee Sans, cursive",}}>
             Favorite Books, Movies, & Video Games
           </Typography>
           <Grid container spacing={2}>
@@ -158,7 +162,7 @@ export default function Home() {
 
       <div style={{ backgroundColor: "#000" }}>
         <Container maxWidth="md">
-          <Typography variant="h3" className={classes.sectionTitle}>
+          <Typography variant="h3" className={classes.sectionTitle}  style={{fontFamily: "Odibee Sans, cursive",}}>
             Social Media
           </Typography>
           <Grid container spacing={3} justifyContent="center">

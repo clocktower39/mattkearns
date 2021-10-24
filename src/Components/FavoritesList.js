@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
-import { CardMedia, Card, Slide, makeStyles } from "@material-ui/core";
+import { CardMedia, Card, Slide } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import useOnScreen from '../Hooks/useOnScreen'
 
 const useStyles = makeStyles((theme) => ({

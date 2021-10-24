@@ -1,6 +1,7 @@
 import React from 'react'
-import { Avatar, Container, Grid, Typography, makeStyles } from '@material-ui/core';
-import { Code, EmojiPeople, Work, Subject, GitHub, LinkedIn, Instagram } from '@material-ui/icons';
+import { Avatar, Container, Grid, Typography } from '@mui/material';
+import { Code, EmojiPeople, Work, Subject, GitHub, LinkedIn, Instagram } from '@mui/icons-material';
+import { makeStyles } from '@mui/styles';
 import img from '../img/IMG_1290.jpg';
 
 const useStyles = makeStyles(theme =>({
