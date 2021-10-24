@@ -85,7 +85,6 @@ export default function Home() {
                   display="inline"
                   variant="h6"
                   className={`${classes.accent} ${classes.introTypography}`}
-                  style={{fontFamily: "Odibee Sans, cursive",}}
                 >
                   Hi, my name is
                 </Typography>
@@ -95,7 +94,6 @@ export default function Home() {
                   display="inline"
                   variant="h3"
                   className={classes.introTypography}
-                  style={{fontFamily: "Odibee Sans, cursive",}}
                 >
                   Matt Kearns.
                 </Typography>
@@ -105,7 +103,6 @@ export default function Home() {
                   display="inline"
                   variant="h6"
                   className={classes.introTypography}
-                  style={{fontFamily: "Odibee Sans, cursive",}}
                 >
                   I'm a self taught{" "}
                   <span className={classes.accent}>full stack developer</span>.
@@ -129,7 +126,7 @@ export default function Home() {
 
       <div style={{ backgroundColor: "#008B74" }}>
         <Container maxWidth="md">
-          <Typography variant="h3" className={classes.sectionTitle} style={{fontFamily: "Odibee Sans, cursive",}}>
+          <Typography variant="h3" className={classes.sectionTitle}>
             Projects
           </Typography>
           <Grid container spacing={3}>
@@ -147,7 +144,7 @@ export default function Home() {
         }}
       >
         <Container maxWidth="md">
-          <Typography variant="h3" className={classes.sectionTitle} style={{fontFamily: "Odibee Sans, cursive",}}>
+          <Typography variant="h3" className={classes.sectionTitle}>
             Favorite Books, Movies, & Video Games
           </Typography>
           <Grid container spacing={2}>
@@ -162,7 +159,7 @@ export default function Home() {
 
       <div style={{ backgroundColor: "#000" }}>
         <Container maxWidth="md">
-          <Typography variant="h3" className={classes.sectionTitle}  style={{fontFamily: "Odibee Sans, cursive",}}>
+          <Typography variant="h3" className={classes.sectionTitle}>
             Social Media
           </Typography>
           <Grid container spacing={3} justifyContent="center">
