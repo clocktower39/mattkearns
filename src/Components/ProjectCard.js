@@ -43,11 +43,13 @@ export default function RecipeReviewCard(props) {
         <Grow in={onScreen} timeout={1250}>
           <div>
           <Card className={classes.root}>
+            <Grow in={onScreen} timeout={1250}>
             <CardMedia
               className={classes.media}
               image={props.project.img}
               title={props.project.name}
             />
+            </Grow>
             <CardContent className={classes.cardContent}>
               <Typography
                 className={classes.cardTypography}

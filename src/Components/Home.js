@@ -4,12 +4,14 @@ import {
   Container,
   Grid,
   IconButton,
+  Paper,
   Typography,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { ExpandMore, LinkedIn, GitHub, Instagram } from '@mui/icons-material';
 import ProjectCard from "./ProjectCard";
 import FavoritesList from "./FavoritesList";
+import Logos from "./Logos";
 import headshot from "../img/IMG_1290.jpg";
 import { projects, list } from "../states";
 
@@ -143,6 +145,13 @@ export default function Home() {
           padding: "100px 0",
         }}
       >
+      <Container maxWidth="md">
+        <Paper>
+        <Grid container spacing={2}>
+          <Logos />
+        </Grid>
+        </Paper>
+      </Container>
         <Container maxWidth="md">
           <Typography variant="h3" className={classes.sectionTitle}>
             Favorite Books, Movies, & Video Games
