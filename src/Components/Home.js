@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { Avatar, Container, Grid, IconButton, Paper, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { ExpandMore, LinkedIn, GitHub, Instagram } from "@mui/icons-material";
-import AOS from 'aos';
 import ProjectCard from "./ProjectCard";
 import FavoritesList from "./FavoritesList";
 import Logos from "./Logos";
@@ -75,18 +74,25 @@ export default function Home() {
   };
 
   const updateTextPathOffset = (offset) => {
-    textPathRef.current.setAttribute('startOffset', offset);
-  }
+    textPathRef.current.setAttribute("startOffset", offset);
+  };
 
-  const onScrollText = () => {
-    updateTextPathOffset(window.scrollY*1.2);
-  }
+  const onScrollText = (path, pathLength) => {
+    const rect = textContainerRef.current.getBoundingClientRect();
+    const scrollPercent = rect.y / window.innerHeight;
+    updateTextPathOffset(scrollPercent * 2 * pathLength);
+  };
 
-  useEffect(()=>{
-    AOS.init({ duration: 1000 });
-    window.addEventListener('scroll', onScrollText)
+  useEffect(() => {
+    const path = document.querySelector(textPathRef.current.getAttribute("href"));
+    const pathLength = path.getTotalLength();
+
+    updateTextPathOffset(pathLength);
+
+    window.addEventListener("scroll", () => onScrollText(path, pathLength));
+
     // eslint-disable-next-line
-  },[])
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -138,22 +144,33 @@ export default function Home() {
                 style={{ fontSize: "115px", color: "#000000", paddingTop: "125px" }}
               />
             </Grid>
-            
-            <svg id="text-container" ref={textContainerRef} viewbox="0 0 1500 200" xmlns="http://ww.w3.org/2000/svg">
-              <path id="text-curve" d="m0 100s269.931 86.612 520 0c250.069-86.612 480 0 480 0" fill="none" />
-              <text y="40" font-size="56">
-                <textPath href="#text-curve" id="text-path" ref={textPathRef}>
-                  Lets code!
-                </textPath>
-              </text>
-            </svg>
+
+            <Grid item container style={{ justifyContent: "center", alignItems: 'flex-start' }} xs={12}>
+              <svg
+                id="text-container"
+                ref={textContainerRef}
+                viewbox="0 0 1500 200"
+                xmlns="http://ww.w3.org/2000/svg"
+              >
+                <path
+                  id="text-curve"
+                  d="m0 100s269.931 86.612 520 0c250.069-86.612 480 0 480 0"
+                  fill="none"
+                />
+                <text y="40" font-size="56">
+                  <textPath href="#text-curve" id="text-path" ref={textPathRef}>
+                    Lets code!
+                  </textPath>
+                </text>
+              </svg>
+            </Grid>
           </Grid>
         </Grid>
       </Container>
 
-      <div style={{ background: "linear-gradient(#F4F4F4, #5D5B7D)", }}>
+      <div style={{ background: "linear-gradient(#F4F4F4, #5D5B7D)" }}>
         <Container maxWidth="md">
-          <Typography variant="h3" className={classes.sectionTitle} style={{color: '#000'}}>
+          <Typography variant="h3" className={classes.sectionTitle} style={{ color: "#000" }}>
             Projects
           </Typography>
           <Grid container spacing={3}>
