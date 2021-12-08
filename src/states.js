@@ -1,8 +1,7 @@
-import scheduleGeneratorImg from "./img/schedule-generator-img.jpg";
 import exerciseAppImg from "./img/exerciseBWImg.jpg";
-// import socialPhotoAppImg from "./img/socialPhotoAppImg.jpg";
 import bonfireImg from "./img/bonfireImg.jpg";
 import medicationImg from "./img/medication.jpg";
+import trackerImg from "./img/activity-tracker.jpg";
 
 import halo from './img/posters/976730_library_600x900.jpg'
 import fallout4 from './img/posters/377160_library_600x900.jpg'
@@ -26,6 +25,16 @@ import cryptography  from './img/posters/cryptography_library_600x900.jpg'
 
 export const projects = [
   {
+    name: "Activity Tracker",
+    link: "https://mattkearns.dev/activity-tracker",
+    github: {
+      client: 'https://github.com/clocktower39/activity-tracker-app',
+      server: null,
+    },
+    img: trackerImg,
+    desc: "Create daily tasks to check off each day and track",
+  },
+  {
     name: "Bonfire",
     link: "https://mattkearns.dev/message",
     github: {
@@ -34,16 +43,6 @@ export const projects = [
     },
     img: bonfireImg,
     desc: "Message app using socket.io for real time updates, JWT for authentication, mongoDB for storage",
-  },
-  {
-    name: "Schedule Generator",
-    link: "https://mattkearns.dev/random-schedule-generator",
-    github: {
-      client: 'https://github.com/clocktower39/react-scheduler',
-      server: null,
-    },
-    img: scheduleGeneratorImg,
-    desc: "Creates a daily schedule based on a weighted system and availablility",
   },
   {
     name: "Fitness Exercises App",

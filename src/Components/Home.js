@@ -6,16 +6,18 @@ import ProjectCard from "./ProjectCard";
 import FavoritesList from "./FavoritesList";
 import Logos from "./Logos";
 import headshot from "../img/IMG_1290.jpg";
-// import codeBracketsSVG from "../img/codeBracketsSVG.svg";
-// import consoleSVG from "../img/consoleSVG.svg";
+import abstract from "../img/petals.svg";
+import fingerprint from "../img/wavey-fingerprint.svg";
 import { projects, list } from "../states";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100%",
-    backgroundColor: "#5927E5",
+    height: '100%',
+    backgroundColor: "#000",
     color: "#deeaef",
-    backgroundImage: "linear-gradient(176deg, #22313F 70%, #F4F4F4 calc(70% + 2px))",
+    backgroundImage: `url(${abstract})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
   },
   introTypography: {
     fontFamily: "Odibee Sans, cursive",
@@ -97,7 +99,7 @@ export default function Home() {
   return (
     <div className={classes.root}>
       <Container maxWidth="md" className={classes.section}>
-        <Grid container style={{ height: "100%" }}>
+        <Grid container style={{ height: "100%", alignContent: "center", }} >
           <Grid container style={{ justifyContent: "space-around", alignItems: "center" }}>
             <Grid className={classes.headshotContainer} container item xs={12} sm={4}>
               <Avatar
@@ -130,18 +132,10 @@ export default function Home() {
                 </Typography>
               </Grid>
             </Grid>
-            {/* <Grid item container style={{ justifyContent: "center" }} xs={12}>
-              <Grid item xs={6}>
-                <img src={codeBracketsSVG} style={{height: '80%', width: '80%',}} />
-              </Grid>
-              <Grid item xs={6}>
-                <img src={consoleSVG} style={{height: '80%', width: '80%',}} />
-              </Grid>
-            </Grid> */}
             <Grid item container style={{ justifyContent: "center" }} xs={12}>
               <ExpandMore
                 className={classes.ExpandMore}
-                style={{ fontSize: "115px", color: "#000000", paddingTop: "125px" }}
+                style={{ fontSize: "115px", color: "#FFF", paddingTop: "125px" }}
               />
             </Grid>
 
@@ -149,7 +143,6 @@ export default function Home() {
               <svg
                 id="text-container"
                 ref={textContainerRef}
-                viewbox="0 0 1500 200"
                 xmlns="http://ww.w3.org/2000/svg"
               >
                 <path
@@ -157,7 +150,7 @@ export default function Home() {
                   d="m0 100s269.931 86.612 520 0c250.069-86.612 480 0 480 0"
                   fill="none"
                 />
-                <text y="40" font-size="56">
+                <text y="40" fill="#FFF" fontSize="56px" fontFamily="Odibee Sans, cursive">
                   <textPath href="#text-curve" id="text-path" ref={textPathRef}>
                     Lets code!
                   </textPath>
@@ -168,9 +161,9 @@ export default function Home() {
         </Grid>
       </Container>
 
-      <div style={{ background: "linear-gradient(#F4F4F4, #5D5B7D)" }}>
+      <div style={{backgroundImage: `url(${fingerprint})`, paddingTop: '125px', }} >
         <Container maxWidth="md">
-          <Typography variant="h3" className={classes.sectionTitle} style={{ color: "#000" }}>
+          <Typography variant="h3" className={classes.sectionTitle} style={{ color: "#deeaef", }}>
             Projects
           </Typography>
           <Grid container spacing={3}>
@@ -183,8 +176,8 @@ export default function Home() {
 
       <div
         style={{
-          background: "linear-gradient(#5D5B7D, #282744)",
           padding: "100px 0",
+          backgroundImage: `url(${fingerprint})`,
         }}
       >
         <Container maxWidth="md">
