@@ -2,6 +2,7 @@ import exerciseAppImg from "./img/exerciseBWImg.jpg";
 import bonfireImg from "./img/bonfireImg.jpg";
 import medicationImg from "./img/medication.jpg";
 import trackerImg from "./img/activity-tracker.jpg";
+import fiveDayForecast from "./img/five-day-forecast.jpg";
 
 import halo from './img/posters/976730_library_600x900.jpg'
 import fallout4 from './img/posters/377160_library_600x900.jpg'
@@ -24,6 +25,16 @@ import code  from './img/posters/code_library_600x900.jpg'
 import cryptography  from './img/posters/cryptography_library_600x900.jpg'
 
 export const projects = [
+  {
+    name: "Chicago 5 day Forecast",
+    link: "https://mattkearns.dev/five-day-forecast",
+    github: {
+      client: 'https://github.com/clocktower39/five-day-forecast',
+      server: null,
+    },
+    img: fiveDayForecast,
+    desc: "Five day forecast of Chicago weather using the openweathermap api",
+  },
   {
     name: "Activity Tracker",
     link: "https://mattkearns.dev/activity-tracker",
