@@ -1,77 +1,67 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef } from "react";
 import {
   Typography,
+  CardActionArea,
   CardContent,
   CardMedia,
   Card,
   Grid,
   Grow,
-} from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import useOnScreen from '../Hooks/useOnScreen';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    backgroundColor: "",
-  },
-  media: {
-    height: 0,
-    paddingTop: "69%", // 16:9 == '56.25%'
-  },
-  cardContent: {
-    flexGrow: 1,
-    alignItems: "flex-end",
-  },
-  cardTypography: {
-    fontFamily: "Odibee Sans, cursive",
-  },
-}));
+} from "@mui/material";
+import useOnScreen from "../Hooks/useOnScreen";
 
 export default function RecipeReviewCard(props) {
-  const classes = useStyles();
   const ref = useRef();
   const onScreen = useOnScreen(ref, "-300px");
 
   return (
-      <Grid item container xs={12} sm={6} ref={ref} >
-        <Grow in={onScreen} timeout={1250}>
-          <div style={{ width: '100%' }}>
-          <Card className={classes.root}>
-            <Grow in={onScreen} timeout={1250}>
-            <CardMedia
-              className={classes.media}
-              image={props.project.img}
-              title={props.project.name}
-            />
-            </Grow>
-            <CardContent className={classes.cardContent}>
-              <Typography
-                className={classes.cardTypography}
-                gutterBottom
-                variant="h5"
-                component="h2"
-                style={{fontFamily: "Odibee Sans, cursive",}}
+    <Grid item container xs={12} sm={6} ref={ref}>
+      <Grow in={onScreen} timeout={1250}>
+        <div style={{ width: "100%" }}>
+          <Card
+            sx={{
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "",
+            }}
+          >
+            <CardActionArea>
+              <Grow in={onScreen} timeout={1250}>
+                <CardMedia
+                  sx={{
+                    height: 0,
+                    paddingTop: "56.25%", // 16:9 == '56.25%'
+                  }}
+                  image={props.project.img}
+                  title={props.project.name}
+                />
+              </Grow>
+              <CardContent
+                sx={{
+                  width: '100%',
+                  backgroundColor: 'rgb(120, 120, 120, .7)',
+                  bottom: '-10px',
+                  height: '83px',
+                  position: 'absolute',
+                  transition: 'all 1s',
+                  transform: 'translateY(50px)',
+                  '&:hover': {
+                    transform: 'translateY(0px)',
+                  }
+                }}
               >
-                {props.project.name}
-              </Typography>
-              <Typography
-                className={classes.cardTypography}
-                variant="body1"
-                color="textSecondary"
-                component="p"
-                style={{fontFamily: "Odibee Sans, cursive",}}
-              >
-                <a href={props.project.link}>{props.project.desc}</a>
-              </Typography>
-            </CardContent>
+                <Typography gutterBottom variant="h5" component="h2" sx={{ width: "100%"}}>
+                  {props.project.name}
+                </Typography>
+                <Typography variant="body1" color="textSecondary" component="p">
+                  <a href={props.project.link} style={{ textDecoration: 'none', color: 'white', padding: '0px 7.5px'}}>{props.project.desc}</a>
+                </Typography>
+              </CardContent>
+            </CardActionArea>
           </Card>
-          </div>
-        </Grow>
-      </Grid>
+        </div>
+      </Grow>
+    </Grid>
   );
 }
-

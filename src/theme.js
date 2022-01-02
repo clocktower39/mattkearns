@@ -14,6 +14,10 @@ theme = createTheme(theme, {
             color: 'white',
             fontSize: '2.1rem',
             fontFamily: 'Arial',
+            fontWeight: 600,
+            [theme.breakpoints.up('sm')]: {
+              fontSize: '3.3rem',
+            },
             [theme.breakpoints.up('md')]: {
               fontSize: '5rem',
             },
@@ -28,6 +32,9 @@ theme = createTheme(theme, {
             fontFamily: 'Arial',
             fontWeight: '600',
             fontSize: '1.3rem',
+            [theme.breakpoints.up('sm')]: {
+              fontSize: '2rem',
+            },
             [theme.breakpoints.up('md')]: {
               fontSize: '2.5rem',
             },
@@ -39,67 +46,14 @@ theme = createTheme(theme, {
         },
         h5: {
             color: 'white',
-            fontSize: '1.1rem',
+            fontSize: '1rem',
+            [theme.breakpoints.up('sm')]: {
+              fontSize: '1.3rem',
+            },
             [theme.breakpoints.up('md')]: {
               fontSize: '1.4rem',
             },
         },
-    },
-    components: {
-        // Name of the component
-        MuiButton: {
-            styleOverrides: {
-                // Name of the slot
-                root: {
-                    // Some CSS
-                    fontSize: '1rem',
-                },
-            },
-        },
-        MuiTextField: {
-            styleOverrides: {
-                root: {
-                    borderBottomColor: "white",
-                    "& input": {
-                        color: "white",
-                    },
-                    "& label": {
-                        color: "white",
-                    },
-                    "& label.Mui-focused": {
-                        color: "white",
-                    },
-                    "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                            borderColor: "white",
-                        },
-                    },
-                    "& .MuiInput-underline:before": {
-                        borderBottomColor: "white",
-                    },
-                    "& .MuiInput-underline:after": {
-                        borderBottomColor: "white",
-                    },
-                    "& .MuiNativeSelect-select": {
-                      color: 'white',
-                    },
-                    "& .MuiNativeSelect-select option": {
-                      color: 'black',
-                    },
-                    "& .MuiSvgIcon-root": {
-                      color: 'white',
-                    },
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      borderColor: 'white',
-                    },
-                    "& .MuiOutlinedInput-notchedOutline:hover": {
-                      borderColor: 'white',
-                    }
-
-                }
-            },
-
-        }
     },
 });
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container, Grid, IconButton, TextField, Typography } from "@mui/material";
+import { Button, Container, Grid, IconButton, Paper, TextField, Typography } from "@mui/material";
 import { LinkedIn, GitHub, Instagram } from "@mui/icons-material";
 import ProjectCard from "./ProjectCard";
 import Logos from "./Logos";
@@ -26,12 +26,18 @@ export default function Home() {
 
   return (
     <div>
-      <div style={{ backgroundImage: `url(${HomepageBackground})`, backgroundPosition: 'right', minHeight: "100vh" }}>
-        <Container maxWidth="md" sx={{ height: "100vh" }}>
+      <div
+        style={{
+          backgroundImage: `url(${HomepageBackground})`,
+          backgroundPosition: "65%",
+          minHeight: "100vh",
+        }}
+      >
+        <Container maxWidth="md" sx={{ minHeight: "100vh" }}>
           <Grid
             container
             direction="column"
-            style={{ justifyContent: "center", alignItems: "center", height: "100%" }}
+            style={{ justifyContent: "center", alignItems: "center", minHeight: "100vh" }}
           >
             <Grid container style={{ justifyContent: "center", alignItems: "center" }}>
               <Grid
@@ -56,14 +62,14 @@ export default function Home() {
                 </div>
               </Grid>
 
-              <Grid container item xs={6}>
+              <Grid container item xs={8} sm={6}>
                 <Grid item xs={12}>
                   <Typography display="inline" variant="h3">
                     Hi, my name is
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography display="inline" variant="h1">
+                  <Typography display="inline" variant="h1" sx={{textTransform: 'uppercase'}}>
                     Matt Kearns
                   </Typography>
                 </Grid>
@@ -77,8 +83,10 @@ export default function Home() {
                     plain breaking it.
                   </Typography>
                 </Grid>
-                <Grid item container xs={12} sx={{margin: '5px', padding: '5px'}} >
-                  <Button variant="contained" sx={{ color: 'white'}}>About Me</Button>
+                <Grid item container xs={12} sx={{ margin: "5px", padding: "5px" }}>
+                  <Button variant="contained" sx={{ color: "white" }}>
+                    About Me
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
@@ -86,7 +94,7 @@ export default function Home() {
         </Container>
       </div>
 
-      <div style={{ padding: "75px 0px", backgroundColor: "#162341" }}>
+      <div style={{ padding: "50px 0px", backgroundColor: "#162341" }}>
         <Grid container item xs={12} sx={{ paddingBottom: "50px" }}>
           <Grid
             item
@@ -101,7 +109,7 @@ export default function Home() {
               paddingRight: "25px",
             }}
           >
-            <Typography variant="h3" style={{ color: "#deeaef" }}>
+            <Typography variant="h3" style={{ color: "#deeaef", textTransform: 'uppercase',  }}>
               Projects
             </Typography>
           </Grid>
@@ -117,7 +125,7 @@ export default function Home() {
 
       <div
         style={{
-          padding: "100px 0",
+          padding: "50px 0",
           backgroundColor: "#FAEDD4",
         }}
       >
@@ -135,7 +143,7 @@ export default function Home() {
               paddingRight: "25px",
             }}
           >
-            <Typography variant="h3" style={{ color: "#deeaef" }}>
+            <Typography variant="h3" style={{ color: "#deeaef", textTransform: 'uppercase',  }}>
               Tools
             </Typography>
           </Grid>
@@ -146,41 +154,52 @@ export default function Home() {
           </Grid>
         </Container>
       </div>
-      
-      <div style={{ backgroundColor: "#4D3E6D", padding: '25px 0px', }}>
+
+      <div style={{ backgroundColor: "#4D3E6D", padding: "25px 0px" }}>
         <Container maxWidth="md">
-          <Typography variant="h3" gutterBottom sx={{ color: 'white', }}>Contact Me</Typography>
-          <Grid container spacing={3} justifyContent="center">
-            <Grid item xs={12}><TextField fullWidth label="Full Name" /></Grid>
-            <Grid item xs={12}><TextField fullWidth label="Email" /></Grid>
-            <Grid item xs={12}><TextField fullWidth label="Summary" multiline /></Grid>
-            <Grid container item xs={12} sx={{ justifyContent: 'center' }}><Button variant="contained" >Send</Button></Grid>
-          </Grid>
+          <Typography variant="h3" gutterBottom sx={{ color: "white", padding: '25px 0px 50px 0px', }}>
+            Contact Me
+          </Typography>
+          <Paper sx={{ backgroundColor: "#FAEDD4" }}>
+            <Grid container spacing={1} sx={{ justifyContent: "center", padding: '50px 0px', }}>
+              <Grid item xs={10}>
+                <TextField fullWidth label="Full Name" required/>
+              </Grid>
+              <Grid item xs={10}>
+                <TextField fullWidth label="Email" required/>
+              </Grid>
+              <Grid item xs={10}>
+                <TextField fullWidth label="Summary" multiline draggable rows={3} required/>
+              </Grid>
+              <Grid container item xs={12} sx={{ justifyContent: "center" }}>
+                <Button variant="contained">Send</Button>
+              </Grid>
+            </Grid>
+          </Paper>
         </Container>
       </div>
 
-      <div style={{ backgroundColor: "#000", paddingTop: '25px', }}>
+      <div style={{ backgroundColor: "#061528", paddingTop: "25px" }}>
         <Container maxWidth="md">
-          <Typography variant="h3">Social Media</Typography>
           <Grid container spacing={3} justifyContent="center">
             <Grid item>
               <IconButton onClick={() => handleSocialLink("github")}>
-                <GitHub style={{ fontSize: "35px", color: "white" }} />
+                <GitHub style={{ fontSize: "35px", color: "white", backgroundColor: '#867CB8', border: '3px solid #867CB8', borderRadius: '50%' }} />
               </IconButton>
             </Grid>
             <Grid item>
               <IconButton onClick={() => handleSocialLink("linkedIn")}>
-                <LinkedIn style={{ fontSize: "35px", color: "white" }} />
+                <LinkedIn style={{ fontSize: "35px", color: "white", backgroundColor: '#867CB8', border: '3px solid #867CB8', borderRadius: '50%' }} />
               </IconButton>
             </Grid>
             <Grid item>
               <IconButton onClick={() => handleSocialLink("instagram")}>
-                <Instagram style={{ fontSize: "35px", color: "white" }} />
+                <Instagram style={{ fontSize: "35px", color: "white", backgroundColor: '#867CB8', border: '3px solid #867CB8', borderRadius: '50%' }} />
               </IconButton>
             </Grid>
             <Grid container item xs={12} justifyContent="center">
-              <Typography variant="body1" style={{ fontSize: "10px" }}>
-                Copyright © 2021 MattKearns.dev - All Rights Reserved.
+              <Typography variant="body1" style={{ fontSize: "10px", color: '#FFF' }}>
+                Copyright © 2022 MattKearns.dev - All Rights Reserved.
               </Typography>
             </Grid>
           </Grid>
