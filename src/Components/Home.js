@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Container, Grid, IconButton, Paper, TextField, Typography } from "@mui/material";
 import { LinkedIn, GitHub, Instagram } from "@mui/icons-material";
+import { Link } from 'react-router-dom';
 import ProjectCard from "./ProjectCard";
 import Logos from "./Logos";
 import headshot from "../img/avatar.jpg";
@@ -84,7 +85,7 @@ export default function Home() {
                   </Typography>
                 </Grid>
                 <Grid item container xs={12} sx={{ margin: "5px", padding: "5px" }}>
-                  <Button variant="contained" sx={{ color: "white" }}>
+                  <Button variant="contained" sx={{ color: "white" }} component={Link} to="/about">
                     About Me
                   </Button>
                 </Grid>

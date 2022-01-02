@@ -9,6 +9,7 @@ import {
   Grow,
 } from "@mui/material";
 import useOnScreen from "../Hooks/useOnScreen";
+import { theme } from "../theme";
 
 export default function RecipeReviewCard(props) {
   const ref = useRef();
@@ -23,10 +24,9 @@ export default function RecipeReviewCard(props) {
               height: "100%",
               display: "flex",
               flexDirection: "column",
-              backgroundColor: "",
             }}
           >
-            <CardActionArea>
+            <CardActionArea disableRipple>
               <Grow in={onScreen} timeout={1250}>
                 <CardMedia
                   sx={{
@@ -39,23 +39,38 @@ export default function RecipeReviewCard(props) {
               </Grow>
               <CardContent
                 sx={{
-                  width: '100%',
-                  backgroundColor: 'rgb(120, 120, 120, .7)',
-                  bottom: '-10px',
-                  height: '83px',
-                  position: 'absolute',
-                  transition: 'all 1s',
-                  transform: 'translateY(50px)',
-                  '&:hover': {
-                    transform: 'translateY(0px)',
-                  }
+                  width: "95%",
+                  backgroundColor: "rgb(134, 124, 184,.7)",
+                  bottom: "-20px",
+                  height: "83px",
+                  position: "absolute",
+                  transition: "all 1s",
+                  transform: "translateY(50px)",
+                  "&:hover": {
+                    transform: "translateY(0px)",
+                  },
+                  [theme.breakpoints.up("md")]: {
+                    bottom: "-10px",
+                  },
                 }}
               >
-                <Typography gutterBottom variant="h5" component="h2" sx={{ width: "100%"}}>
+                <Typography gutterBottom variant="h5" component="h2" sx={{ width: "90%" }}>
                   {props.project.name}
                 </Typography>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  <a href={props.project.link} style={{ textDecoration: 'none', color: 'white', padding: '0px 7.5px'}}>{props.project.desc}</a>
+                <Typography
+                  variant="body1"
+                  color="textSecondary"
+                  component="a"
+                  href={props.project.link}
+                  sx={{ 
+                    color: "white", 
+                    textDecoration: "none", 
+                    "&:hover": { 
+                      fontWeight: 500 
+                    } 
+                  }}
+                >
+                  {props.project.desc}
                 </Typography>
               </CardContent>
             </CardActionArea>
