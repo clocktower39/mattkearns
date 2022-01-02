@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef } from "react";
 import {
-  Button,
   Typography,
-  CardActions,
   CardContent,
   CardMedia,
   Card,
@@ -39,9 +37,9 @@ export default function RecipeReviewCard(props) {
   const onScreen = useOnScreen(ref, "-300px");
 
   return (
-      <Grid item container xs={6} sm={4} ref={ref} >
+      <Grid item container xs={12} sm={6} ref={ref} >
         <Grow in={onScreen} timeout={1250}>
-          <div>
+          <div style={{ width: '100%' }}>
           <Card className={classes.root}>
             <Grow in={onScreen} timeout={1250}>
             <CardMedia
@@ -67,27 +65,9 @@ export default function RecipeReviewCard(props) {
                 component="p"
                 style={{fontFamily: "Odibee Sans, cursive",}}
               >
-                {props.project.desc}
+                <a href={props.project.link}>{props.project.desc}</a>
               </Typography>
             </CardContent>
-            <CardActions>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={() => (window.location.href = props.project.link)}
-              >
-                Open
-              </Button>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={() =>
-                  window.open("https://www.github.com/clocktower39", "_blank")
-                }
-              >
-                Source
-              </Button>
-            </CardActions>
           </Card>
           </div>
         </Grow>

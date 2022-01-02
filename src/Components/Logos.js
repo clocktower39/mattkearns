@@ -40,8 +40,8 @@ export default function Logos() {
     bitcoin_logo,
     ethereum_logo,
   ];
-  return logos.map((logo) => (
-    <Grid container item xs={2} style={{alignContent: 'center'}}>
+  return logos.map((logo, index) => (
+    <Grid container item xs={3} sm={2} style={{alignContent: 'center'}} key={`logo-${index}`}>
       <Grid item xs={12}>
         <img src={logo} style={{maxWidth: "100%", }} alt={"Logo"} />
       </Grid>
