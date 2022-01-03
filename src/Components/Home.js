@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Grid, IconButton, Paper, TextField, Typography } from "@mui/material";
 import { LinkedIn, GitHub, Instagram } from "@mui/icons-material";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import env from "react-dotenv";
+import ReCAPTCHA from "react-google-recaptcha";
 import ProjectCard from "./ProjectCard";
 import Logos from "./Logos";
 import headshot from "../img/avatar.jpg";
@@ -9,6 +11,20 @@ import HomepageBackground from "../img/Homepage_Background.jpg";
 import { projects } from "../states";
 
 export default function Home() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [summary, setSummary] = useState("");
+  const [reCapValue, setReCapValue] = useState(null);
+  const [contactMessageSent, setContactMessageSent] = useState(false);
+
+  const handleNameChange = (e) => setFullName(e.target.value);
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handleSummaryChange = (e) => setSummary(e.target.value);
+  const handleReChange = (e) => {
+    console.log(e);
+    setReCapValue(e);
+  };
+
   const handleSocialLink = (type) => {
     switch (type) {
       case "github":
@@ -22,6 +38,25 @@ export default function Home() {
         break;
       default:
         break;
+    }
+  };
+
+  const handleContactSubmit = () => {
+    if (fullName !== "" && email !== "" && summary !== "" && reCapValue !== null) {
+      fetch("https://mattkearns.dev/contact_form_submission.php", {
+        credentials: "include",
+        headers: {
+          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+          "Accept-Language": "en-US,en;q=0.5",
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Upgrade-Insecure-Requests": "1",
+        },
+        body: `email=${encodeURI(email)}&summary=${encodeURI(summary)}&fullName=${encodeURI(fullName)}&reCapValue=${encodeURI(reCapValue)}`,
+        method: "POST",
+        mode: "cors",
+      }).then(() => {
+        setContactMessageSent(true);
+      });
     }
   };
 
@@ -70,7 +105,11 @@ export default function Home() {
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography display="inline" variant="h1" sx={{textTransform: 'uppercase'}}>
+                  <Typography
+                    display="inline"
+                    variant="h1"
+                    sx={{ textTransform: "uppercase", lineHeight: "85%" }}
+                  >
                     Matt Kearns
                   </Typography>
                 </Grid>
@@ -84,8 +123,14 @@ export default function Home() {
                     plain breaking it.
                   </Typography>
                 </Grid>
-                <Grid item container xs={12} sx={{ margin: "5px", padding: "5px" }}>
-                  <Button variant="contained" sx={{ color: "white" }} component={Link} to="/about">
+                <Grid item container xs={6} sx={{ margin: "5px", padding: "5px 0px" }}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{ color: "white", borderRadius: "25px" }}
+                    component={Link}
+                    to="/about"
+                  >
                     About Me
                   </Button>
                 </Grid>
@@ -110,7 +155,7 @@ export default function Home() {
               paddingRight: "25px",
             }}
           >
-            <Typography variant="h3" style={{ color: "#deeaef", textTransform: 'uppercase',  }}>
+            <Typography variant="h3" style={{ color: "#deeaef", textTransform: "uppercase" }}>
               Projects
             </Typography>
           </Grid>
@@ -144,7 +189,7 @@ export default function Home() {
               paddingRight: "25px",
             }}
           >
-            <Typography variant="h3" style={{ color: "#deeaef", textTransform: 'uppercase',  }}>
+            <Typography variant="h3" style={{ color: "#deeaef", textTransform: "uppercase" }}>
               Tools
             </Typography>
           </Grid>
@@ -158,22 +203,58 @@ export default function Home() {
 
       <div style={{ backgroundColor: "#4D3E6D", padding: "25px 0px" }}>
         <Container maxWidth="md">
-          <Typography variant="h3" gutterBottom sx={{ color: "white", padding: '25px 0px 50px 0px', }}>
+          <Typography
+            variant="h3"
+            gutterBottom
+            sx={{ color: "white", padding: "25px 0px 50px 0px" }}
+          >
             Contact Me
           </Typography>
           <Paper sx={{ backgroundColor: "#FAEDD4" }}>
-            <Grid container spacing={1} sx={{ justifyContent: "center", padding: '50px 0px', }}>
+            <Grid container spacing={1} sx={{ justifyContent: "center", padding: "50px 0px" }}>
               <Grid item xs={10}>
-                <TextField fullWidth label="Full Name" required/>
+                <TextField
+                  fullWidth
+                  label="Full Name"
+                  value={fullName}
+                  onChangeCapture={handleNameChange}
+                  required
+                />
               </Grid>
               <Grid item xs={10}>
-                <TextField fullWidth label="Email" required/>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  value={email}
+                  onChangeCapture={handleEmailChange}
+                  required
+                />
               </Grid>
               <Grid item xs={10}>
-                <TextField fullWidth label="Summary" multiline draggable rows={3} required/>
+                <TextField
+                  fullWidth
+                  label="Summary"
+                  value={summary}
+                  multiline
+                  draggable
+                  rows={3}
+                  onChangeCapture={handleSummaryChange}
+                  required
+                />
               </Grid>
-              <Grid container item xs={12} sx={{ justifyContent: "center" }}>
-                <Button variant="contained">Send</Button>
+              <Grid item xs={10} container sx={{ justifyContent: "center" }}>
+                <ReCAPTCHA sitekey={env.RECAPTCHA_KEY} onChange={handleReChange} />
+              </Grid>
+              <Grid container item xs={6} sx={{ justifyContent: "center" }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={handleContactSubmit}
+                  sx={{ borderRadius: "25px" }}
+                  disabled={contactMessageSent}
+                >
+                  {contactMessageSent ? "Sent" : "Send"}
+                </Button>
               </Grid>
             </Grid>
           </Paper>
@@ -185,21 +266,45 @@ export default function Home() {
           <Grid container spacing={3} justifyContent="center">
             <Grid item>
               <IconButton onClick={() => handleSocialLink("github")}>
-                <GitHub style={{ fontSize: "35px", color: "white", backgroundColor: '#867CB8', border: '3px solid #867CB8', borderRadius: '50%' }} />
+                <GitHub
+                  style={{
+                    fontSize: "35px",
+                    color: "white",
+                    backgroundColor: "#867CB8",
+                    border: "3px solid #867CB8",
+                    borderRadius: "50%",
+                  }}
+                />
               </IconButton>
             </Grid>
             <Grid item>
               <IconButton onClick={() => handleSocialLink("linkedIn")}>
-                <LinkedIn style={{ fontSize: "35px", color: "white", backgroundColor: '#867CB8', border: '3px solid #867CB8', borderRadius: '50%' }} />
+                <LinkedIn
+                  style={{
+                    fontSize: "35px",
+                    color: "white",
+                    backgroundColor: "#867CB8",
+                    border: "3px solid #867CB8",
+                    borderRadius: "50%",
+                  }}
+                />
               </IconButton>
             </Grid>
             <Grid item>
               <IconButton onClick={() => handleSocialLink("instagram")}>
-                <Instagram style={{ fontSize: "35px", color: "white", backgroundColor: '#867CB8', border: '3px solid #867CB8', borderRadius: '50%' }} />
+                <Instagram
+                  style={{
+                    fontSize: "35px",
+                    color: "white",
+                    backgroundColor: "#867CB8",
+                    border: "3px solid #867CB8",
+                    borderRadius: "50%",
+                  }}
+                />
               </IconButton>
             </Grid>
             <Grid container item xs={12} justifyContent="center">
-              <Typography variant="body1" style={{ fontSize: "10px", color: '#FFF' }}>
+              <Typography variant="body1" style={{ fontSize: "10px", color: "#FFF" }}>
                 Copyright © 2022 MattKearns.dev - All Rights Reserved.
               </Typography>
             </Grid>
