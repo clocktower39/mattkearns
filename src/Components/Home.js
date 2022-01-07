@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, Container, Grid, IconButton, Paper, TextField, Typography } from "@mui/material";
 import { LinkedIn, GitHub, Instagram } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import env from "react-dotenv";
 import ReCAPTCHA from "react-google-recaptcha";
 import ProjectCard from "./ProjectCard";
 import Logos from "./Logos";
@@ -243,7 +242,7 @@ export default function Home() {
                 />
               </Grid>
               <Grid item xs={10} container sx={{ justifyContent: "center" }}>
-                <ReCAPTCHA sitekey={env.RECAPTCHA_KEY} onChange={handleReChange} />
+                <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_KEY} onChange={handleReChange} />
               </Grid>
               <Grid container item xs={6} sx={{ justifyContent: "center" }}>
                 <Button

@@ -54,7 +54,19 @@ export default function RecipeReviewCard(props) {
                   },
                 }}
               >
-                <Typography gutterBottom variant="h5" component="h2" sx={{ width: "90%" }}>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="a"
+                  href={props.project.link}
+                  sx={{
+                    display: 'block',
+                    width: "90%", color: "white",
+                    textDecoration: "none",
+                    "&:hover": {
+                      fontWeight: 500
+                    }
+                  }}>
                   {props.project.name}
                 </Typography>
                 <Typography
@@ -62,12 +74,12 @@ export default function RecipeReviewCard(props) {
                   color="textSecondary"
                   component="a"
                   href={props.project.link}
-                  sx={{ 
-                    color: "white", 
-                    textDecoration: "none", 
-                    "&:hover": { 
-                      fontWeight: 500 
-                    } 
+                  sx={{
+                    color: "white",
+                    textDecoration: "none",
+                    "&:hover": {
+                      fontWeight: 500
+                    }
                   }}
                 >
                   {props.project.desc}

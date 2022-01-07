@@ -26,14 +26,14 @@ import cryptography  from './img/posters/cryptography_library_600x900.jpg'
 
 export const projects = [
   {
-    name: "Chicago 5 day Forecast",
+    name: "5 day Forecast",
     link: "https://mattkearns.dev/five-day-forecast",
     github: {
       client: 'https://github.com/clocktower39/five-day-forecast',
       server: null,
     },
     img: fiveDayForecast,
-    desc: "Five day forecast of Chicago weather using the openweathermap api",
+    desc: "Search by zip code to get a five day forecast of the weather using the openweathermap api",
   },
   {
     name: "Activity Tracker",
