@@ -26,7 +26,7 @@ export default function RecipeReviewCard(props) {
               flexDirection: "column",
             }}
           >
-            <CardActionArea disableRipple>
+            <CardActionArea component={"a"} href={props.project.link} >
               <Grow in={onScreen} timeout={1250}>
                 <CardMedia
                   sx={{
@@ -39,18 +39,25 @@ export default function RecipeReviewCard(props) {
               </Grow>
               <CardContent
                 sx={{
-                  width: "95%",
+                  width: "100%",
+                  padding: '5px',
                   backgroundColor: "rgb(134, 124, 184,.7)",
-                  bottom: "-20px",
-                  height: "83px",
+                  bottom: "-20%",
+                  height: "100%",
                   position: "absolute",
                   transition: "all 1s",
-                  transform: "translateY(50px)",
+                  transform: "translateY(60%)",
                   "&:hover": {
-                    transform: "translateY(0px)",
+                    transform: "translateY(20%)",
                   },
                   [theme.breakpoints.up("md")]: {
-                    bottom: "-10px",
+                    bottom: "-25%",
+                  },
+                  [theme.breakpoints.up("sm")]: {
+                    bottom: "-22%",
+                  },
+                  [theme.breakpoints.up("xs")]: {
+                    bottom: "-30%",
                   },
                 }}
               >
