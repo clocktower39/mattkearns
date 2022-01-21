@@ -15,12 +15,6 @@ theme = createTheme(theme, {
       fontSize: "2.1rem",
       fontFamily: "Arial Black",
       fontWeight: 600,
-      [theme.breakpoints.up("sm")]: {
-        fontSize: "3.3rem",
-      },
-      [theme.breakpoints.up("md")]: {
-        fontSize: "5rem",
-      },
     },
     h2: {
       color: "white",
@@ -32,12 +26,6 @@ theme = createTheme(theme, {
       fontFamily: "Arial Black",
       fontWeight: "600",
       fontSize: "1.3rem",
-      [theme.breakpoints.up("sm")]: {
-        fontSize: "2rem",
-      },
-      [theme.breakpoints.up("md")]: {
-        fontSize: "2.5rem",
-      },
     },
     h4: {
       color: "white",
@@ -45,16 +33,17 @@ theme = createTheme(theme, {
       fontWeight: "600",
     },
     h5: {
-      color: "white",
-      fontSize: "1rem",
+      color: "black",
+      fontSize: "1.5rem",
       fontFamily: "Arial",
-      [theme.breakpoints.up("sm")]: {
-        fontSize: "1.3rem",
-      },
-      [theme.breakpoints.up("md")]: {
-        fontSize: "1.4rem",
-      },
     },
+    subtitle1: {
+      fontWeight: 500
+    },
+    subtitle2: {
+      fontSize: '.8rem',
+      fontWeight: 500
+    }
   },
 });
 

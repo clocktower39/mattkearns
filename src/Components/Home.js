@@ -235,7 +235,6 @@ export default function Home() {
                   label="Summary"
                   value={summary}
                   multiline
-                  draggable
                   rows={3}
                   onChangeCapture={handleSummaryChange}
                   required

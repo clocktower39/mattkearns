@@ -17,14 +17,44 @@ import alyx from './img/posters/546560_library_600x900.jpg'
 import pulpFiction from './img/posters/pulpFiction_library_600x900.jpg'
 import southPark from './img/posters/south_park_bigger_longer_and_uncut_library_600x900.jpg'
 import donnieDarko from './img/posters/donnie_darko_library_600x900.jpg'
-import truman  from './img/posters/truman_library_600x900.jpg'
+import truman from './img/posters/truman_library_600x900.jpg'
 
-import blindWatchmaker  from './img/posters/blindWatchmaker_library_600x900.jpg'
-import unweavingTheRainbow  from './img/posters/unweavingTheRainbow_library_600x900.jpg'
-import code  from './img/posters/code_library_600x900.jpg'
-import cryptography  from './img/posters/cryptography_library_600x900.jpg'
+import blindWatchmaker from './img/posters/blindWatchmaker_library_600x900.jpg'
+import unweavingTheRainbow from './img/posters/unweavingTheRainbow_library_600x900.jpg'
+import code from './img/posters/code_library_600x900.jpg'
+import cryptography from './img/posters/cryptography_library_600x900.jpg'
 
 export const projects = [
+  {
+    name: "Medication Tracking System",
+    link: "https://mattkearns.dev/medication-tracking-system/",
+    github: {
+      client: 'https://github.com/clocktower39/medication-client',
+      server: 'https://github.com/clocktower39/medication-server',
+    },
+    img: medicationImg,
+    desc: "Application to monitor and track patient blood levels",
+  },
+  {
+    name: "Activity Tracker",
+    link: "https://mattkearns.dev/activity-tracker",
+    github: {
+      client: 'https://github.com/clocktower39/activity-tracker-app',
+      server: null,
+    },
+    img: trackerImg,
+    desc: "Create personalized daily tasks to check off each day and track progress",
+  },
+  {
+    name: "Bonfire",
+    link: "https://mattkearns.dev/message",
+    github: {
+      client: 'https://github.com/clocktower39/message-react-redux',
+      server: 'https://github.com/clocktower39/message-server',
+    },
+    img: bonfireImg,
+    desc: "Message application using socket.io for real time updates, JWT for authentication, mongoDB for storage",
+  },
   {
     name: "5 day Forecast",
     link: "https://mattkearns.dev/five-day-forecast",
@@ -36,26 +66,6 @@ export const projects = [
     desc: "Search by zip code to get a five day forecast of the weather using the openweathermap api",
   },
   {
-    name: "Activity Tracker",
-    link: "https://mattkearns.dev/activity-tracker",
-    github: {
-      client: 'https://github.com/clocktower39/activity-tracker-app',
-      server: null,
-    },
-    img: trackerImg,
-    desc: "Create daily tasks to check off each day and track",
-  },
-  {
-    name: "Bonfire",
-    link: "https://mattkearns.dev/message",
-    github: {
-      client: 'https://github.com/clocktower39/message-react-redux',
-      server: 'https://github.com/clocktower39/message-server',
-    },
-    img: bonfireImg,
-    desc: "Message app using socket.io for real time updates, JWT for authentication, mongoDB for storage",
-  },
-  {
     name: "Fitness Exercises App",
     link: "https://mattkearns.dev/fitness-exercises",
     github: {
@@ -64,16 +74,6 @@ export const projects = [
     },
     img: exerciseAppImg,
     desc: "Lists fitness exercises by muscle group and provides a description",
-  },
-  {
-    name: "Medication Tracking System",
-    link: "https://mattkearns.dev/medication-tracking-system/",
-    github: {
-      client: 'https://github.com/clocktower39/medication-client',
-      server: 'https://github.com/clocktower39/medication-server',
-    },
-    img: medicationImg,
-    desc: "Application to monitor and track patient blood levels",
   },
 ];
 
