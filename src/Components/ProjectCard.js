@@ -26,7 +26,11 @@ export default function RecipeReviewCard(props) {
               flexDirection: "column",
             }}
           >
-            <CardActionArea component={"a"} href={props.project.link} >
+            <CardActionArea component={"a"} href={props.project.link} sx={{
+              "&:hover .card-content": {
+                transform: "translateY(0%)",
+              },
+            }} >
               <Grow in={onScreen} timeout={1250}>
                 <CardMedia
                   sx={{
@@ -38,23 +42,23 @@ export default function RecipeReviewCard(props) {
                 />
               </Grow>
               <CardContent
+                className="card-content"
                 sx={{
-                  width: "100%",
-                  padding: '5px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '5px 7.5px',
                   backgroundColor: "rgb(134, 124, 184,.7)",
                   bottom: "-20%",
                   height: "100%",
+                  minWidth: 'calc(100% - 15px)',
                   position: "absolute",
                   transition: "all 1s",
-                  transform: "translateY(60%)",
-                  "&:hover": {
-                    transform: "translateY(20%)",
-                  },
+                  transform: "translateY(56%)",
                   [theme.breakpoints.up("md")]: {
                     bottom: "-25%",
                   },
                   [theme.breakpoints.up("sm")]: {
-                    bottom: "-22%",
+                    bottom: "-25%",
                   },
                   [theme.breakpoints.up("xs")]: {
                     bottom: "-30%",
@@ -67,12 +71,8 @@ export default function RecipeReviewCard(props) {
                   component="a"
                   href={props.project.link}
                   sx={{
-                    display: 'block',
-                    width: "90%", color: "white",
+                    width: "100%", color: "white",
                     textDecoration: "none",
-                    "&:hover": {
-                      fontWeight: 500
-                    }
                   }}>
                   {props.project.name}
                 </Typography>
@@ -82,11 +82,9 @@ export default function RecipeReviewCard(props) {
                   component="a"
                   href={props.project.link}
                   sx={{
+                    padding: '7.5px 0',
                     color: "white",
                     textDecoration: "none",
-                    "&:hover": {
-                      fontWeight: 500
-                    }
                   }}
                 >
                   {props.project.desc}

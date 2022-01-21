@@ -24,7 +24,7 @@ export default function Resume() {
 
           <Grid container item xs={8} sx={{ paddingLeft: "12.5px", alignItems: 'center' }}>
             <Grid item xs={12}>
-              <Typography variant="h4">
+              <Typography variant="h2">
                 Matt Kearns
               </Typography>
             </Grid>
@@ -45,7 +45,7 @@ export default function Resume() {
         }}>
           <Grid container item xs={12}>
             <Grid item xs={12} sx={{ paddingBottom: "7.5px", }}>
-              <Typography variant="h5" sx={{ color: 'black' }}>CONTACT</Typography>
+              <Typography variant="h4" sx={{ color: 'black' }}>CONTACT</Typography>
             </Grid>
 
             <Grid container item xs={12} sx={{ paddingBottom: "7.5px", }}>
@@ -139,7 +139,7 @@ export default function Resume() {
           order: 3,
           padding: '10px',
         }}>
-          <Typography variant="h5">
+          <Typography variant="h4">
             <EmojiPeople /> About Me
           </Typography>
           <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px", }}>
@@ -151,7 +151,7 @@ export default function Resume() {
             </Typography>
           </Grid>
 
-          <Typography variant="h5">
+          <Typography variant="h4">
             <Code /> Projects
           </Typography>
           <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px", }}>
@@ -189,7 +189,7 @@ export default function Resume() {
             </Grid>
           </Grid>
 
-          <Typography variant="h5">
+          <Typography variant="h4">
             <Work /> Work Experience
           </Typography>
           <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px", }}>
@@ -279,7 +279,7 @@ export default function Resume() {
             </Grid>
           </Grid>
 
-          <Typography variant="h5">
+          <Typography variant="h4">
             <Subject /> Education
           </Typography>
           <Grid container item sx={{ paddingLeft: "35px", paddingBottom: "25px", }}>

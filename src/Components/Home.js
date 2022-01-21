@@ -116,8 +116,8 @@ export default function Home() {
                   <Typography display="inline" variant="h5">
                     I'm a self taught{" "}
                     <span style={{ color: "#79a825", textTransform: "uppercase" }}>
-                      full stack developer.
-                    </span>{" "}
+                      full stack developer.{" "}
+                    </span>
                     passionate hacker and love to break everything down...even if I end up just
                     plain breaking it.
                   </Typography>

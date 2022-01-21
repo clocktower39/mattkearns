@@ -18,6 +18,7 @@ theme = createTheme(theme, {
     },
     h2: {
       color: "white",
+      fontSize: "1.8rem",
       fontFamily: "Arial Black",
       fontWeight: "600",
     },
@@ -28,14 +29,26 @@ theme = createTheme(theme, {
       fontSize: "1.3rem",
     },
     h4: {
-      color: "white",
-      fontFamily: "Arial",
-      fontWeight: "600",
-    },
-    h5: {
       color: "black",
       fontSize: "1.5rem",
       fontFamily: "Arial",
+    },
+    h5: {
+      color: "white",
+      fontSize: "1.5rem",
+      fontFamily: "Arial",
+      [theme.breakpoints.down('md')]: {
+        fontSize: "1.2rem"
+    },
+    },
+    body1: {
+      fontSize: "1rem",
+      [theme.breakpoints.down('md')]: {
+        fontSize: ".9rem"
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: "1rem"
+  },
     },
     subtitle1: {
       fontWeight: 500
