@@ -66,6 +66,8 @@ export default function Home() {
           backgroundImage: `url(${HomepageBackground})`,
           backgroundPosition: "65%",
           minHeight: "100vh",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: 'cover'
         }}
       >
         <Container maxWidth="md" sx={{ minHeight: "100vh" }}>
