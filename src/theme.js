@@ -43,6 +43,7 @@ theme = createTheme(theme, {
     },
     body1: {
       fontSize: "1rem",
+      color: "white",
       [theme.breakpoints.down('md')]: {
         fontSize: ".9rem"
     },

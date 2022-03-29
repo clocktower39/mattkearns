@@ -120,8 +120,7 @@ export default function Home() {
                     <span style={{ color: "#79a825", textTransform: "uppercase" }}>
                       full stack developer.{" "}
                     </span>
-                    passionate hacker and love to break everything down...even if I end up just
-                    plain breaking it.
+                    passionate about everything and anything IT releated.
                   </Typography>
                 </Grid>
                 <Grid item container xs={6} sx={{ margin: "5px", padding: "5px 0px" }}>
@@ -220,6 +219,7 @@ export default function Home() {
                   value={fullName}
                   onChangeCapture={handleNameChange}
                   required
+                  InputLabelProps={{sx: {color: 'black'}}}
                 />
               </Grid>
               <Grid item xs={10}>
@@ -229,6 +229,7 @@ export default function Home() {
                   value={email}
                   onChangeCapture={handleEmailChange}
                   required
+                  InputLabelProps={{sx: {color: 'black'}}}
                 />
               </Grid>
               <Grid item xs={10}>
@@ -240,6 +241,7 @@ export default function Home() {
                   rows={3}
                   onChangeCapture={handleSummaryChange}
                   required
+                  InputLabelProps={{sx: {color: 'black'}}}
                 />
               </Grid>
               <Grid item xs={10} container sx={{ justifyContent: "center" }}>
@@ -304,7 +306,7 @@ export default function Home() {
               </IconButton>
             </Grid>
             <Grid container item xs={12} justifyContent="center">
-              <Typography variant="body1" style={{ fontSize: "10px", color: "#FFF" }}>
+              <Typography variant="body1" style={{ fontSize: "10px" }}>
                 Copyright © 2022 MattKearns.dev - All Rights Reserved.
               </Typography>
             </Grid>
