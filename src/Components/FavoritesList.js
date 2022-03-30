@@ -1,16 +1,13 @@
 import React, { useRef, useState } from "react";
 import { Button, CardMedia, Card, Grid, MobileStepper, Slide } from "@mui/material";
 import { KeyboardArrowRight, KeyboardArrowLeft } from "@mui/icons-material";
-import { makeStyles } from "@mui/styles";
 import useOnScreen from "../Hooks/useOnScreen";
-import SwipeableViews from "react-swipeable-views";
 
-const useStyles = makeStyles((theme) => ({
+const styles = () => ({
   root: {
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "",
   },
   media: {
     height: 0,
@@ -23,17 +20,24 @@ const useStyles = makeStyles((theme) => ({
   cardTypography: {
     fontFamily: "Odibee Sans, cursive",
   },
-}));
+});
 
 export default function GameList({ list }) {
-  const classes = useStyles();
+  const classes = styles();
   const ref = useRef();
-  const onScreen = useOnScreen(ref, "-300px");
+  const onScreen = useOnScreen(ref, "-0px");
   const [activeStep, setActiveStep] = useState(0);
 
-  const handleStepChange = (step) => {
-    setActiveStep(step);
+  const fixList = (arr, size = 4) => {
+    if (arr.length <= size) {
+      return [arr];
+    } else {
+      return [arr.slice(0, size)].concat(fixList(arr.slice(size), size));
+    }
   };
+
+  const fixedList = fixList(list);
+  const maxSteps = fixedList.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -45,43 +49,38 @@ export default function GameList({ list }) {
 
   return (
     <>
-      <MobileStepper
-        steps={1}
-        position="static"
-        activeStep={activeStep}
-        nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === 1 - 1}>
-            Next
-            <KeyboardArrowRight />
-          </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            <KeyboardArrowLeft />
-            Back
-          </Button>
-        }
-      />
-      <SwipeableViews
-        axis="x"
-        index={activeStep}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
-        animateHeight
-      >
-        <Grid container item xs={12} ref={ref}>
-          {list.map((item) => (<>
-            <Grid container item xs={3} key={item.title}>
-              <Slide in={onScreen} direction="right" timeout={1500}>
-                <Card className={classes.root}>
-                  <CardMedia className={classes.media} image={item.poster} title={item.title} />
-                </Card>
-              </Slide>
-            </Grid>
-            </>
-          ))}
-        </Grid>
-      </SwipeableViews>
+      <Grid item xs={12}>
+          <Grid container item xs={12} spacing={1}>
+            {fixedList[activeStep].map((item) => (
+              <Grid item xs={3} key={`${item.title}-${item.poster}`} ref={ref} >
+                <Slide in={onScreen} direction="left" timeout={500}>
+                  <Card sx={classes.root}>
+                    <CardMedia sx={classes.media} image={item.poster} title={item.title} />
+                  </Card>
+                </Slide>
+              </Grid>
+            ))}
+          </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <MobileStepper
+          steps={maxSteps}
+          position="static"
+          activeStep={activeStep}
+          nextButton={
+            <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+              Next
+              <KeyboardArrowRight />
+            </Button>
+          }
+          backButton={
+            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+              <KeyboardArrowLeft />
+              Back
+            </Button>
+          }
+        />
+      </Grid>
     </>
   );
 }

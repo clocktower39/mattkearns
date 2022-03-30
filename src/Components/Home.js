@@ -74,9 +74,9 @@ export default function Home() {
           <Grid
             container
             direction="column"
-            style={{ justifyContent: "center", alignItems: "center", minHeight: "100vh" }}
+            sx={{ justifyContent: "center", alignItems: "center", minHeight: "100vh" }}
           >
-            <Grid container style={{ justifyContent: "center", alignItems: "center" }}>
+            <Grid container sx={{ justifyContent: "center", alignItems: "center" }}>
               <Grid
                 container
                 item
@@ -155,7 +155,7 @@ export default function Home() {
               paddingRight: "25px",
             }}
           >
-            <Typography variant="h3" style={{ color: "#deeaef", textTransform: "uppercase" }}>
+            <Typography variant="h3" sx={{ color: "#deeaef", textTransform: "uppercase" }}>
               Projects
             </Typography>
           </Grid>
@@ -189,7 +189,7 @@ export default function Home() {
               paddingRight: "25px",
             }}
           >
-            <Typography variant="h3" style={{ color: "#deeaef", textTransform: "uppercase" }}>
+            <Typography variant="h3" sx={{ color: "#deeaef", textTransform: "uppercase" }}>
               Tools
             </Typography>
           </Grid>
@@ -269,7 +269,7 @@ export default function Home() {
             <Grid item>
               <IconButton onClick={() => handleSocialLink("github")}>
                 <GitHub
-                  style={{
+                  sx={{
                     fontSize: "35px",
                     color: "white",
                     backgroundColor: "#867CB8",
@@ -282,7 +282,7 @@ export default function Home() {
             <Grid item>
               <IconButton onClick={() => handleSocialLink("linkedIn")}>
                 <LinkedIn
-                  style={{
+                  sx={{
                     fontSize: "35px",
                     color: "white",
                     backgroundColor: "#867CB8",
@@ -295,7 +295,7 @@ export default function Home() {
             <Grid item>
               <IconButton onClick={() => handleSocialLink("instagram")}>
                 <Instagram
-                  style={{
+                  sx={{
                     fontSize: "35px",
                     color: "white",
                     backgroundColor: "#867CB8",

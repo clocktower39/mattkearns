@@ -8,10 +8,9 @@ import halo from './img/posters/976730_library_600x900.jpg'
 import fallout4 from './img/posters/377160_library_600x900.jpg'
 import r6s from './img/posters/359550_library_600x900.jpg'
 import alyx from './img/posters/546560_library_600x900.jpg'
-// import skyrim from './img/posters/489830_library_600x900.jpg'
-// import portal2 from './img/posters/620_library_600x900.jpg'
+import skyrim from './img/posters/489830_library_600x900.jpg'
+import portal2 from './img/posters/620_library_600x900.jpg'
 // import wolfenstein from './img/posters/201810_library_600x900.jpg'
-// import amoungUs from './img/posters/945360_library_600x900.jpg'
 // import tabletop from './img/posters/286160_library_600x900.jpg'
 
 import pulpFiction from './img/posters/pulpFiction_library_600x900.jpg'
@@ -113,21 +112,17 @@ export const games = [
     title: 'Alyx',
     poster: alyx,
   },
-  // {
-  //   title: 'Skyrim',
-  //   poster: skyrim,
-  // },
-  // {
-  //   title: 'Portal 2',
-  //   poster: portal2,
-  // },
+  {
+    title: 'Skyrim',
+    poster: skyrim,
+  },
+  {
+    title: 'Portal 2',
+    poster: portal2,
+  },
   // {
   //   title: 'Wolfenstein',
   //   poster: wolfenstein,
-  // },
-  // {
-  //   title: 'Amoung Us',
-  //   poster: amoungUs,
   // },
   // {
   //   title: 'Tabletop Simulator',
