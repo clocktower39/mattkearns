@@ -120,7 +120,7 @@ export default function Home() {
                     <span style={{ color: "#79a825", textTransform: "uppercase" }}>
                       full stack developer.{" "}
                     </span>
-                    passionate about everything and anything IT releated.
+                    passionate about everything and anything IT related.
                   </Typography>
                 </Grid>
                 <Grid item container xs={6} sx={{ margin: "5px", padding: "5px 0px" }}>

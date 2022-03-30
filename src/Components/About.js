@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import FavoritesList from "./FavoritesList";
-import { list } from "../states";
+import { books, movies, games } from "../states";
 
 export default function About() {
   return (
@@ -61,11 +61,15 @@ export default function About() {
           Favorite Books, Movies, & Video Games
         </Typography>
         <Grid container spacing={2}>
-          {list.map((item) => (
-            <Grid item xs={3} key={item.title}>
-              <FavoritesList item={item} />
+            <Grid item xs={12} >
+              <FavoritesList list={books} />
             </Grid>
-          ))}
+            <Grid item xs={12} >
+              <FavoritesList list={movies} />
+            </Grid>
+            <Grid item xs={12} >
+              <FavoritesList list={games} />
+            </Grid>
         </Grid>
       </Container>
     </div>
