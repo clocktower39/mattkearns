@@ -68,23 +68,22 @@ export default function RecipeReviewCard(props) {
                 <Typography
                   gutterBottom
                   variant="h5"
-                  component="a"
+                  component="p"
                   href={props.project.link}
                   sx={{
-                    width: "100%", color: "white",
-                    textDecoration: "none",
+                    width: "100%",
+                    color: "white",
                   }}>
                   {props.project.name}
                 </Typography>
                 <Typography
                   variant="body1"
                   color="textSecondary"
-                  component="a"
+                  component="p"
                   href={props.project.link}
                   sx={{
                     padding: '7.5px 0',
                     color: "white",
-                    textDecoration: "none",
                   }}
                 >
                   {props.project.desc}

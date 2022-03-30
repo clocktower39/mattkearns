@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Button, Container, Grid, IconButton, Paper, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  IconButton,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { LinkedIn, GitHub, Instagram } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -8,6 +17,7 @@ import Logos from "./Logos";
 import headshot from "../img/avatar.jpg";
 import HomepageBackground from "../img/Homepage_Background.jpg";
 import { projects } from "../states";
+import { theme } from "../theme";
 
 export default function Home() {
   const [fullName, setFullName] = useState("");
@@ -50,7 +60,9 @@ export default function Home() {
           "Content-Type": "application/x-www-form-urlencoded",
           "Upgrade-Insecure-Requests": "1",
         },
-        body: `email=${encodeURI(email)}&summary=${encodeURI(summary)}&fullName=${encodeURI(fullName)}&reCapValue=${encodeURI(reCapValue)}`,
+        body: `email=${encodeURI(email)}&summary=${encodeURI(summary)}&fullName=${encodeURI(
+          fullName
+        )}&reCapValue=${encodeURI(reCapValue)}`,
         method: "POST",
         mode: "cors",
       }).then(() => {
@@ -61,28 +73,44 @@ export default function Home() {
 
   return (
     <div>
-      <div
-        style={{
+      <Box
+        sx={{
           backgroundImage: `url(${HomepageBackground})`,
           backgroundPosition: "65%",
           minHeight: "100vh",
           backgroundRepeat: "no-repeat",
-          backgroundSize: 'cover'
+          backgroundSize: "cover",
         }}
       >
         <Container maxWidth="md" sx={{ minHeight: "100vh" }}>
           <Grid
             container
-            direction="column"
             sx={{ justifyContent: "center", alignItems: "center", minHeight: "100vh" }}
           >
-            <Grid container sx={{ justifyContent: "center", alignItems: "center" }}>
+            <Box
+              container
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "grid",
+                gridTemplateAreas: `
+                'A'
+                'B'
+                'C'
+                `,
+                [theme.breakpoints.up("sm")]: {
+                  gridTemplateAreas: `
+                  'B A'
+                  'B C'
+                  `,
+                },
+              }}
+            >
               <Grid
                 container
                 item
                 xs={12}
-                sm={6}
-                style={{ justifyContent: "center", padding: "15px 0px" }}
+                sx={{ justifyContent: "center", padding: "15px 0px", gridArea: "B" }}
               >
                 <div style={{ width: "80%", overflow: "none" }}>
                   <img
@@ -99,13 +127,31 @@ export default function Home() {
                 </div>
               </Grid>
 
-              <Grid container item xs={8} sm={6}>
-                <Grid item xs={12}>
+              <Grid container item xs={12} sx={{ gridArea: "A" }}>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    textAlign: "center",
+                    [theme.breakpoints.up("sm")]: {
+                      textAlign: "inherit",
+                    },
+                  }}
+                >
                   <Typography display="inline" variant="h3">
                     Hi, my name is
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    textAlign: "center",
+                    [theme.breakpoints.up("sm")]: {
+                      textAlign: "inherit",
+                    },
+                  }}
+                >
                   <Typography
                     display="inline"
                     variant="h1"
@@ -114,16 +160,27 @@ export default function Home() {
                     Matt Kearns
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
-                  <Typography display="inline" variant="h5">
-                    I'm a self taught{" "}
-                    <span style={{ color: "#79a825", textTransform: "uppercase" }}>
-                      full stack developer.{" "}
-                    </span>
-                    passionate about everything and anything IT related.
-                  </Typography>
-                </Grid>
-                <Grid item container xs={6} sx={{ margin: "5px", padding: "5px 0px" }}>
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  textAlign: "center",
+                  gridArea: "C",
+                  [theme.breakpoints.up("sm")]: {
+                    textAlign: "inherit",
+                  },
+                }}
+              >
+                <Typography display="inline" variant="h5">
+                  I'm a self taught{" "}
+                  <span style={{ color: "#79a825", textTransform: "uppercase" }}>
+                    full stack developer.{" "}
+                  </span>
+                  Passionate about everything and anything IT related.
+                </Typography>
+                <Grid item container sm={6} xs={12} sx={{ margin: "5px", padding: "5px 0px" }}>
                   <Button
                     fullWidth
                     variant="contained"
@@ -135,10 +192,10 @@ export default function Home() {
                   </Button>
                 </Grid>
               </Grid>
-            </Grid>
+            </Box>
           </Grid>
         </Container>
-      </div>
+      </Box>
 
       <div style={{ padding: "50px 0px", backgroundColor: "#162341" }}>
         <Grid container item xs={12} sx={{ paddingBottom: "50px" }}>
@@ -219,7 +276,7 @@ export default function Home() {
                   value={fullName}
                   onChangeCapture={handleNameChange}
                   required
-                  InputLabelProps={{sx: {color: 'black'}}}
+                  InputLabelProps={{ sx: { color: "black" } }}
                 />
               </Grid>
               <Grid item xs={10}>
@@ -229,7 +286,7 @@ export default function Home() {
                   value={email}
                   onChangeCapture={handleEmailChange}
                   required
-                  InputLabelProps={{sx: {color: 'black'}}}
+                  InputLabelProps={{ sx: { color: "black" } }}
                 />
               </Grid>
               <Grid item xs={10}>
@@ -241,11 +298,14 @@ export default function Home() {
                   rows={3}
                   onChangeCapture={handleSummaryChange}
                   required
-                  InputLabelProps={{sx: {color: 'black'}}}
+                  InputLabelProps={{ sx: { color: "black" } }}
                 />
               </Grid>
               <Grid item xs={10} container sx={{ justifyContent: "center" }}>
-                <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_KEY} onChange={handleReChange} />
+                <ReCAPTCHA
+                  sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
+                  onChange={handleReChange}
+                />
               </Grid>
               <Grid container item xs={6} sx={{ justifyContent: "center" }}>
                 <Button

@@ -52,8 +52,8 @@ export default function GameList({ list }) {
       <Grid item xs={12}>
           <Grid container item xs={12} spacing={1}>
             {fixedList[activeStep].map((item) => (
-              <Grid item xs={3} key={`${item.title}-${item.poster}`} ref={ref} >
-                <Slide in={onScreen} direction="left" timeout={500}>
+              <Grid item xs={3} key={`${item.title}-${item.poster}`} ref={ref} sx={{ overflow: 'hidden', }}>
+                <Slide in={onScreen} direction="up" timeout={500}>
                   <Card sx={classes.root}>
                     <CardMedia sx={classes.media} image={item.poster} title={item.title} />
                   </Card>
