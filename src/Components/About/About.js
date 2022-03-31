@@ -1,19 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Grid, Typography } from "@mui/material";
+import Footer from '../Footer';
 import FavoritesList from "./FavoritesList";
-import { books, movies, games } from "../states";
+import { books, movies, games } from "../../states";
+
+const styles = () => ({
+  AboutContainer: {
+    minHeight: "100vh",
+    backgroundColor: "#162341",
+  },
+  BackButtonContainer: { textAlign: "center", padding: "5px", },
+})
 
 export default function About() {
+  const classes = styles();
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#162341",
-      }}
-    >
+    <div style={ classes.AboutContainer } >
       <Container maxWidth="md">
-        <div style={{ textAlign: "center", padding: "5px" }}>
+        <div style={ classes.BackButtonContainer }>
           <Button variant="outlined" component={Link} to="/">
             Back
           </Button>
@@ -70,6 +75,7 @@ export default function About() {
             </Grid>
         </Grid>
       </Container>
+      <Footer />
     </div>
   );
 }

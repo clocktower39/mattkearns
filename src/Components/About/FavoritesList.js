@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Button, CardMedia, Card, Grid, MobileStepper, Slide } from "@mui/material";
 import { KeyboardArrowRight, KeyboardArrowLeft } from "@mui/icons-material";
-import useOnScreen from "../Hooks/useOnScreen";
+import useOnScreen from "../../Hooks/useOnScreen";
 
 const styles = () => ({
   root: {
@@ -13,6 +13,7 @@ const styles = () => ({
     height: 0,
     paddingTop: "150%", // 16:9
   },
+  CardContainer: { overflow: 'hidden', },
   cardContent: {
     flexGrow: 1,
     alignItems: "flex-end",
@@ -52,7 +53,7 @@ export default function GameList({ list }) {
       <Grid item xs={12}>
           <Grid container item xs={12} spacing={1}>
             {fixedList[activeStep].map((item) => (
-              <Grid item xs={3} key={`${item.title}-${item.poster}`} ref={ref} sx={{ overflow: 'hidden', }}>
+              <Grid item xs={3} key={`${item.title}-${item.poster}`} ref={ref} sx={ classes.CardContainer }>
                 <Slide in={onScreen} direction="up" timeout={500}>
                   <Card sx={classes.root}>
                     <CardMedia sx={classes.media} image={item.poster} title={item.title} />

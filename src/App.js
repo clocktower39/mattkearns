@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
-import Home from "./Components/Home";
+import Home from "./Components/Home/Home";
 import { theme } from "./theme";
-import About from "./Components/About";
+import About from "./Components/About/About";
 import Resume from "./Components/Resume";
 import "./App.css";
 
