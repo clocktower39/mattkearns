@@ -4,6 +4,7 @@ import Home from "./Components/Home/Home";
 import { theme } from "./theme";
 import About from "./Components/About/About";
 import Resume from "./Components/Resume";
+import NotFoundPage from "./Components/NotFoundPage";
 import "./App.css";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/web_resume" element={<Resume />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
