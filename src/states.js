@@ -1,4 +1,4 @@
-import exerciseAppImg from "./img/exerciseBWImg.jpg";
+import socialPhotoAppImg from "./img/socialPhotoAppImg.jpg";
 import bonfireImg from "./img/bonfireImg.jpg";
 import medicationImg from "./img/medication.jpg";
 import trackerImg from "./img/activity-tracker.jpg";
@@ -36,6 +36,16 @@ import code from "./img/posters/books/code_library_600x900.jpg";
 import cryptography from "./img/posters/books/cryptography_library_600x900.jpg";
 
 export const projects = [
+  {
+    name: "Social Picture App",
+    link: "https://mattkearns.dev/social-picture-app/",
+    github: {
+      client: 'https://github.com/clocktower39/social-picture-app',
+      server: 'https://github.com/clocktower39/social-server-pic-app',
+    },
+    img: socialPhotoAppImg,
+    desc: "Share, like, and comment on user uploaded pictures.",
+  },
   {
     name: "Medication Tracking System",
     link: "https://mattkearns.dev/medication-tracking-system/",
@@ -75,16 +85,6 @@ export const projects = [
     },
     img: fiveDayForecast,
     desc: "Search by zip code to get a five day forecast of the weather using the openweathermap api",
-  },
-  {
-    name: "Fitness Exercises App",
-    link: "https://mattkearns.dev/fitness-exercises",
-    github: {
-      client: "https://github.com/clocktower39/Fitness-Exercises",
-      server: null,
-    },
-    img: exerciseAppImg,
-    desc: "Lists fitness exercises by muscle group and provides a description",
   },
 ];
 

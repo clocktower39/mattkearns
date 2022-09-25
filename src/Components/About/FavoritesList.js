@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
-import { Button, CardMedia, Card, Grid, MobileStepper, Slide } from "@mui/material";
+import React, { useState } from "react";
+import { Button, CardMedia, Card, Grid, MobileStepper } from "@mui/material";
 import { KeyboardArrowRight, KeyboardArrowLeft } from "@mui/icons-material";
-import useOnScreen from "../../Hooks/useOnScreen";
 
 const styles = () => ({
   root: {
@@ -25,8 +24,6 @@ const styles = () => ({
 
 export default function GameList({ list }) {
   const classes = styles();
-  const ref = useRef();
-  const onScreen = useOnScreen(ref, "-0px");
   const [activeStep, setActiveStep] = useState(0);
 
   const fixList = (arr, size = 4) => {
@@ -53,12 +50,10 @@ export default function GameList({ list }) {
       <Grid item xs={12}>
           <Grid container item xs={12} spacing={1}>
             {fixedList[activeStep].map((item) => (
-              <Grid item xs={3} key={`${item.title}-${item.poster}`} ref={ref} sx={ classes.CardContainer }>
-                <Slide in={onScreen} direction="up" timeout={500}>
+              <Grid item xs={3} key={`${item.title}-${item.poster}`} sx={ classes.CardContainer }>
                   <Card sx={classes.root}>
                     <CardMedia sx={classes.media} image={item.poster} title={item.title} />
                   </Card>
-                </Slide>
               </Grid>
             ))}
           </Grid>
