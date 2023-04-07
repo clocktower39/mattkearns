@@ -11,7 +11,6 @@ import Logos from "./Logos";
 import headshot from "../../img/avatar.jpg";
 import HomepageBackground from "../../img/Homepage_Background.jpg";
 import Projects from './Projects';
-import Contact from './Contact';
 import Footer from '../Footer';
 import { theme } from '../../theme';
 
@@ -71,7 +70,7 @@ const styles = () => ({
     },
   },
   Name: { textTransform: "uppercase", lineHeight: "85%", },
-  DescriptionSpan: { color: "#79a825", textTransform: "uppercase", },
+  DescriptionSpan: { color: "#73D90D", textTransform: "uppercase", },
   ButtonContainer: { margin: "5px", padding: "5px 0px", },
   Button: { color: "white", borderRadius: "25px", },
 })
@@ -85,7 +84,6 @@ export default function Home() {
         <Container maxWidth="md" sx={ classes.WelcomeContainer } >
           <Grid container sx={ classes.WelcomeGridContainer } >
             <Box
-              container
               sx={ classes.CssGridBox }
             >
               <Grid
@@ -138,7 +136,7 @@ export default function Home() {
                   <span style={ classes.DescriptionSpan }>
                     full stack developer.{" "}
                   </span>
-                  Passionate about everything and anything IT related.
+                  I have a passion for technology and creating innovative solutions. With experience in building web applications, automating tasks, and developing smart home appliances, I'm dedicated to making a positive impact through technology.
                 </Typography>
                 <Grid item container sm={6} xs={12} sx={ classes.ButtonContainer }>
                   <Button
@@ -158,7 +156,6 @@ export default function Home() {
       </Box>
       <Projects />
       <Logos />
-      <Contact />
       <Footer />
     </div>
   );

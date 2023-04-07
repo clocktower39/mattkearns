@@ -3,12 +3,12 @@ import { Container, Grid, IconButton, Typography } from "@mui/material";
 import { LinkedIn, GitHub, Instagram } from "@mui/icons-material";
 
 const styles = () => ({
-  FooterContainer: { backgroundColor: "#061528", paddingTop: "25px", },
+  FooterContainer: { backgroundColor: "#000", paddingTop: "25px", },
   Icon: {
     fontSize: "35px",
     color: "white",
-    backgroundColor: "#867CB8",
-    border: "3px solid #867CB8",
+    backgroundColor: "#8a2be2",
+    border: "3px solid #8a2be2",
     borderRadius: "50%",
   },
   FooterText: { fontSize: "10px", },

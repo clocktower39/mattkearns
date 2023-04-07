@@ -5,7 +5,7 @@ let theme = createTheme();
 theme = createTheme(theme, {
   palette: {
     primary: {
-      main: "#79A825",
+      main: "#73D90D",
     },
   },
   typography: {
@@ -23,7 +23,7 @@ theme = createTheme(theme, {
       fontWeight: "600",
     },
     h3: {
-      color: "#79a825",
+      color: "#73D90D",
       fontFamily: "Arial Black",
       fontWeight: "600",
       fontSize: "1.3rem",
@@ -35,7 +35,7 @@ theme = createTheme(theme, {
     },
     h5: {
       color: "white",
-      fontSize: "1.5rem",
+      fontSize: "1.2rem",
       fontFamily: "Arial",
       [theme.breakpoints.down('md')]: {
         fontSize: "1.2rem"

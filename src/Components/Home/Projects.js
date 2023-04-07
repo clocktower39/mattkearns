@@ -14,11 +14,11 @@ import { projects } from "../../states";
 import { theme } from "../../theme";
 
 const styles = () => ({
-  ProjectsContainer: { padding: "50px 0px", backgroundColor: "#162341", },
+  ProjectsContainer: { padding: "50px 0px", backgroundColor: "#303030", },
   TitleContainer: {
     alignItems: "center",
     justifyContent: "flex-end",
-    backgroundColor: "#4D386D",
+    backgroundColor: "#8a2be2",
     height: "75px",
     borderRadius: "0 50px 50px 0",
     paddingRight: "25px",
