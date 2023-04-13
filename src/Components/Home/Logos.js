@@ -22,7 +22,7 @@ import ethereum_logo from "../../img/logos/ethereum_logo.svg";
 const styles = () => ({
   LogosContainer: {
     padding: "50px 0",
-    backgroundColor: "#1c1c1c",
+    backgroundColor: "#303030",
   },
   TitleContainer: {
     alignItems: "center",

@@ -13,9 +13,12 @@
     "react": "^17.0.2",
     "react-dom": "^16.8.0",
     "react-google-recaptcha": "^2.1.0",
+    "react-particles": "^2.9.3",
+    "react-photo-gallery": "^8.0.0",
     "react-router-dom": "^6.2.1",
     "react-scripts": "4.0.3",
     "react-spring": "^9.2.2",
+    "tsparticles": "^2.9.3",
     "web-vitals": "^1.1.1"
   },
   "scripts": {

@@ -14,7 +14,7 @@ import { projects } from "../../states";
 import { theme } from "../../theme";
 
 const styles = () => ({
-  ProjectsContainer: { padding: "50px 0px", backgroundColor: "#303030", },
+  ProjectsContainer: { padding: "50px 0px", backgroundColor: "#1c1c1c", },
   TitleContainer: {
     alignItems: "center",
     justifyContent: "flex-end",
