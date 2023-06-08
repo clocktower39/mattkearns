@@ -31,10 +31,11 @@ const styles = () => ({
       `,
     },
   },
-  GridAreaA: { gridArea: "A" },
-  GridAreaB: { gridArea: "B", justifyContent: "center", padding: "15px 0px" },
+  GridAreaA: { gridArea: "A", userSelect: 'none', },
+  GridAreaB: { gridArea: "B", justifyContent: "center", padding: "15px 0px", userSelect: 'none', },
   GridAreaC: {
     gridArea: "C",
+    userSelect: 'none',
     textAlign: "center",
     [theme.breakpoints.up("sm")]: {
       textAlign: "inherit",

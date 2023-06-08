@@ -59,7 +59,7 @@ const ParticleBackground = ({ children }) => {
               width: 1,
             },
             collisions: {
-              enable: true,
+              enable: false,
             },
             move: {
               direction: "none",
@@ -70,6 +70,7 @@ const ParticleBackground = ({ children }) => {
               random: false,
               speed: 3,
               straight: false,
+              bounce: false,
             },
             number: {
               density: {

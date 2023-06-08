@@ -55,7 +55,7 @@ export default function Footer() {
           </Grid>
           <Grid container item xs={12} sx={{ ...classes.JustifyContentCenter }}>
             <Typography variant="body1" sx={classes.FooterText}>
-              Copyright © 2022 MattKearns.dev - All Rights Reserved.
+              Copyright © 2023 MattKearns.dev - All Rights Reserved.
             </Typography>
           </Grid>
         </Grid>
