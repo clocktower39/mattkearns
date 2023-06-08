@@ -3,7 +3,6 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logos from "./Logos";
 import headshot from "../../img/avatar.jpg";
-import HomepageBackground from "../../img/Homepage_Background.jpg";
 import Projects from "./Projects";
 import Footer from "../Footer";
 import { theme } from "../../theme";
@@ -11,11 +10,8 @@ import ParticleBackground from "../ParticleBackground";
 
 const styles = () => ({
   WelcomeBox: {
-    backgroundImage: `url(${HomepageBackground})`,
     backgroundPosition: "75%",
     minHeight: "100vh",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
   },
   WelcomeContainer: { minHeight: "100vh" },
   WelcomeGridContainer: { justifyContent: "center", alignItems: "center", minHeight: "100vh" },

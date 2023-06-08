@@ -25,7 +25,7 @@ const ParticleBackground = ({ children }) => {
               value: "#000",
             },
           },
-          fpsLimit: 60,
+          fpsLimit: 45,
           interactivity: {
             events: {
               onClick: {

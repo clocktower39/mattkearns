@@ -1,8 +1,9 @@
-import socialPhotoAppImg from "./img/socialPhotoAppImg.jpg";
-import bonfireImg from "./img/bonfireImg.jpg";
-import medicationImg from "./img/medication.jpg";
-import trackerImg from "./img/activity-tracker.jpg";
-import fiveDayForecast from "./img/five-day-forecast.jpg";
+import socialPhotoAppPoster from "./img/projects/social-picture-app-poster-black-bg.jpg";
+import medicationTrackerPoster from "./img/projects/sq-medication-tracker-poster-black-bg.jpg";
+import activityTrackerPoster from "./img/projects/activity-tracker-poster-black-bg.jpg";
+import bonfirePoster from "./img/projects/bonfire-poster.png";
+import fiveDayForecastPoster from "./img/projects/five-day-forecast-poster.jpg";
+import firebellyPoster from "./img/projects/firebelly-poster.png";
 
 import halo from "./img/posters/games/haloMCC_600x900.jpg";
 import fallout4 from "./img/posters/games/fallout4_600x900.jpg";
@@ -37,34 +38,24 @@ import cryptography from "./img/posters/books/cryptography_library_600x900.jpg";
 
 export const projects = [
   {
+    name: "Firebelly Fitness",
+    link: "https://mattkearns.dev/firebelly-demo/",
+    github: {
+      client: 'https://github.com/clocktower39/firebelly-client',
+      server: 'https://github.com/clocktower39/firebelly-server',
+    },
+    img: firebellyPoster,
+    desc: "Personal Traning web app",
+  },
+  {
     name: "Social Picture App",
     link: "https://mattkearns.dev/social-picture-app/",
     github: {
       client: 'https://github.com/clocktower39/social-picture-app',
       server: 'https://github.com/clocktower39/social-server-pic-app',
     },
-    img: socialPhotoAppImg,
+    img: socialPhotoAppPoster,
     desc: "Share, like, and comment on user uploaded pictures.",
-  },
-  {
-    name: "Medication Tracking System",
-    link: "https://mattkearns.dev/medication-tracking-system/",
-    github: {
-      client: "https://github.com/clocktower39/medication-client",
-      server: "https://github.com/clocktower39/medication-server",
-    },
-    img: medicationImg,
-    desc: "Application to monitor and track patient blood levels",
-  },
-  {
-    name: "Activity Tracker",
-    link: "https://mattkearns.dev/activity-tracker",
-    github: {
-      client: "https://github.com/clocktower39/activity-tracker-app",
-      server: null,
-    },
-    img: trackerImg,
-    desc: "Create personalized daily tasks to check off each day and track progress",
   },
   {
     name: "Bonfire",
@@ -73,8 +64,28 @@ export const projects = [
       client: "https://github.com/clocktower39/message-react-redux",
       server: "https://github.com/clocktower39/message-server",
     },
-    img: bonfireImg,
+    img: bonfirePoster,
     desc: "Message application using socket.io for real time updates, JWT for authentication, mongoDB for storage",
+  },
+  {
+    name: "Activity Tracker",
+    link: "https://mattkearns.dev/activity-tracker",
+    github: {
+      client: "https://github.com/clocktower39/activity-tracker-app",
+      server: null,
+    },
+    img: activityTrackerPoster,
+    desc: "Create personalized daily tasks to check off each day and track progress",
+  },
+  {
+    name: "Medication Tracking System",
+    link: "https://mattkearns.dev/medication-tracking-system/",
+    github: {
+      client: "https://github.com/clocktower39/medication-client",
+      server: "https://github.com/clocktower39/medication-server",
+    },
+    img: medicationTrackerPoster,
+    desc: "Application to monitor and track patient blood levels",
   },
   {
     name: "5 day Forecast",
@@ -83,7 +94,7 @@ export const projects = [
       client: "https://github.com/clocktower39/five-day-forecast",
       server: null,
     },
-    img: fiveDayForecast,
+    img: fiveDayForecastPoster,
     desc: "Search by zip code to get a five day forecast of the weather using the openweathermap api",
   },
 ];
