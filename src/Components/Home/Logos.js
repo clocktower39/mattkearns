@@ -27,7 +27,7 @@ const styles = () => ({
   TitleContainer: {
     alignItems: "center",
     justifyContent: "flex-end",
-    backgroundColor: "#8a2be2",
+    backgroundColor: "#73D90D",
     height: "75px",
     borderRadius: "0 50px 50px 0",
     paddingRight: "25px",

@@ -1,32 +1,67 @@
 import React from "react";
-import { Avatar, Container, Grid, Typography } from "@mui/material";
-import { Code, EmojiPeople, Work, Subject, GitHub, LinkedIn, Instagram } from "@mui/icons-material";
+import { Avatar, Container, Grid, IconButton, Typography } from "@mui/material";
+import { Code, EmojiPeople, Work, Subject, Source as SourceIcon, GitHub, LinkedIn, Instagram } from "@mui/icons-material";
 import img from "../img/avatar.jpg";
 
 export default function Resume() {
+  const skills = [
+    'Javascript',
+    'Node.js',
+    'MongoDB',
+    'CSS',
+    'NPM',
+    'Mongoose',
+    'HTML',
+    'Express',
+    'Multer',
+    'React',
+    'Python',
+    'GridFS',
+    'Redux',
+    'PHP',
+    'Firebase',
+    'Material-UI',
+    'Socket.IO',
+    'SQL',
+    'D3',
+    'JWT',
+    'AWS',
+    'Git',
+    'Puppeteer',
+    'Docker',
+    'Heroku',
+    'cPanel',
+  ];
   return (
     <Container maxWidth="md" disableGutters>
-      <Grid container >
-        <Grid xs={12} item container sx={{
-          fontWeight: 500,
-          backgroundColor: "#2D3D4C",
-          borderRadius: "12.5px 12.5px 0 0",
-          color: "white",
-          order: 1,
-        }}>
-          <Grid container item xs={4} sx={{ justifyContent: "center" }} >
-            <Avatar alt="pic" src={img} sx={{
-              height: "125px",
-              width: "125px",
-              margin: '5px'
-            }} />
+      <Grid container>
+        <Grid
+          xs={12}
+          item
+          container
+          sx={{
+            fontWeight: 500,
+            backgroundColor: "#2D3D4C",
+            borderRadius: "12.5px 12.5px 0 0",
+            color: "white",
+            order: 1,
+          }}
+        >
+          <Grid container item xs={4} sx={{ justifyContent: "center" }}>
+            <Avatar
+              alt="pic"
+              src={img}
+              sx={{
+                height: "125px",
+                width: "125px",
+                margin: "5px",
+              }}
+            />
           </Grid>
 
-          <Grid container item xs={8} sx={{ paddingLeft: "12.5px", alignItems: 'center' }}>
+          <Grid container item xs={8} sx={{ paddingLeft: "12.5px", alignItems: "center" }}>
             <Grid item xs={12}>
-              <Typography variant="h2">
-                Matt Kearns
-              </Typography>
+              <Typography variant="h2">Matt Kearns</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h6">Full Stack Developer</Typography>
@@ -34,21 +69,28 @@ export default function Resume() {
           </Grid>
         </Grid>
 
-        <Grid item sm={12} md={4} sx={{
-          backgroundColor: "#EDEDED",
-          textAlign: "center",
-          order: {
-            xs: 4,
-            md: 2,
-          },
-          padding: '10px',
-        }}>
+        <Grid
+          item
+          sm={12}
+          md={4}
+          sx={{
+            backgroundColor: "#EDEDED",
+            textAlign: "center",
+            order: {
+              xs: 4,
+              md: 2,
+            },
+            padding: "10px",
+          }}
+        >
           <Grid container item xs={12}>
-            <Grid item xs={12} sx={{ paddingBottom: "7.5px", }}>
-              <Typography variant="h4" sx={{ color: 'black' }}>CONTACT</Typography>
+            <Grid item xs={12} sx={{ paddingBottom: "7.5px" }}>
+              <Typography variant="h4" sx={{ color: "black" }}>
+                CONTACT
+              </Typography>
             </Grid>
 
-            <Grid container item xs={12} sx={{ paddingBottom: "7.5px", }}>
+            <Grid container item xs={12} sx={{ paddingBottom: "7.5px" }}>
               <Grid item xs={12}>
                 <Typography variant="subtitle1">Email</Typography>
               </Grid>
@@ -57,111 +99,143 @@ export default function Resume() {
               </Grid>
             </Grid>
 
-            <Grid container item xs={12} sx={{ paddingBottom: "7.5px", }}>
+            <Grid container item xs={12} sx={{ paddingBottom: "7.5px" }}>
               <Grid item xs={12}>
                 <Typography variant="subtitle1">Skills</Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">HTML</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">CSS</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Javascript</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">React</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Redux</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Material-UI</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Node.js</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Express</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Socket.io</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">MongoDB</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Mongoose</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Git</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">APIs</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">JWT</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Python</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">PHP</Typography>
-              </Grid>
+              {skills.map(skill => (
+                <Grid item xs={4} key={skill}>
+                  <Typography variant="caption">{skill}</Typography>
+                </Grid>
+              ))}
             </Grid>
 
-            <Grid container item xs={12} sx={{ paddingBottom: "7.5px", }}>
+            <Grid container item xs={12} sx={{ paddingBottom: "7.5px" }}>
               <Grid item xs={12}>
                 <Typography variant="subtitle1">Social Media</Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="caption">
+                <IconButton onClick={() => window.open('https://www.github.com/clocktower39', '_blank')} >
                   <GitHub />
-                </Typography>
+                </IconButton>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="caption">
+                <IconButton onClick={() => window.open('https://www.linkedin.com/in/matthew-kearns-6b8865117/', '_blank')} >
                   <LinkedIn />
-                </Typography>
+                </IconButton>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="caption">
+                <IconButton >
                   <Instagram />
-                </Typography>
+                </IconButton>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
 
-        <Grid container item sm={12} md={8} sx={{
-          backgroundColor: "#FEFEFE",
-          order: 3,
-          padding: '10px',
-        }}>
+        <Grid
+          container
+          item
+          sm={12}
+          md={8}
+          sx={{
+            backgroundColor: "#FEFEFE",
+            order: 3,
+            padding: "10px",
+          }}
+        >
           <Typography variant="h4">
             <EmojiPeople /> About Me
           </Typography>
-          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px", }}>
-            <Typography variant="subtitle1">
-              I am a passionate and self-taught full stack web developer driven to create and
-              maintain scalable web applications. I have excellent problem-solving skills and a
-              track record of exceeding expectations, boosting efficiency, and facilitating a
-              productive work environment
+          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
+            <Typography variant="body2">
+              I am a passionate and self-motivated web developer with a strong foundation in
+              JavaScript and web technologies. Committed to building robust and user-friendly
+              applications. Experienced in working on various projects and collaborating with teams
+              to deliver high-quality results. Quick learner with a willingness to adopt new
+              technologies.
             </Typography>
           </Grid>
 
           <Typography variant="h4">
             <Code /> Projects
           </Typography>
-          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px", }}>
+          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
             <Grid item xs={12}>
-              <Typography variant="h6" component="a" href="https://mattkearns.dev/medication-tracking-system/">
+              <Typography variant="h6" component="a" href="https://mattkearns.dev/">
+                Portfolio Website
+              </Typography>
+              <Typography variant="body2">
+                • Personal website, learn more about me and check out my portfolio
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6" component="a" href="https://www.firebellyfitness.com">
+                Firebelly Fitness
+              </Typography>
+              <Typography variant="body2">
+                • Personal Trainer website and web application for tracking workouts and
+                progression.
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                variant="h6"
+                component="a"
+                href="https://mattkearns.dev/social-picture-app"
+              >
+                Social Picture App
+              </Typography>
+              <Typography variant="body2">
+                • Share photos with friends, comment, react, and message.
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                variant="h6"
+                component="a"
+                href="https://mattkearns.dev/self-driving-car-sim"
+              >
+                Self Driving Car Simulator
+              </Typography>
+              <Typography variant="body2">
+                • 1000 instances of a car are deployed, save the best car position to teach the
+                neural network how to drive and avoid cars.
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                variant="h6"
+                component="a"
+                href="https://mattkearns.dev/medication-tracking-system/"
+              >
                 Medication Tracking System
               </Typography>
               <Typography variant="body2">
                 • Application to monitor and track patient blood levels.
               </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                variant="h6"
+                component="a"
+                href="https://github.com/clocktower39/tv-controller"
+              >
+                CEC-TV-Controller
+              </Typography>
+              <Typography variant="body2">
+                • Control your TV via a raspberry pi using the HDMI CEC commands.
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                variant="h6"
+                component="a"
+                href="https://github.com/clocktower39/snake-game-python"
+              >
+                Snake Game
+              </Typography>
+              <Typography variant="body2">• Simple snake game made with Python.</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h6" component="a" href="https://mattkearns.dev/activity-tracker">
@@ -176,105 +250,174 @@ export default function Resume() {
                 Messenger App
               </Typography>
               <Typography variant="body2">
-                • Message application using socket.io for real time updates, JWT for authentication, mongoDB for storage.
+                • Message application using socket.io for real time updates, JWT for authentication,
+                mongoDB for storage.
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h6" component="a" href="https://mattkearns.dev/five-day-forecast">
+              <Typography
+                variant="h6"
+                component="a"
+                href="https://mattkearns.dev/five-day-forecast"
+              >
                 5 day Forecast
               </Typography>
               <Typography variant="body2">
-                • Search by zip code to get a five day forecast of the weather using the openweathermap api.
+                • Search by zip code to get a five day forecast of the weather using the
+                openweathermap api.
               </Typography>
             </Grid>
           </Grid>
 
           <Typography variant="h4">
-            <Work /> Work Experience
+            <SourceIcon /> Experience
           </Typography>
-          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px", }}>
-            <Grid item xs={12}><Typography variant="subtitle1">Seasonal Operations Supervisor | McKesson</Typography></Grid>
-            <Grid item xs={12}><Typography variant="subtitle2">September 2021 - Current</Typography></Grid>
-            <Grid item xs={12} sx={{
-              paddingLeft: "35px",
-              paddingBottom: "7.5px",
-              "& p": {
-                paddingBottom: "7.5px",
-              },
-            }}>
-              <Typography variant="body2">
-                • Primary contact for highest severity IT tickets for all employees in contact center
-                such as entire system outages.
-              </Typography>
-              <Typography variant="body2">• Directly supervise 35 employees.</Typography>
-              <Typography variant="body2">
-                • Responsible for maintenance of department progress and agent productivity
-                reporting.
-              </Typography>
-              <Typography variant="body2">
-                • Assist with integration and development of new tools into the existing system.
-              </Typography>
-              <Typography variant="body2">
-                • Create new processes and work flows to improve efficiency and productivity.
-              </Typography>
-              <Typography variant="body2"></Typography>
+          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
+            <Typography variant="subtitle1">Freelance Web Developer | Self-Employed</Typography>
+            <Grid item xs={12}>
+              <Typography variant="subtitle2">2018 - Current</Typography>
             </Grid>
-            <Typography variant="subtitle1">Operation Support Lead | McKesson</Typography>
-            <Grid item xs={12}><Typography variant="subtitle2">March 2019 - September 2021</Typography></Grid>
-            <Grid item xs={12} sx={{
-              paddingLeft: "35px",
-              paddingBottom: "7.5px",
-              "& p": {
+            <Grid
+              item
+              xs={12}
+              sx={{
+                paddingLeft: "35px",
                 paddingBottom: "7.5px",
-              },
-            }}>
+                "& p": {
+                  paddingBottom: "7.5px",
+                },
+              }}
+            >
               <Typography variant="body2">
-                • Developed Firefox extensions to automate reports and workflows.
+                • Collaborate with clients to create and launch responsive and user-friendly websites tailored to their specific needs
               </Typography>
               <Typography variant="body2">
-                • Monitored, coordinated and evaluated program service levels using call management
-                systems to ensure contractual commitments were met.
+                • Utilize a combination of JavaScript, CSS, HTML, and frameworks like React to build interactive and dynamic front-end interfaces
               </Typography>
               <Typography variant="body2">
-                • Liaison between my department and IT for program system issues.
+                • Developed back-end functionalities using Node.js, Express, JWT, and MongoDB to ensure smooth data handling, seamless user interactions, and proper authentication
               </Typography>
               <Typography variant="body2">
-                • Identified patterns of performance and system issues.
+                • Conducted regular maintenance and updates to ensure websites remain up-to-date and functional
+              </Typography>
+              <Typography variant="body2">
+                • Provided training and support to clients for content management and website maintenance
+              </Typography>
+            </Grid>
+            </Grid>
+          <Typography variant="h4">
+            <Work /> NON-RELATED WORK HISTORY
+          </Typography>
+          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
+            <Typography variant="subtitle1">Operation Support Lead | McKesson</Typography>
+            <Grid item xs={12}>
+              <Typography variant="subtitle2">March 2019 - Current</Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                paddingLeft: "35px",
+                paddingBottom: "7.5px",
+                "& p": {
+                  paddingBottom: "7.5px",
+                },
+              }}
+            >
+              <Typography variant="body2">
+                • Automate reports and tasks using Sharepoint, firefox extensions and web scraping tools.
+              </Typography>
+              <Typography variant="body2">
+                • Participate in IT meetings and assist with customer facing bugs as needed
+              </Typography>
+              <Typography variant="body2">
+                • Resolve system issues and handle system-related production support tickets
               </Typography>
               <Typography variant="body2">
                 • Took lead on noncompliance investigations and provided reports to management.
               </Typography>
               <Typography variant="body2">
-                • Collaborated with clients and other departments to accomplish goals.
+                • Provided data analysis and generated reports for program performance improvement
+              </Typography>
+              <Typography variant="body2">• Reviewed and provided revisions for work instruction SOPs and other documentation</Typography>
+              <Typography variant="body2">• Coordinated and led team meetings and training sessions</Typography>
+              <Typography variant="body2">• Scheduled and ran program meetings.</Typography>
+              <Typography variant="body2"></Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography variant="subtitle1">Seasonal Operations Supervisor | McKesson</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="subtitle2">September 2021 - March 2022</Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                paddingLeft: "35px",
+                paddingBottom: "7.5px",
+                "& p": {
+                  paddingBottom: "7.5px",
+                },
+              }}
+            >
+              <Typography variant="body2">
+                • Assist with integration and development of new tools into the existing system.
               </Typography>
               <Typography variant="body2">
-                • Provided guidance, support and constructive feedback to representatives.
+                • Primary contact for highest severity IT tickets for all employees in contact
+                center such as entire system outages.
               </Typography>
-              <Typography variant="body2">-Scheduled and ran program meetings.</Typography>
+              <Typography variant="body2">
+                • Supervised and trained new team members to ensure they were proficient in their
+                roles
+              </Typography>
+              <Typography variant="body2">
+                • Monitored team performance and identified areas for improvement to ensure service
+                level agreements are met
+              </Typography>
+              <Typography variant="body2">
+                • Coordinated and facilitated training sessions and team building events to improve
+                team communication and morale
+              </Typography>
+              <Typography variant="body2">
+                • Conducted quality assurance checks to ensure accuracy and completeness of work,
+                and provided feedback to team members to promote continuous improvement
+              </Typography>
+              <Typography variant="body2">
+                • Collaborated with other supervisors and managers to ensure cross-functional
+                alignment and consistency in processes and procedures
+              </Typography>
               <Typography variant="body2"></Typography>
             </Grid>
 
             <Typography variant="subtitle1">REMS Support Representative | McKesson</Typography>
-            <Grid item xs={12}><Typography variant="subtitle2">July 2018 - March 2019 (Contractor December 2017 - July 2018)</Typography></Grid>
-            <Grid item xs={12} sx={{
-              paddingLeft: "35px",
-              paddingBottom: "7.5px",
-              "& p": {
+            <Grid item xs={12}>
+              <Typography variant="subtitle2">
+                July 2018 - March 2019 (Contractor December 2017 - July 2018)
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                paddingLeft: "35px",
                 paddingBottom: "7.5px",
-              },
-            }}>
-              <Typography variant="body2">-Supported multiple REMS programs</Typography>
+                "& p": {
+                  paddingBottom: "7.5px",
+                },
+              }}
+            >
               <Typography variant="body2">
-                • Provided HIPPA compliant customer servicing to stakeholders.
+                • Served as subject matter expert for new hire training class
               </Typography>
               <Typography variant="body2">
-                • Assisted stakeholders with registration, enrollment, certification processing.
+                • Identified potential adverse events and product complaints
               </Typography>
               <Typography variant="body2">
-                • Unlocked web accounts and generated temporary passwords for stakeholders.
-              </Typography>
-              <Typography variant="body2">
-                • Identified drug side effects and reported to the appropriate manufacturer.
+                • Provided support for multiple programs and assisted stakeholders with registration
+                and website issues
               </Typography>
             </Grid>
           </Grid>
@@ -282,15 +425,19 @@ export default function Resume() {
           <Typography variant="h4">
             <Subject /> Education
           </Typography>
-          <Grid container item sx={{ paddingLeft: "35px", paddingBottom: "25px", }}>
+          <Grid container item sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
             <Typography variant="subtitle1">FreeCodeCamp</Typography>
-            <Grid item xs={12} sx={{
-              paddingLeft: "35px",
-              paddingBottom: "7.5px",
-              "& p": {
+            <Grid
+              item
+              xs={12}
+              sx={{
+                paddingLeft: "35px",
                 paddingBottom: "7.5px",
-              },
-            }}>
+                "& p": {
+                  paddingBottom: "7.5px",
+                },
+              }}
+            >
               <Typography variant="body2">• Responsive Web Design Certification</Typography>
               <Typography variant="body2">
                 • JavaScript Algorithms and Data Structures Certification
@@ -301,16 +448,22 @@ export default function Resume() {
             </Grid>
           </Grid>
 
-          <Grid container item sx={{ paddingLeft: "35px", paddingBottom: "25px", }}>
+          <Grid container item sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
             <Typography variant="subtitle1">LinkedIn</Typography>
-            <Grid item xs={12} sx={{
-              paddingLeft: "35px",
-              paddingBottom: "7.5px",
-              "& p": {
+            <Grid
+              item
+              xs={12}
+              sx={{
+                paddingLeft: "35px",
                 paddingBottom: "7.5px",
-              },
-            }}>
-              <Typography variant="body2">• 100+ software development and related technical courses completed and certified.</Typography>
+                "& p": {
+                  paddingBottom: "7.5px",
+                },
+              }}
+            >
+              <Typography variant="body2">
+                • 100+ software development and related technical courses completed and certified.
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
