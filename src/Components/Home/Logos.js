@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import javascript_logo from "../../img/logos/javascript_logo.svg";
 import reactjs_logo from "../../img/logos/reactjs_logo.svg";
 import redux_logo from "../../img/logos/redux_logo.svg";
@@ -62,18 +62,6 @@ export default function Logos() {
 
   return (
     <div style={ classes.LogosContainer } >
-      <Grid container item xs={12} >
-        <Grid
-          item
-          container
-          xs={5}
-          sx={ classes.TitleContainer }
-        >
-          <Typography variant="h3" sx={{ color: "#deeaef", textTransform: "uppercase" }}>
-            Tools
-          </Typography>
-        </Grid>
-      </Grid>
       <Container maxWidth="md">
         <Grid container spacing={2}>
           {logos.map((logo, index) => (

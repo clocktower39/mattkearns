@@ -45,7 +45,7 @@ export const projects = [
       server: 'https://github.com/clocktower39/firebelly-server',
     },
     img: firebellyPoster,
-    desc: "Personal Traning web app",
+    desc: "Personal Traning web app for client, trainer able to view and and manage training clients. Track weight lifting progress, goals, and nutrition.",
   },
   {
     name: "Social Picture App",
@@ -55,7 +55,7 @@ export const projects = [
       server: 'https://github.com/clocktower39/social-server-pic-app',
     },
     img: socialPhotoAppPoster,
-    desc: "Share, like, and comment on user uploaded pictures.",
+    desc: "Share, like, and comment on user uploaded pictures. Message with other users using socket.io for real time message interface",
   },
   {
     name: "Bonfire",

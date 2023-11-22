@@ -3,7 +3,8 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logos from "./Logos";
 import headshot from "../../img/avatar.jpg";
-import Projects from "./Projects";
+// import Projects from "./Projects";
+import TerminalController from "../TerminalController";
 import Footer from "../Footer";
 import { theme } from "../../theme";
 import ParticleBackground from "../ParticleBackground";
@@ -121,7 +122,8 @@ export default function Home() {
           </Container>
         </ParticleBackground>
       </Box>
-      <Projects />
+      {/* <Projects /> */}
+      <TerminalController />
       <Logos />
       <Footer />
     </div>
