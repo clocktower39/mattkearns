@@ -1,27 +1,55 @@
 import React, { useState } from "react";
 import Terminal, { TerminalOutput, TerminalInput } from "react-terminal-ui";
 import { Grid } from "@mui/material";
+import { styled } from "@mui/system";
 import { projects } from "../states";
 
-export default function TerminalController(props = {}) {
-  const colors = {
-    green: { hex: "#01A252" },
-    red: { hex: "#DB2D20" },
-    yellow: { hex: "#FDED02" },
-    blue: { hex: "#01A0E4" },
-    purple: { hex: "#A16A94" },
-  };
-  const ProjectResponse = (p) => (
-    <TerminalOutput key={`output-${p.name}`}>
-      <span style={{ color: colors.blue.hex }}>
-        Project: {p.name}<br />
-        Link: <a href={p.link}>{p.link}</a><br />
-        Client Source Code: <a href={p.github.client}>{p.github.client}</a><br />
-        Server Source Code: <a href={p.github.server}>{p.github.server}</a><br />
-        Description: {p.desc}
+const colors = {
+  green: { hex: "#01A252" },
+  red: { hex: "#DB2D20" },
+  yellow: { hex: "#FDED02" },
+  blue: { hex: "#01A0E4" },
+  purple: { hex: "#A16A94" },
+};
+
+const StyledSpan = styled("span")`
+  color: ${(props) => props.color || "inherit"};
+  cursor: ${(props) => (props.cursor ? "pointer" : "inherit")};
+  word-wrap: ${(props) => props.word || "break-word"};
+`;
+
+const BoldItalicSpan = styled("span")`
+  color: ${(props) => props.color || colors.yellow.hex};
+  font-weight: ${(props) => props.fontWeight || "500"};
+  font-style: ${(props) => props.fontStyle || "italic"};
+`;
+
+const StyledLink = styled("a")`
+  textdecoration: ${(props) => props.textDecoration || "none"};
+  color: ${(props) => props.color || "inherit"};
+`;
+
+const ProjectResponse = (p) => (
+  <TerminalOutput key={p.name}>
+    <StyledSpan color={colors.green.hex}>
+      <BoldItalicSpan>-Project:</BoldItalicSpan> {p.name}
+      <br />
+      <BoldItalicSpan>-Link:</BoldItalicSpan> <StyledLink href={p.link}>{p.link}</StyledLink>
+      <br />
+      <BoldItalicSpan>-Client Source Code:</BoldItalicSpan>{" "}
+      <StyledLink href={p.github.client}>{p.github.client}</StyledLink>
+      <br />
+      <BoldItalicSpan>-Server Source Code:</BoldItalicSpan>{" "}
+      <StyledLink href={p.github.server}>{p.github.server}</StyledLink>
+      <br />
+      <span style={{ whiteSpace: "pre-wrap" }}>
+        <BoldItalicSpan>-Description:</BoldItalicSpan> {p.desc}
       </span>
-    </TerminalOutput>);
-    
+    </StyledSpan>
+  </TerminalOutput>
+);
+
+export default function TerminalController(props = {}) {
   const projectOutputs = projects.map((p) => {
     const handleClick = () => {
       setTerminalLineData((prevData) => [
@@ -33,20 +61,20 @@ export default function TerminalController(props = {}) {
         <TerminalOutput key="empty"></TerminalOutput>,
       ]);
     };
-    
+
     return (
       <TerminalOutput key={p.name}>
-        <span style={{ color: colors.blue.hex, cursor: "pointer" }} onClick={handleClick}>
+        <StyledSpan color={colors.green.hex} cursor="pointer" onClick={handleClick}>
           {p.name}
-        </span>
+        </StyledSpan>
       </TerminalOutput>
     );
   });
 
   const initTerminalLineData = [
     <TerminalOutput>
-      <span style={{ color: colors.green.hex }}>user@MattKearns</span>{" "}
-      <span style={{ color: colors.yellow.hex }}>~/Projects</span>
+      <StyledSpan color={colors.green.hex}>user@MattKearns</StyledSpan>{" "}
+      <StyledSpan color={colors.yellow.hex}>~/Projects</StyledSpan>
     </TerminalOutput>,
     <TerminalOutput></TerminalOutput>,
     <TerminalOutput>$ ls</TerminalOutput>,
@@ -76,54 +104,47 @@ export default function TerminalController(props = {}) {
       ld.push(
         <>
           <TerminalOutput>
-            <span style={{ color: colors.blue.hex }}>
-              <span style={{ fontStyle: "italic" }}>
-                <strong>ls, projects</strong>
-              </span>
-              : list all projects
-            </span>
+            <StyledSpan color={colors.green.hex}>
+              <BoldItalicSpan>ls, projects: </BoldItalicSpan>
+              list all projects
+            </StyledSpan>
           </TerminalOutput>
           <TerminalOutput></TerminalOutput>
           <TerminalOutput>
-            <span style={{ color: colors.blue.hex }}>
-              <span style={{ fontStyle: "italic" }}>
-                <strong>[project title]</strong>
-              </span>
-              : list all information for the project
-            </span>
+            <StyledSpan color={colors.green.hex}>
+              <BoldItalicSpan>[project title]: </BoldItalicSpan>: list all information for the
+              project
+            </StyledSpan>
           </TerminalOutput>
           {/* <TerminalOutput>
-            <span style={{ color: colors.blue.hex }}>
+          <StyledSpan color={colors.green.hex}>
               <span style={{ fontStyle: "italic" }}>
                 <strong>-d, -description</strong>
               </span>
               : list project description
-            </span>
+            </StyledSpan>
           </TerminalOutput>
           <TerminalOutput>
-            <span style={{ color: colors.blue.hex }}>
+          <StyledSpan color={colors.green.hex}>
               <span style={{ fontStyle: "italic" }}>
                 <strong>-s, -source</strong>
               </span>
               : list project source
-            </span>
+            </StyledSpan>
           </TerminalOutput>
           <TerminalOutput>
-            <span style={{ color: colors.blue.hex }}>
+          <StyledSpan color={colors.green.hex}>
               <span style={{ fontStyle: "italic" }}>
                 <strong>-o, -open</strong>
               </span>
               : open project in new tab
-            </span>
+            </StyledSpan>
           </TerminalOutput> */}
           <TerminalOutput></TerminalOutput>
           <TerminalOutput>
-            <span style={{ color: colors.blue.hex }}>
-              <span style={{ fontStyle: "italic" }}>
-                <strong>clear</strong>
-              </span>
-              : reset to original view
-            </span>
+            <StyledSpan color={colors.green.hex}>
+              <BoldItalicSpan>clear: </BoldItalicSpan>: reset to original view
+            </StyledSpan>
           </TerminalOutput>
           <TerminalOutput></TerminalOutput>
         </>
@@ -138,21 +159,24 @@ export default function TerminalController(props = {}) {
       const matchingProjectIndex = projects
         .map((p) => p.name.toLocaleLowerCase().trim())
         .indexOf(terminalInput.toLocaleLowerCase().trim());
-      ld.push(ProjectResponse(projects[matchingProjectIndex]),
-      <TerminalOutput key="empty"></TerminalOutput>);
+      ld.push(
+        ProjectResponse(projects[matchingProjectIndex]),
+        <TerminalOutput key="empty"></TerminalOutput>
+      );
     } else if (terminalInput.toLocaleLowerCase().trim() === "clear") {
       ld = [initTerminalLineData];
     } else if (terminalInput) {
       ld.push(
         <TerminalOutput>
-          <span style={{ color: colors.blue.hex }}>
+          <span style={{ color: colors.red.hex, whiteSpace: "pre-wrap" }}>
             Unrecognized command, use command{" "}
             <span style={{ fontStyle: "italic" }}>
               <strong>help</strong>
             </span>{" "}
             for list of available commands
           </span>
-        </TerminalOutput>
+        </TerminalOutput>,
+        <TerminalOutput></TerminalOutput>
       );
     }
     setTerminalLineData(ld);

@@ -7,8 +7,6 @@ const styles = () => ({
   Icon: {
     fontSize: "35px",
     color: "white",
-    backgroundColor: "#8a2be2",
-    border: "3px solid #8a2be2",
     borderRadius: "50%",
   },
   FooterText: { fontSize: "10px", },
