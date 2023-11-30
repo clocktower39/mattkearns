@@ -34,13 +34,13 @@ const ProjectResponse = (p) => (
     <StyledSpan color={colors.green.hex}>
       <BoldItalicSpan>-Project:</BoldItalicSpan> {p.name}
       <br />
-      <BoldItalicSpan>-Link:</BoldItalicSpan> <StyledLink href={p.link}>{p.link}</StyledLink>
+      <BoldItalicSpan>-Link:</BoldItalicSpan> <StyledLink href={p.link}>{p.link || "null"}</StyledLink>
       <br />
       <BoldItalicSpan>-Client Source Code:</BoldItalicSpan>{" "}
-      <StyledLink href={p.github.client}>{p.github.client}</StyledLink>
+      <StyledLink href={p.github.client}>{p.github.client || "null"}</StyledLink>
       <br />
       <BoldItalicSpan>-Server Source Code:</BoldItalicSpan>{" "}
-      <StyledLink href={p.github.server}>{p.github.server}</StyledLink>
+      <StyledLink href={p.github.server}>{p.github.server || "null"}</StyledLink>
       <br />
       <span style={{ whiteSpace: "pre-wrap" }}>
         <BoldItalicSpan>-Description:</BoldItalicSpan> {p.desc}

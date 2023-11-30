@@ -39,13 +39,13 @@ import cryptography from "./img/posters/books/cryptography_library_600x900.jpg";
 export const projects = [
   {
     name: "Firebelly Fitness",
-    link: "https://mattkearns.dev/firebelly-demo/",
+    link: "https://app.firebellyfitness.com/",
     github: {
       client: 'https://github.com/clocktower39/firebelly-client',
       server: 'https://github.com/clocktower39/firebelly-server',
     },
     img: firebellyPoster,
-    desc: "Personal Traning web app for client, trainer able to view and and manage training clients. Track weight lifting progress, goals, and nutrition.",
+    desc: "Personal Traning web app for client, trainer able to view and and manage training clients. Track weight lifting progress, goals, and nutrition",
   },
   {
     name: "Social Picture App",
@@ -58,21 +58,29 @@ export const projects = [
     desc: "Share, like, and comment on user uploaded pictures. Message with other users using socket.io for real time message interface",
   },
   {
-    name: "Bonfire",
-    link: "https://mattkearns.dev/message",
+    name: "CEC-TV Controller",
+    link: null,
     github: {
-      client: "https://github.com/clocktower39/message-react-redux",
-      server: "https://github.com/clocktower39/message-server",
+      client: "https://github.com/clocktower39/tv-controller-client",
+      server: "https://github.com/clocktower39/tv-controller",
     },
-    img: bonfirePoster,
-    desc: "Message application using socket.io for real time updates, JWT for authentication, mongoDB for storage",
+    desc: "Control your TV via a raspberry pi using the HDMI CEC commands.",
+  },
+  {
+    name: "Self Driving Car Simulator",
+    link: "https://mattkearns.dev/self-driving-car-sim",
+    github: {
+      client: "https://github.com/clocktower39/self-driving-car-sim",
+      server: null,
+    },
+    desc: "1000 instances of a car are deployed all driven by neural networks. Save the best car position to teach the neural network how to drive by avoiding other cars on the road.",
   },
   {
     name: "Activity Tracker",
     link: "https://mattkearns.dev/activity-tracker",
     github: {
       client: "https://github.com/clocktower39/activity-tracker-app",
-      server: null,
+      server: "https://github.com/clocktower39/activity-server",
     },
     img: activityTrackerPoster,
     desc: "Create personalized daily tasks to check off each day and track progress",
@@ -86,6 +94,36 @@ export const projects = [
     },
     img: medicationTrackerPoster,
     desc: "Application to monitor and track patient blood levels",
+  },
+  {
+    name: "Bonfire",
+    link: "https://mattkearns.dev/message",
+    github: {
+      client: "https://github.com/clocktower39/message-react-redux",
+      server: "https://github.com/clocktower39/message-server",
+    },
+    img: bonfirePoster,
+    desc: "Message application using socket.io for real time updates, JWT for authentication, mongoDB for storage",
+  },
+  {
+    name: "Snake Game",
+    link: null,
+    github: {
+      client: "https://github.com/clocktower39/snake-game-python",
+      server: null,
+    },
+    img: null,
+    desc: "Simple snake game made with Python.",
+  },
+  {
+    name: "RFC Spotify Player",
+    link: null,
+    github: {
+      client: null,
+      server: "https://github.com/clocktower39/rfc-spotify-player",
+    },
+    img: fiveDayForecastPoster,
+    desc: "Start specific songs/albums/playlists through the Spotify api via assigned RFC values. Like a mini digital record player.",
   },
   {
     name: "5 day Forecast",
@@ -256,7 +294,7 @@ export const inspirational = [
   { firstName: "Quintin", lastName: "Tarantino", medium: "director" },
   { firstName: "Samuel", lastName: "Jackson", medium: "actor" },
   { firstName: "Jake", lastName: "Gyllenhaal", medium: "actor" },
-  { firstName: "Steve", lastName: "Woz", medium: "hardware" },
+  { firstName: "Steve", lastName: "Wozniak", medium: "hardware" },
   { firstName: "Steve", lastName: "Jobs", medium: "design" },
   { firstName: "Bill", lastName: "Gates", medium: "software" },
   { firstName: "Brad", lastName: "Harris", medium: "historian" },

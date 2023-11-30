@@ -106,7 +106,7 @@ export default function Home() {
                     appliances, I'm dedicated to making a positive impact through technology.
                   </Typography>
                   <Grid item container sm={6} xs={12} sx={classes.ButtonContainer}>
-                    <Button
+                    {/* <Button
                       fullWidth
                       variant="contained"
                       sx={classes.Button}
@@ -114,7 +114,7 @@ export default function Home() {
                       to="/about"
                     >
                       About Me
-                    </Button>
+                    </Button> */}
                   </Grid>
                 </Grid>
               </Box>
