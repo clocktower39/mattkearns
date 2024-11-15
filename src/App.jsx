@@ -5,7 +5,7 @@ import { theme } from "./theme";
 import About from "./Components/About/About";
 import Resume from "./Components/Resume";
 import NotFoundPage from "./Components/NotFoundPage";
-import "./App.css";
+import './App.css'
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         </Routes>
       </Router>
     </ThemeProvider>
-  );
+  )
 }
 
-export default App;
+export default App
