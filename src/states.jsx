@@ -48,6 +48,16 @@ export const projects = [
     desc: "Personal Traning web app for client, trainer able to view and and manage training clients. Track weight lifting progress, goals, and nutrition",
   },
   {
+    name: "Dauntless Athletics",
+    link: "https://www.dauntlessathletics.com/",
+    github: {
+      client: 'https://github.com/clocktower39/dauntless-athletics',
+      server: null,
+    },
+    img: null,
+    desc: "Cheer and Gymnastics facility offering training to beginners and advanced athletes in a supportive environment.",
+  },
+  {
     name: "Social Picture App",
     link: "https://mattkearns.dev/social-picture-app/",
     github: {
@@ -64,6 +74,7 @@ export const projects = [
       client: "https://github.com/clocktower39/tv-controller-client",
       server: "https://github.com/clocktower39/tv-controller",
     },
+    img: null,
     desc: "Control your TV via a raspberry pi using the HDMI CEC commands.",
   },
   {
@@ -73,6 +84,7 @@ export const projects = [
       client: "https://github.com/clocktower39/self-driving-car-sim",
       server: null,
     },
+    img: null,
     desc: "1000 instances of a car are deployed all driven by neural networks. Save the best car position to teach the neural network how to drive by avoiding other cars on the road.",
   },
   {
@@ -85,56 +97,46 @@ export const projects = [
     img: activityTrackerPoster,
     desc: "Create personalized daily tasks to check off each day and track progress",
   },
-  {
-    name: "Medication Tracking System",
-    link: "https://mattkearns.dev/medication-tracking-system/",
-    github: {
-      client: "https://github.com/clocktower39/medication-client",
-      server: "https://github.com/clocktower39/medication-server",
-    },
-    img: medicationTrackerPoster,
-    desc: "Application to monitor and track patient blood levels",
-  },
-  {
-    name: "Bonfire",
-    link: "https://mattkearns.dev/message",
-    github: {
-      client: "https://github.com/clocktower39/message-react-redux",
-      server: "https://github.com/clocktower39/message-server",
-    },
-    img: bonfirePoster,
-    desc: "Message application using socket.io for real time updates, JWT for authentication, mongoDB for storage",
-  },
-  {
-    name: "Snake Game",
-    link: null,
-    github: {
-      client: "https://github.com/clocktower39/snake-game-python",
-      server: null,
-    },
-    img: null,
-    desc: "Simple snake game made with Python.",
-  },
-  {
-    name: "RFC Spotify Player",
-    link: null,
-    github: {
-      client: null,
-      server: "https://github.com/clocktower39/rfc-spotify-player",
-    },
-    img: fiveDayForecastPoster,
-    desc: "Start specific songs/albums/playlists through the Spotify api via assigned RFC values. Like a mini digital record player.",
-  },
-  {
-    name: "5 day Forecast",
-    link: "https://mattkearns.dev/five-day-forecast",
-    github: {
-      client: "https://github.com/clocktower39/five-day-forecast",
-      server: null,
-    },
-    img: fiveDayForecastPoster,
-    desc: "Search by zip code to get a five day forecast of the weather using the openweathermap api",
-  },
+  // {
+  //   name: "Medication Tracking System",
+  //   link: "https://mattkearns.dev/medication-tracking-system/",
+  //   github: {
+  //     client: "https://github.com/clocktower39/medication-client",
+  //     server: "https://github.com/clocktower39/medication-server",
+  //   },
+  //   img: medicationTrackerPoster,
+  //   desc: "Application to monitor and track patient blood levels",
+  // },
+  // {
+  //   name: "Bonfire",
+  //   link: "https://mattkearns.dev/message",
+  //   github: {
+  //     client: "https://github.com/clocktower39/message-react-redux",
+  //     server: "https://github.com/clocktower39/message-server",
+  //   },
+  //   img: bonfirePoster,
+  //   desc: "Message application using socket.io for real time updates, JWT for authentication, mongoDB for storage",
+  // },
+  // {
+  //   name: "Snake Game",
+  //   link: null,
+  //   github: {
+  //     client: "https://github.com/clocktower39/snake-game-python",
+  //     server: null,
+  //   },
+  //   img: null,
+  //   desc: "Simple snake game made with Python.",
+  // },
+  // {
+  //   name: "RFC Spotify Player",
+  //   link: null,
+  //   github: {
+  //     client: null,
+  //     server: "https://github.com/clocktower39/rfc-spotify-player",
+  //   },
+  //   img: null,
+  //   desc: "Start specific songs/albums/playlists through the Spotify api via assigned RFC values. Like a mini digital record player.",
+  // },
 ];
 
 export const books = [

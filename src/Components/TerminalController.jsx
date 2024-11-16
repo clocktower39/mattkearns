@@ -46,6 +46,12 @@ const ProjectResponse = (p) => (
         <BoldItalicSpan>-Description:</BoldItalicSpan> {p.desc}
       </span>
     </StyledSpan>
+    <div>
+    {p.img && (
+      <img src={p.img} style={{ maxWidth: '500px',  }} />
+    )}
+    
+    </div>
   </TerminalOutput>
 );
 

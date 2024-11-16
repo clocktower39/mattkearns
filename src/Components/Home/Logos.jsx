@@ -17,12 +17,26 @@ import postman_logo from "../../img/logos/postman_logo.svg";
 import raspberrypi_logo from "../../img/logos/raspberrypi_logo.svg";
 import visualstudio_logo from "../../img/logos/visualstudio_logo.svg";
 import jwt_logo from "../../img/logos/jwt_logo.svg";
+import home_assistant_logo from "../../img/logos/home_assistant_logo.svg";
+import plex_logo from "../../img/logos/plex_logo.svg";
+import docker_logo from "../../img/logos/docker_logo.svg";
+import amazon_web_services_logo from "../../img/logos/amazon_web_services_logo.svg";
+import wordpress_logo from "../../img/logos/wordpress_logo.svg";
 import bitcoin_logo from "../../img/logos/bitcoin_logo.svg";
+import cloudflare_logo from "../../img/logos/cloudflare_logo.svg";
+import discord_logo from "../../img/logos/discord_logo.svg";
+import fdroid_logo from "../../img/logos/fdroid_logo.svg";
+import figma_logo from "../../img/logos/figma_logo.svg";
+import letsencrypt_logo from "../../img/logos/letsencrypt_logo.svg";
+import linux_logo from "../../img/logos/linux_logo.svg";
+import nginx_logo from "../../img/logos/nginx_logo.svg";
+import steampowered_logo from "../../img/logos/steampowered_logo.svg";
+import torproject_logo from "../../img/logos/torproject_logo.svg";
 
 const styles = () => ({
   LogosContainer: {
     padding: "50px 0",
-    backgroundColor: "#303030",
+    backgroundColor: "#999999",
   },
   TitleContainer: {
     alignItems: "center",
@@ -49,14 +63,28 @@ export default function Logos() {
     nodejs_logo,
     python_logo,
     php_logo,
+    nginx_logo,
+    linux_logo,
+    docker_logo,
+    amazon_web_services_logo,
+    letsencrypt_logo,
+    cloudflare_logo,
+    heroku_logo,
+    wordpress_logo,
     mongodb_logo,
     jwt_logo,
     socketio_logo,
-    heroku_logo,
     postman_logo,
+    figma_logo,
     git_logo,
     raspberrypi_logo,
+    home_assistant_logo,
+    plex_logo,
     visualstudio_logo,
+    fdroid_logo,
+    discord_logo,
+    steampowered_logo,
+    torproject_logo,
     bitcoin_logo,
   ];
 

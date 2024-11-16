@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logos from "./Logos";
-import headshot from "../../img/avatar.jpg";
+import headshot from "../../img/avatar2.jpg";
 // import Projects from "./Projects";
 import TerminalController from "../TerminalController";
 import Footer from "../Footer";
@@ -14,7 +14,7 @@ const styles = () => ({
     backgroundPosition: "75%",
     minHeight: "100vh",
   },
-  WelcomeContainer: { minHeight: "100vh" },
+  WelcomeContainer: { minHeight: "100vh", },
   WelcomeGridContainer: { justifyContent: "center", alignItems: "center", minHeight: "100vh" },
   CssGridBox: {
     justifyContent: "center",
@@ -32,17 +32,17 @@ const styles = () => ({
       `,
     },
   },
-  GridAreaA: { gridArea: "A", userSelect: 'none', },
-  GridAreaB: { gridArea: "B", justifyContent: "center", padding: "15px 0px", userSelect: 'none', },
+  GridAreaA: { gridArea: "A", userSelect: "none" },
+  GridAreaB: { gridArea: "B", justifyContent: "center", padding: "15px 0px", userSelect: "none" },
   GridAreaC: {
     gridArea: "C",
-    userSelect: 'none',
+    userSelect: "none",
     textAlign: "center",
     [theme.breakpoints.up("sm")]: {
       textAlign: "inherit",
     },
   },
-  HeadshotContainer: { width: "80%", overflow: "none" },
+  HeadshotContainer: { width: "85%", overflow: "none" },
   Headshot: {
     borderRadius: "50%",
     objectFit: "cover",
@@ -87,7 +87,7 @@ export default function Home() {
                 <Grid container item xs={12} sx={classes.GridAreaA}>
                   <Grid item xs={12} sx={classes.SalutationContainer}>
                     <Typography display="inline" variant="h3">
-                      Hi, my name is
+                      Hey, I'm
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sx={classes.NameContainer}>
@@ -98,13 +98,27 @@ export default function Home() {
                 </Grid>
 
                 <Grid item xs={12} sx={classes.GridAreaC}>
-                  <Typography display="inline" variant="h5">
-                    I'm a self taught{" "}
-                    <span style={classes.DescriptionSpan}>full stack developer. </span>I have a
-                    passion for technology and creating innovative solutions. With experience in
-                    building web applications, automating tasks, and developing smart home
-                    appliances, I'm dedicated to making a positive impact through technology.
+                  <Typography variant="h5">
+                    I'm a self taught <span style={classes.DescriptionSpan}>Web Developer.</span>
                   </Typography>
+                  <br />
+                  <Typography variant="h5">
+                    I specialize in building modern web apps using the MERN stack and have hands-on
+                    experience managing servers, including Apache, NGINX, and WordPress.
+                  </Typography>
+                  <br />
+                  <Typography variant="h5">
+                    My workflow includes everything from coding and debugging to deployment on
+                    platforms like AWS and other hosting services.
+                  </Typography>
+                  <br />
+                  <Typography variant="h5">
+                    I am passionate about smart home technology, using Home Assistant
+                    to create integrated and automated setups. Whether it’s building websites,
+                    optimizing workflows, or solving unique challenges, I focus on making ideas
+                    functional and impactful.
+                  </Typography>
+
                   <Grid item container sm={6} xs={12} sx={classes.ButtonContainer}>
                     {/* <Button
                       fullWidth
