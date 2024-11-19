@@ -3,7 +3,8 @@ import medicationTrackerPoster from "./img/projects/sq-medication-tracker-poster
 import activityTrackerPoster from "./img/projects/activity-tracker-poster-black-bg.jpg";
 import bonfirePoster from "./img/projects/bonfire-poster.png";
 import fiveDayForecastPoster from "./img/projects/five-day-forecast-poster.jpg";
-import firebellyPoster from "./img/projects/firebelly-poster.png";
+import firebellyPoster from "./img/projects/firebelly-fitness-poster.png";
+import selfdrivingcarPoster from "./img/projects/selfdrivingcar-poster.png";
 
 import halo from "./img/posters/games/haloMCC_600x900.jpg";
 import fallout4 from "./img/posters/games/fallout4_600x900.jpg";
@@ -84,7 +85,7 @@ export const projects = [
       client: "https://github.com/clocktower39/self-driving-car-sim",
       server: null,
     },
-    img: null,
+    img: selfdrivingcarPoster,
     desc: "1000 instances of a car are deployed all driven by neural networks. Save the best car position to teach the neural network how to drive by avoiding other cars on the road.",
   },
   {

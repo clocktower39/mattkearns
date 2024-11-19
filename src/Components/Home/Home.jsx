@@ -42,7 +42,7 @@ const styles = () => ({
       textAlign: "inherit",
     },
   },
-  HeadshotContainer: { width: "85%", overflow: "none" },
+  HeadshotContainer: { width: "80%", overflow: "none" },
   Headshot: {
     borderRadius: "50%",
     objectFit: "cover",
@@ -51,12 +51,14 @@ const styles = () => ({
     border: "3px solid white",
   },
   SalutationContainer: {
+    padding: '7.5px 0px',
     textAlign: "center",
     [theme.breakpoints.up("sm")]: {
       textAlign: "inherit",
     },
   },
   NameContainer: {
+    padding: '7.5px 0px',
     textAlign: "center",
     [theme.breakpoints.up("sm")]: {
       textAlign: "inherit",
@@ -113,10 +115,13 @@ export default function Home() {
                   </Typography>
                   <br />
                   <Typography variant="h5">
-                    I am passionate about smart home technology, using Home Assistant
-                    to create integrated and automated setups. Whether it’s building websites,
-                    optimizing workflows, or solving unique challenges, I focus on making ideas
-                    functional and impactful.
+                    I am passionate about smart home technology, using Home Assistant to create
+                    integrated and automated setups.
+                  </Typography>
+                  <br />
+                  <Typography variant="h5">
+                    Whether it’s building websites, optimizing workflows, or solving unique
+                    challenges, I focus on making ideas functional and impactful.
                   </Typography>
 
                   <Grid item container sm={6} xs={12} sx={classes.ButtonContainer}>

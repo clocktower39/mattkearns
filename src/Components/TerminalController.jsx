@@ -34,7 +34,8 @@ const ProjectResponse = (p) => (
     <StyledSpan color={colors.green.hex}>
       <BoldItalicSpan>-Project:</BoldItalicSpan> {p.name}
       <br />
-      <BoldItalicSpan>-Link:</BoldItalicSpan> <StyledLink href={p.link}>{p.link || "null"}</StyledLink>
+      <BoldItalicSpan>-Link:</BoldItalicSpan>{" "}
+      <StyledLink href={p.link}>{p.link || "null"}</StyledLink>
       <br />
       <BoldItalicSpan>-Client Source Code:</BoldItalicSpan>{" "}
       <StyledLink href={p.github.client}>{p.github.client || "null"}</StyledLink>
@@ -46,31 +47,20 @@ const ProjectResponse = (p) => (
         <BoldItalicSpan>-Description:</BoldItalicSpan> {p.desc}
       </span>
     </StyledSpan>
-    <div>
-    {p.img && (
-      <img src={p.img} style={{ maxWidth: '500px',  }} />
-    )}
-    
-    </div>
+    <div>{p.img && <img src={p.img} style={{ maxWidth: "500px" }} />}</div>
   </TerminalOutput>
 );
 
 export default function TerminalController(props = {}) {
-  const projectOutputs = projects.map((p) => {
-    const handleClick = () => {
-      setTerminalLineData((prevData) => [
-        ...prevData,
-        <TerminalInput key={`input-${p.name}`}>{p.name}</TerminalInput>,
-        // Display information for the clicked project
-        ProjectResponse(p),
-        // ... other projects
-        <TerminalOutput key="empty"></TerminalOutput>,
-      ]);
-    };
+  const handleClick = (projectName) => {
+    
+    handleInput(projectName); // Pass the project name as if it was typed in the terminal
+  };
 
+  const projectOutputs = projects.map((p) => {
     return (
       <TerminalOutput key={p.name}>
-        <StyledSpan color={colors.green.hex} cursor="pointer" onClick={handleClick}>
+        <StyledSpan color={colors.green.hex} cursor="pointer" onClick={() => handleClick(p.name)}>
           {p.name}
         </StyledSpan>
       </TerminalOutput>
@@ -90,8 +80,7 @@ export default function TerminalController(props = {}) {
 
   const [terminalLineData, setTerminalLineData] = useState(initTerminalLineData);
 
-  const handleInput = (terminalInput) => {
-    /*
+  /*
       commands:
         ls, projects: list all projects
 
@@ -103,10 +92,17 @@ export default function TerminalController(props = {}) {
         clear: reset to original view
 
     */
+  const handleInput = (terminalInput) => {
+    // Create a copy of the existing data
     let ld = [...terminalLineData];
+
+    // Add the input line to the terminal
     ld.push(<TerminalInput>{terminalInput}</TerminalInput>);
 
-    if (["commands", "help", "man"].includes(terminalInput.toLocaleLowerCase().trim())) {
+    const command = terminalInput.toLocaleLowerCase().trim();
+
+    // Handle different commands
+    if (["commands", "help", "man"].includes(command)) {
       ld.push(
         <>
           <TerminalOutput>
@@ -122,30 +118,6 @@ export default function TerminalController(props = {}) {
               project
             </StyledSpan>
           </TerminalOutput>
-          {/* <TerminalOutput>
-          <StyledSpan color={colors.green.hex}>
-              <span style={{ fontStyle: "italic" }}>
-                <strong>-d, -description</strong>
-              </span>
-              : list project description
-            </StyledSpan>
-          </TerminalOutput>
-          <TerminalOutput>
-          <StyledSpan color={colors.green.hex}>
-              <span style={{ fontStyle: "italic" }}>
-                <strong>-s, -source</strong>
-              </span>
-              : list project source
-            </StyledSpan>
-          </TerminalOutput>
-          <TerminalOutput>
-          <StyledSpan color={colors.green.hex}>
-              <span style={{ fontStyle: "italic" }}>
-                <strong>-o, -open</strong>
-              </span>
-              : open project in new tab
-            </StyledSpan>
-          </TerminalOutput> */}
           <TerminalOutput></TerminalOutput>
           <TerminalOutput>
             <StyledSpan color={colors.green.hex}>
@@ -155,21 +127,17 @@ export default function TerminalController(props = {}) {
           <TerminalOutput></TerminalOutput>
         </>
       );
-    } else if (["ls", "projects"].includes(terminalInput.toLocaleLowerCase().trim())) {
+    } else if (["ls", "projects"].includes(command)) {
       ld.push(...projectOutputs, <TerminalOutput></TerminalOutput>);
-    } else if (
-      projects
-        .map((p) => p.name.toLocaleLowerCase().trim())
-        .includes(terminalInput.toLocaleLowerCase().trim())
-    ) {
+    } else if (projects.map((p) => p.name.toLocaleLowerCase().trim()).includes(command)) {
       const matchingProjectIndex = projects
         .map((p) => p.name.toLocaleLowerCase().trim())
-        .indexOf(terminalInput.toLocaleLowerCase().trim());
-      ld.push(
-        ProjectResponse(projects[matchingProjectIndex]),
-        <TerminalOutput key="empty"></TerminalOutput>
+        .indexOf(command);
+      ld.push(ProjectResponse(projects[matchingProjectIndex]),
+          <TerminalOutput key="empty"></TerminalOutput>
       );
-    } else if (terminalInput.toLocaleLowerCase().trim() === "clear") {
+    } else if (command === "clear") {
+      // Reset to the initial view
       ld = [initTerminalLineData];
     } else if (terminalInput) {
       ld.push(
@@ -185,6 +153,8 @@ export default function TerminalController(props = {}) {
         <TerminalOutput></TerminalOutput>
       );
     }
+
+    // Update the terminal data state
     setTerminalLineData(ld);
   };
 

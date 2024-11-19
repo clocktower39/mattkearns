@@ -1,36 +1,44 @@
 import React from "react";
 import { Avatar, Container, Grid, IconButton, Typography } from "@mui/material";
-import { Code, EmojiPeople, Work, Subject, Source as SourceIcon, GitHub, LinkedIn, Instagram } from "@mui/icons-material";
+import {
+  Code,
+  EmojiPeople,
+  Work,
+  Subject,
+  Source as SourceIcon,
+  GitHub,
+  LinkedIn,
+  Instagram,
+} from "@mui/icons-material";
 import img from "../img/avatar.jpg";
 
 export default function Resume() {
-  const skills = [
-    'Javascript',
-    'Node.js',
-    'MongoDB',
-    'CSS',
-    'NPM',
-    'Mongoose',
-    'HTML',
-    'Express',
-    'Multer',
-    'React',
-    'Python',
-    'GridFS',
-    'Redux',
-    'PHP',
-    'Firebase',
-    'Material-UI',
-    'Socket.IO',
-    'SQL',
-    'D3',
-    'JWT',
-    'AWS',
-    'Git',
-    'Puppeteer',
-    'Docker',
-    'Heroku',
-    'cPanel',
+  const tools = [
+    "Javascript",
+    "Node.js",
+    "MongoDB",
+    "CSS",
+    "Yarn",
+    "NPM",
+    "Mongoose",
+    "HTML",
+    "Express",
+    "Multer",
+    "React",
+    "Python",
+    "Redux",
+    "PHP",
+    "Material-UI",
+    "Socket.IO",
+    "SQL",
+    "D3",
+    "JWT",
+    "AWS",
+    "Git",
+    "Puppeteer",
+    "Docker",
+    "Heroku",
+    "cPanel",
   ];
   return (
     <Container maxWidth="md" disableGutters>
@@ -101,11 +109,11 @@ export default function Resume() {
 
             <Grid container item xs={12} sx={{ paddingBottom: "7.5px" }}>
               <Grid item xs={12}>
-                <Typography variant="subtitle1">Skills</Typography>
+                <Typography variant="subtitle1">Tools</Typography>
               </Grid>
-              {skills.map(skill => (
-                <Grid item xs={4} key={skill}>
-                  <Typography variant="caption">{skill}</Typography>
+              {tools.map((tool) => (
+                <Grid item xs={4} key={tools}>
+                  <Typography variant="caption">{tool}</Typography>
                 </Grid>
               ))}
             </Grid>
@@ -115,17 +123,23 @@ export default function Resume() {
                 <Typography variant="subtitle1">Social Media</Typography>
               </Grid>
               <Grid item xs={12}>
-                <IconButton onClick={() => window.open('https://www.github.com/clocktower39', '_blank')} >
+                <IconButton
+                  onClick={() => window.open("https://www.github.com/clocktower39", "_blank")}
+                >
                   <GitHub />
                 </IconButton>
               </Grid>
               <Grid item xs={12}>
-                <IconButton onClick={() => window.open('https://www.linkedin.com/in/matthew-kearns-6b8865117/', '_blank')} >
+                <IconButton
+                  onClick={() =>
+                    window.open("https://www.linkedin.com/in/matthew-kearns-6b8865117/", "_blank")
+                  }
+                >
                   <LinkedIn />
                 </IconButton>
               </Grid>
               <Grid item xs={12}>
-                <IconButton >
+                <IconButton>
                   <Instagram />
                 </IconButton>
               </Grid>
@@ -149,11 +163,11 @@ export default function Resume() {
           </Typography>
           <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
             <Typography variant="body2">
-              I am a passionate and self-motivated web developer with a strong foundation in
-              JavaScript and web technologies. Committed to building robust and user-friendly
-              applications. Experienced in working on various projects and collaborating with teams
-              to deliver high-quality results. Quick learner with a willingness to adopt new
-              technologies.
+              Experienced and self-motivated web developer with over six years of expertise in
+              JavaScript, React, and building responsive, user-centric interfaces. Proficient with
+              modern frameworks, libraries, and tools, with a strong commitment to optimizing
+              codebases for scalability and maintainability. Adept at collaborating with
+              cross-functional teams to deliver innovative solutions.
             </Typography>
           </Grid>
 
@@ -163,10 +177,10 @@ export default function Resume() {
           <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
             <Grid item xs={12}>
               <Typography variant="h6" component="a" href="https://mattkearns.dev/">
-                Portfolio Website
+                Personal Website
               </Typography>
               <Typography variant="body2">
-                • Personal website, learn more about me and check out my portfolio
+                • Learn more about me and check out some of my projects
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -207,18 +221,6 @@ export default function Resume() {
               <Typography
                 variant="h6"
                 component="a"
-                href="https://mattkearns.dev/medication-tracking-system/"
-              >
-                Medication Tracking System
-              </Typography>
-              <Typography variant="body2">
-                • Application to monitor and track patient blood levels.
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography
-                variant="h6"
-                component="a"
                 href="https://github.com/clocktower39/tv-controller"
               >
                 CEC-TV-Controller
@@ -228,43 +230,11 @@ export default function Resume() {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography
-                variant="h6"
-                component="a"
-                href="https://github.com/clocktower39/snake-game-python"
-              >
-                Snake Game
-              </Typography>
-              <Typography variant="body2">• Simple snake game made with Python.</Typography>
-            </Grid>
-            <Grid item xs={12}>
               <Typography variant="h6" component="a" href="https://mattkearns.dev/activity-tracker">
                 Activity Tracker
               </Typography>
               <Typography variant="body2">
                 • Create personalized daily tasks to check off each day and track progress.
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6" component="a" href="https://mattkearns.dev/message">
-                Messenger App
-              </Typography>
-              <Typography variant="body2">
-                • Message application using socket.io for real time updates, JWT for authentication,
-                mongoDB for storage.
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography
-                variant="h6"
-                component="a"
-                href="https://mattkearns.dev/five-day-forecast"
-              >
-                5 day Forecast
-              </Typography>
-              <Typography variant="body2">
-                • Search by zip code to get a five day forecast of the weather using the
-                openweathermap api.
               </Typography>
             </Grid>
           </Grid>
@@ -273,7 +243,7 @@ export default function Resume() {
             <SourceIcon /> Experience
           </Typography>
           <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
-            <Typography variant="subtitle1">Freelance Web Developer | Self-Employed</Typography>
+            <Typography variant="subtitle1">Freelance Web Developer</Typography>
             <Grid item xs={12}>
               <Typography variant="subtitle2">2018 - Current</Typography>
             </Grid>
@@ -289,22 +259,27 @@ export default function Resume() {
               }}
             >
               <Typography variant="body2">
-                • Collaborate with clients to create and launch responsive and user-friendly websites tailored to their specific needs
+                • Collaborate with clients to create and launch responsive and user-friendly
+                websites tailored to their specific needs
               </Typography>
               <Typography variant="body2">
-                • Utilize a combination of JavaScript, CSS, HTML, and frameworks like React to build interactive and dynamic front-end interfaces
+                • Utilize a combination of JavaScript, CSS, HTML, and frameworks like React to build
+                interactive and dynamic front-end interfaces
               </Typography>
               <Typography variant="body2">
-                • Developed back-end functionalities using Node.js, Express, JWT, and MongoDB to ensure smooth data handling, seamless user interactions, and proper authentication
+                • Developed back-end functionalities using Node.js, Express, JWT, and MongoDB to
+                ensure smooth data handling, seamless user interactions, and proper authentication
               </Typography>
               <Typography variant="body2">
-                • Conducted regular maintenance and updates to ensure websites remain up-to-date and functional
+                • Conducted regular maintenance and updates to ensure websites remain up-to-date and
+                functional
               </Typography>
               <Typography variant="body2">
-                • Provided training and support to clients for content management and website maintenance
+                • Provided training and support to clients for content management and website
+                maintenance
               </Typography>
             </Grid>
-            </Grid>
+          </Grid>
           <Typography variant="h4">
             <Work /> NON-RELATED WORK HISTORY
           </Typography>
@@ -325,7 +300,8 @@ export default function Resume() {
               }}
             >
               <Typography variant="body2">
-                • Automate reports and tasks using Sharepoint, firefox extensions and web scraping tools.
+                • Automate reports and tasks using Sharepoint, firefox extensions and web scraping
+                tools.
               </Typography>
               <Typography variant="body2">
                 • Participate in IT meetings and assist with customer facing bugs as needed
@@ -339,8 +315,12 @@ export default function Resume() {
               <Typography variant="body2">
                 • Provided data analysis and generated reports for program performance improvement
               </Typography>
-              <Typography variant="body2">• Reviewed and provided revisions for work instruction SOPs and other documentation</Typography>
-              <Typography variant="body2">• Coordinated and led team meetings and training sessions</Typography>
+              <Typography variant="body2">
+                • Reviewed and provided revisions for work instruction SOPs and other documentation
+              </Typography>
+              <Typography variant="body2">
+                • Coordinated and led team meetings and training sessions
+              </Typography>
               <Typography variant="body2">• Scheduled and ran program meetings.</Typography>
               <Typography variant="body2"></Typography>
             </Grid>
