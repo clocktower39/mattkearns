@@ -12,7 +12,7 @@ const ParticleBackground = ({ children }) => {
   }, []);
 
   return (
-    <div style={{ position: "relative", backgroundColor: "#0d47a1", minHeight: "100vh" }}>
+    <div style={{ position: "relative", minHeight: "100vh" }}>
       <Particles
         style={{ position: "absolute", top: 0, left: 0 }}
         id="tsparticles"

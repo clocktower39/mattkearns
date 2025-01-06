@@ -36,7 +36,6 @@ import torproject_logo from "../../img/logos/torproject_logo.svg";
 const styles = () => ({
   LogosContainer: {
     padding: "50px 0",
-    backgroundColor: "#999999",
   },
   TitleContainer: {
     alignItems: "center",
