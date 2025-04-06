@@ -44,8 +44,7 @@ export default function Resume() {
     <Container maxWidth="md" disableGutters>
       <Grid container>
         <Grid
-          xs={12}
-          item
+          size={12}
           container
           sx={{
             fontWeight: 500,
@@ -55,7 +54,7 @@ export default function Resume() {
             order: 1,
           }}
         >
-          <Grid container item xs={4} sx={{ justifyContent: "center" }}>
+          <Grid container size={4} sx={{ justifyContent: "center" }}>
             <Avatar
               alt="pic"
               src={img}
@@ -67,18 +66,18 @@ export default function Resume() {
             />
           </Grid>
 
-          <Grid container item xs={8} sx={{ paddingLeft: "12.5px", alignItems: "center" }}>
-            <Grid item xs={12}>
+          <Grid container size={8} sx={{ paddingLeft: "12.5px", alignItems: "center" }}>
+            <Grid size={12}>
               <Typography variant="h2">Matt Kearns</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography variant="h6">Full Stack Developer</Typography>
             </Grid>
           </Grid>
         </Grid>
 
         <Grid
-          item
+          size={{ sm: 12, md: 4, }}
           sm={12}
           md={4}
           sx={{
@@ -91,45 +90,45 @@ export default function Resume() {
             padding: "10px",
           }}
         >
-          <Grid container item xs={12}>
-            <Grid item xs={12} sx={{ paddingBottom: "7.5px" }}>
+          <Grid container size={12}>
+            <Grid size={12} sx={{ paddingBottom: "7.5px" }}>
               <Typography variant="h4" sx={{ color: "black" }}>
                 CONTACT
               </Typography>
             </Grid>
 
-            <Grid container item xs={12} sx={{ paddingBottom: "7.5px" }}>
-              <Grid item xs={12}>
+            <Grid container size={12} sx={{ paddingBottom: "7.5px" }}>
+              <Grid size={12}>
                 <Typography variant="subtitle1">Email</Typography>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <Typography variant="caption">matt@mattkearns.dev</Typography>
               </Grid>
             </Grid>
 
-            <Grid container item xs={12} sx={{ paddingBottom: "7.5px" }}>
-              <Grid item xs={12}>
+            <Grid container size={12} sx={{ paddingBottom: "7.5px" }}>
+              <Grid size={12}>
                 <Typography variant="subtitle1">Tools</Typography>
               </Grid>
               {tools.map((tool) => (
-                <Grid item xs={4} key={tools}>
+                <Grid size={4} key={tools}>
                   <Typography variant="caption">{tool}</Typography>
                 </Grid>
               ))}
             </Grid>
 
-            <Grid container item xs={12} sx={{ paddingBottom: "7.5px" }}>
-              <Grid item xs={12}>
+            <Grid container size={12} sx={{ paddingBottom: "7.5px" }}>
+              <Grid size={12}>
                 <Typography variant="subtitle1">Social Media</Typography>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <IconButton
                   onClick={() => window.open("https://www.github.com/clocktower39", "_blank")}
                 >
                   <GitHub />
                 </IconButton>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <IconButton
                   onClick={() =>
                     window.open("https://www.linkedin.com/in/matthew-kearns-6b8865117/", "_blank")
@@ -138,7 +137,7 @@ export default function Resume() {
                   <LinkedIn />
                 </IconButton>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <IconButton>
                   <Instagram />
                 </IconButton>
@@ -149,9 +148,7 @@ export default function Resume() {
 
         <Grid
           container
-          item
-          sm={12}
-          md={8}
+          size={{ sm: 12, md: 8, }}
           sx={{
             backgroundColor: "#FEFEFE",
             order: 3,
@@ -161,7 +158,7 @@ export default function Resume() {
           <Typography variant="h4">
             <EmojiPeople /> About Me
           </Typography>
-          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
+          <Grid container size={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
             <Typography variant="body2">
               Experienced and self-motivated web developer with over six years of expertise in
               JavaScript, React, and building responsive, user-centric interfaces. Proficient with
@@ -174,8 +171,8 @@ export default function Resume() {
           <Typography variant="h4">
             <Code /> Projects
           </Typography>
-          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
-            <Grid item xs={12}>
+          <Grid container size={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
+            <Grid size={12}>
               <Typography variant="h6" component="a" href="https://mattkearns.dev/">
                 Personal Website
               </Typography>
@@ -183,7 +180,7 @@ export default function Resume() {
                 • Learn more about me and check out some of my projects
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography variant="h6" component="a" href="https://www.firebellyfitness.com">
                 Firebelly Fitness
               </Typography>
@@ -192,7 +189,7 @@ export default function Resume() {
                 progression.
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography
                 variant="h6"
                 component="a"
@@ -204,7 +201,7 @@ export default function Resume() {
                 • Share photos with friends, comment, react, and message.
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography
                 variant="h6"
                 component="a"
@@ -217,7 +214,7 @@ export default function Resume() {
                 neural network how to drive and avoid cars.
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography
                 variant="h6"
                 component="a"
@@ -229,7 +226,7 @@ export default function Resume() {
                 • Control your TV via a raspberry pi using the HDMI CEC commands.
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography variant="h6" component="a" href="https://mattkearns.dev/activity-tracker">
                 Activity Tracker
               </Typography>
@@ -242,14 +239,13 @@ export default function Resume() {
           <Typography variant="h4">
             <SourceIcon /> Experience
           </Typography>
-          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
+          <Grid container size={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
             <Typography variant="subtitle1">Freelance Web Developer</Typography>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography variant="subtitle2">2018 - Current</Typography>
             </Grid>
             <Grid
-              item
-              xs={12}
+              size={12}
               sx={{
                 paddingLeft: "35px",
                 paddingBottom: "7.5px",
@@ -283,14 +279,13 @@ export default function Resume() {
           <Typography variant="h4">
             <Work /> NON-RELATED WORK HISTORY
           </Typography>
-          <Grid container item xs={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
+          <Grid container size={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
             <Typography variant="subtitle1">Operation Support Lead | McKesson</Typography>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography variant="subtitle2">March 2019 - Current</Typography>
             </Grid>
             <Grid
-              item
-              xs={12}
+              size={12}
               sx={{
                 paddingLeft: "35px",
                 paddingBottom: "7.5px",
@@ -325,15 +320,14 @@ export default function Resume() {
               <Typography variant="body2"></Typography>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography variant="subtitle1">Seasonal Operations Supervisor | McKesson</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography variant="subtitle2">September 2021 - March 2022</Typography>
             </Grid>
             <Grid
-              item
-              xs={12}
+              size={12}
               sx={{
                 paddingLeft: "35px",
                 paddingBottom: "7.5px",
@@ -373,14 +367,13 @@ export default function Resume() {
             </Grid>
 
             <Typography variant="subtitle1">REMS Support Representative | McKesson</Typography>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Typography variant="subtitle2">
                 July 2018 - March 2019 (Contractor December 2017 - July 2018)
               </Typography>
             </Grid>
             <Grid
-              item
-              xs={12}
+              size={12}
               sx={{
                 paddingLeft: "35px",
                 paddingBottom: "7.5px",
@@ -405,11 +398,10 @@ export default function Resume() {
           <Typography variant="h4">
             <Subject /> Education
           </Typography>
-          <Grid container item sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
+          <Grid container sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
             <Typography variant="subtitle1">FreeCodeCamp</Typography>
             <Grid
-              item
-              xs={12}
+              size={12}
               sx={{
                 paddingLeft: "35px",
                 paddingBottom: "7.5px",
@@ -428,11 +420,10 @@ export default function Resume() {
             </Grid>
           </Grid>
 
-          <Grid container item sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
+          <Grid container sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
             <Typography variant="subtitle1">LinkedIn</Typography>
             <Grid
-              item
-              xs={12}
+              size={12}
               sx={{
                 paddingLeft: "35px",
                 paddingBottom: "7.5px",

@@ -94,13 +94,11 @@ export default function Logos() {
           {logos.map((logo, index) => (
             <Grid
               container
-              item
-              xs={3}
-              sm={2}
+              size={{ xs: 3, sm: 2}}
               sx={ classes.LogoContainer }
               key={`logo-${index}`}
             >
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <img src={logo} style={ classes.LogoImg} alt={"Logo"} />
               </Grid>
             </Grid>

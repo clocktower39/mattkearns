@@ -36,22 +36,22 @@ export default function Footer() {
     <div style={classes.FooterContainer}>
       <Container maxWidth="md">
         <Grid container spacing={3} sx={{ ...classes.JustifyContentCenter }}>
-          <Grid item>
+          <Grid>
             <IconButton onClick={() => handleSocialLink("github")}>
               <GitHub sx={classes.Icon} />
             </IconButton>
           </Grid>
-          <Grid item>
+          <Grid>
             <IconButton onClick={() => handleSocialLink("linkedIn")}>
               <LinkedIn sx={classes.Icon} />
             </IconButton>
           </Grid>
-          <Grid item>
+          <Grid>
             <IconButton onClick={() => handleSocialLink("instagram")}>
               <Instagram sx={classes.Icon} />
             </IconButton>
           </Grid>
-          <Grid container item xs={12} sx={{ ...classes.JustifyContentCenter }}>
+          <Grid container size={12} sx={{ ...classes.JustifyContentCenter }}>
             <Typography variant="body1" sx={classes.FooterText}>
               Copyright © 2023 MattKearns.dev - All Rights Reserved.
             </Typography>

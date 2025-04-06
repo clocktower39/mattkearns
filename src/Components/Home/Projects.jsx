@@ -75,7 +75,7 @@ function ProjectCard(props) {
   const classes = styles();
 
   return (
-    <Grid item container xs={12} sm={6}>
+    <Grid container size={{ xs: 12, sm:6 }} >
       <div style={classes.CardContainer}>
         <Card sx={classes.Card}>
           <CardActionArea
@@ -122,8 +122,8 @@ export default function Projects() {
   const classes = styles();
   return (
     <div style={classes.ProjectsContainer}>
-      <Grid container item xs={12}>
-        <Grid item container xs={5} sx={classes.TitleContainer}>
+      <Grid container size={12}>
+        <Grid container size={5} sx={classes.TitleContainer}>
           <Typography variant="h3" sx={classes.Title}>
             Projects
           </Typography>

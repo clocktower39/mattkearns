@@ -80,26 +80,26 @@ export default function Home() {
           <Container maxWidth="md" sx={classes.WelcomeContainer}>
             <Grid container sx={classes.WelcomeGridContainer}>
               <Box sx={classes.CssGridBox}>
-                <Grid container item xs={12} sx={classes.GridAreaB}>
+                <Grid container size={12} sx={classes.GridAreaB}>
                   <div style={classes.HeadshotContainer}>
                     <img src={headshot} alt="Avatar" style={classes.Headshot} />
                   </div>
                 </Grid>
 
-                <Grid container item xs={12} sx={classes.GridAreaA}>
-                  <Grid item xs={12} sx={classes.SalutationContainer}>
+                <Grid container size={12} sx={classes.GridAreaA}>
+                  <Grid size={12} sx={classes.SalutationContainer}>
                     <Typography display="inline" variant="h3">
                       Hey, I'm
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} sx={classes.NameContainer}>
+                  <Grid size={12} sx={classes.NameContainer}>
                     <Typography display="inline" variant="h1" sx={classes.Name}>
                       Matt Kearns
                     </Typography>
                   </Grid>
                 </Grid>
 
-                <Grid item xs={12} sx={classes.GridAreaC}>
+                <Grid size={12} sx={classes.GridAreaC}>
                   <Typography variant="h5">
                     I'm a self taught <span style={classes.DescriptionSpan}>Web Developer.</span>
                   </Typography>
@@ -124,7 +124,7 @@ export default function Home() {
                     challenges, I focus on making ideas functional and impactful.
                   </Typography>
 
-                  <Grid item container sm={6} xs={12} sx={classes.ButtonContainer}>
+                  <Grid container size={{ xs: 12, sm: 6, }} sx={classes.ButtonContainer}>
                     {/* <Button
                       fullWidth
                       variant="contained"

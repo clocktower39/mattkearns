@@ -160,7 +160,7 @@ export default function TerminalController(props = {}) {
 
   // Terminal has 100% width by default so it should usually be wrapped in a container div
   return (
-    <Grid container item>
+    <Grid container>
       <Terminal
         name="- MattKearns ./Projects"
         onInput={(terminalInput) => handleInput(terminalInput)}

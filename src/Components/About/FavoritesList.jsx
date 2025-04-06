@@ -47,10 +47,10 @@ export default function GameList({ list }) {
 
   return (
     <>
-      <Grid item xs={12}>
-          <Grid container item xs={12} spacing={1}>
+      <Grid size={12}>
+          <Grid container size={12} spacing={1}>
             {fixedList[activeStep].map((item) => (
-              <Grid item xs={3} key={`${item.title}-${item.poster}`} sx={ classes.CardContainer }>
+              <Grid size={3} key={`${item.title}-${item.poster}`} sx={ classes.CardContainer }>
                   <Card sx={classes.root}>
                     <CardMedia sx={classes.media} image={item.poster} title={item.title} />
                   </Card>
@@ -58,7 +58,7 @@ export default function GameList({ list }) {
             ))}
           </Grid>
       </Grid>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <MobileStepper
           steps={maxSteps}
           position="static"

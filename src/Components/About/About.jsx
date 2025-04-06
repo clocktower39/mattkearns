@@ -53,13 +53,13 @@ export default function About() {
           Favorite Books, Movies, & Video Games
         </Typography>
         <Grid container spacing={2}>
-            <Grid container item xs={12} >
+            <Grid container size={12} >
               <FavoritesList list={books} />
             </Grid>
-            <Grid container item xs={12} >
+            <Grid container size={12} >
               <FavoritesList list={movies} />
             </Grid>
-            <Grid container item xs={12} >
+            <Grid container size={12} >
               <FavoritesList list={games} />
             </Grid>
         </Grid>
