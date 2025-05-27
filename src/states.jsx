@@ -9,14 +9,16 @@ import selfdrivingcarPoster from "./img/projects/selfdrivingcar-poster.png";
 import halo from "./img/posters/games/haloMCC_600x900.jpg";
 import fallout4 from "./img/posters/games/fallout4_600x900.jpg";
 import arma3 from "./img/posters/games/arma_600x900.jpg";
-import zeroHour from "./img/posters/games/zerohour_600x900.jpg";
-import alyx from "./img/posters/games/alyx_600x900.jpg";
 import gearsOfWar4 from "./img/posters/games/GearsOfWar4_600x900.jpg";
-import skyrim from "./img/posters/games/skyrim_600x900.jpg";
 import starwarsJKJA from "./img/posters/games/starwars_jkja_600x900.png";
 import portal2 from "./img/posters/games/portal2_600x900.jpg";
-import wolfenstein from "./img/posters/games/wolfenstein_600x900.jpg";
-import tabletop from "./img/posters/games/tabletop_600x900.jpg";
+import metroidDread from "./img/posters/games/metroid_dread.png";
+import metroid_fusion from "./img/posters/games/metroid_fusion.png";
+import witcher3 from "./img/posters/games/witcher3.png";
+import forza_horizon_5 from "./img/posters/games/forza_horizon_5.png";
+import super_smash_bros_ultimate from "./img/posters/games/super_smash_bros_ultimate.png";
+import untitled_goose_game from "./img/posters/games/untitled_goose_game.png";
+import binding_of_isaac from "./img/posters/games/binding_of_isaac.png";
 
 import pulpFiction from "./img/posters/movies/pulpFiction_library_600x900.jpg";
 import southPark from "./img/posters/movies/south_park_bigger_longer_and_uncut_library_600x900.jpg";
@@ -161,32 +163,40 @@ export const books = [
 
 export const games = [
   {
-    title: "Arma 3",
-    poster: arma3,
+    title: "Halo: MCC",
+    poster: halo,
   },
   {
     title: "Fallout 4",
     poster: fallout4,
   },
   {
-    title: "Halo: MCC",
-    poster: halo,
+    title: "Metroid Dread",
+    poster: metroidDread,
   },
   {
-    title: "Zero Hour",
-    poster: zeroHour,
+    title: "The Witcher 3: Wild Hunt",
+    poster: witcher3,
   },
   {
-    title: "Alyx",
-    poster: alyx,
+    title: "Metroid Fusion",
+    poster: metroid_fusion,
+  },
+  {
+    title: "Super Smash Bros Ultimate",
+    poster: super_smash_bros_ultimate,
+  },
+  {
+    title: "Forza Horizon 5",
+    poster: forza_horizon_5,
   },
   {
     title: "Gears of War 4",
     poster: gearsOfWar4,
   },
   {
-    title: "Skyrim",
-    poster: skyrim,
+    title: "Untitled Goose Game",
+    poster: untitled_goose_game,
   },
   {
     title: "Star Wars: Jedi Knight Jedi Academy",
@@ -197,12 +207,12 @@ export const games = [
     poster: portal2,
   },
   {
-    title: "Wolfenstein",
-    poster: wolfenstein,
+    title: "Binding of Isaac",
+    poster: binding_of_isaac,
   },
   {
-    title: "Tabletop Simulator",
-    poster: tabletop,
+    title: "Arma 3",
+    poster: arma3,
   },
 ];
 
