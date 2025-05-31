@@ -7,6 +7,8 @@ import firebellyPoster from "./img/projects/firebelly-fitness-poster.png";
 import selfdrivingcarPoster from "./img/projects/selfdrivingcar-poster.png";
 
 import halo from "./img/posters/games/haloMCC_600x900.jpg";
+import fallout3 from "./img/posters/games/fallout3.png";
+import fallout_new_vegas from "./img/posters/games/fallout_new_vegas.jpg";
 import fallout4 from "./img/posters/games/fallout4_600x900.jpg";
 import arma3 from "./img/posters/games/arma_600x900.jpg";
 import gearsOfWar4 from "./img/posters/games/GearsOfWar4_600x900.jpg";
@@ -38,6 +40,10 @@ import blindWatchmaker from "./img/posters/books/blindWatchmaker_library_600x900
 import unweavingTheRainbow from "./img/posters/books/unweavingTheRainbow_library_600x900.jpg";
 import code from "./img/posters/books/code_library_600x900.jpg";
 import cryptography from "./img/posters/books/cryptography_library_600x900.jpg";
+import richard_dawkins_climbing_mount_improbable from "./img/posters/books/richard_dawkins_climbing_mount_improbable.jpg";
+import richard_dawkins_the_ancestors_tale from "./img/posters/books/richard_dawkins_the_ancestors_tale.jpg";
+import richard_dawkins_the_extended_phenotype from "./img/posters/books/richard_dawkins_the_extended_phenotype.jpg";
+import richard_dawkins_the_selfish_gene from "./img/posters/books/richard_dawkins_the_selfish_gene.jpg";
 
 export const projects = [
   {
@@ -148,6 +154,10 @@ export const books = [
     poster: blindWatchmaker,
   },
   {
+    title: "Climbing Mount Improbable",
+    poster: richard_dawkins_climbing_mount_improbable,
+  },
+  {
     title: "Unweaving The Rainbow",
     poster: unweavingTheRainbow,
   },
@@ -158,6 +168,18 @@ export const books = [
   {
     title: "Cryptography: A Very Short Introduction",
     poster: cryptography,
+  },
+  {
+    title: "The Selfish Gene",
+    poster: richard_dawkins_the_selfish_gene,
+  },
+  {
+    title: "The Extended Phenotype",
+    poster: richard_dawkins_the_extended_phenotype,
+  },
+  {
+    title: "The Ancestor's Tale",
+    poster: richard_dawkins_the_ancestors_tale,
   },
 ];
 
@@ -193,6 +215,14 @@ export const games = [
   {
     title: "Gears of War 4",
     poster: gearsOfWar4,
+  },
+  {
+    title: "Fallout 3",
+    poster: fallout3,
+  },
+  {
+    title: "Fallout New Vegas",
+    poster: fallout_new_vegas,
   },
   {
     title: "Untitled Goose Game",
@@ -298,6 +328,19 @@ export const tvShows = [
   { title: "Rick and Morty" },
   { title: "The Office" },
   { title: "Futurama" },
+  { title: "Aqua Team Hunger Force" },
+  { title: "Chernobyl" },
+  { title: "Barry" },
+  { title: "Avatar: The Last Airbender" },
+  { title: "Criminal Minds" },
+  { title: "Fallout" },
+  { title: "Mr. Robot" },
+  { title: "Nathan for You" },
+  { title: "Severance" },
+  { title: "Scavengers Reign" },
+  { title: "Trailer Park Boys" },
+  { title: "True Detective" },
+  { title: "It's Always Sunny in Philadelphia" },
 ];
 
 export const inspirational = [
