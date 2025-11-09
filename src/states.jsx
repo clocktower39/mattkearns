@@ -1,11 +1,3 @@
-import socialPhotoAppPoster from "./img/projects/social-picture-app-poster-black-bg.jpg";
-import medicationTrackerPoster from "./img/projects/sq-medication-tracker-poster-black-bg.jpg";
-import activityTrackerPoster from "./img/projects/activity-tracker-poster-black-bg.jpg";
-import bonfirePoster from "./img/projects/bonfire-poster.png";
-import fiveDayForecastPoster from "./img/projects/five-day-forecast-poster.jpg";
-import firebellyPoster from "./img/projects/firebelly-fitness-poster.png";
-import selfdrivingcarPoster from "./img/projects/selfdrivingcar-poster.png";
-
 import halo from "./img/posters/games/haloMCC_600x900.jpg";
 import fallout3 from "./img/posters/games/fallout3.png";
 import fallout_new_vegas from "./img/posters/games/fallout_new_vegas.jpg";
@@ -53,7 +45,7 @@ export const projects = [
       client: 'https://github.com/clocktower39/firebelly-client',
       server: 'https://github.com/clocktower39/firebelly-server',
     },
-    img: firebellyPoster,
+    img: "/img/projects/firebelly-fitness-poster.png",
     desc: "Personal Traning web app for client, trainer able to view and and manage training clients. Track weight lifting progress, goals, and nutrition",
   },
   {
@@ -73,7 +65,7 @@ export const projects = [
       client: 'https://github.com/clocktower39/social-picture-app',
       server: 'https://github.com/clocktower39/social-server-pic-app',
     },
-    img: socialPhotoAppPoster,
+    img: "/img/projects/social-picture-app-poster-black-bg.jpg",
     desc: "Share, like, and comment on user uploaded pictures. Message with other users using socket.io for real time message interface",
   },
   {
@@ -93,7 +85,7 @@ export const projects = [
       client: "https://github.com/clocktower39/self-driving-car-sim",
       server: null,
     },
-    img: selfdrivingcarPoster,
+    img: "/img/projects/selfdrivingcar-poster.png",
     desc: "1000 instances of a car are deployed all driven by neural networks. Save the best car position to teach the neural network how to drive by avoiding other cars on the road.",
   },
   {
@@ -103,49 +95,9 @@ export const projects = [
       client: "https://github.com/clocktower39/activity-tracker-app",
       server: "https://github.com/clocktower39/activity-server",
     },
-    img: activityTrackerPoster,
+    img: "/img/projects/activity-tracker-poster-black-bg.jpg",
     desc: "Create personalized daily tasks to check off each day and track progress",
   },
-  // {
-  //   name: "Medication Tracking System",
-  //   link: "https://mattkearns.dev/medication-tracking-system/",
-  //   github: {
-  //     client: "https://github.com/clocktower39/medication-client",
-  //     server: "https://github.com/clocktower39/medication-server",
-  //   },
-  //   img: medicationTrackerPoster,
-  //   desc: "Application to monitor and track patient blood levels",
-  // },
-  // {
-  //   name: "Bonfire",
-  //   link: "https://mattkearns.dev/message",
-  //   github: {
-  //     client: "https://github.com/clocktower39/message-react-redux",
-  //     server: "https://github.com/clocktower39/message-server",
-  //   },
-  //   img: bonfirePoster,
-  //   desc: "Message application using socket.io for real time updates, JWT for authentication, mongoDB for storage",
-  // },
-  // {
-  //   name: "Snake Game",
-  //   link: null,
-  //   github: {
-  //     client: "https://github.com/clocktower39/snake-game-python",
-  //     server: null,
-  //   },
-  //   img: null,
-  //   desc: "Simple snake game made with Python.",
-  // },
-  // {
-  //   name: "RFC Spotify Player",
-  //   link: null,
-  //   github: {
-  //     client: null,
-  //     server: "https://github.com/clocktower39/rfc-spotify-player",
-  //   },
-  //   img: null,
-  //   desc: "Start specific songs/albums/playlists through the Spotify api via assigned RFC values. Like a mini digital record player.",
-  // },
 ];
 
 export const books = [
