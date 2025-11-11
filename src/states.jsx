@@ -28,15 +28,6 @@ import kill_bill from "./img/posters/movies/kill_bill_600x900.jpg";
 import hollywood from "./img/posters/movies/hollywood_600x900.jpg";
 import fired_up from "./img/posters/movies/fired_up_600x900.jpg";
 
-import blindWatchmaker from "./img/posters/books/blindWatchmaker_library_600x900.jpg";
-import unweavingTheRainbow from "./img/posters/books/unweavingTheRainbow_library_600x900.jpg";
-import code from "./img/posters/books/code_library_600x900.jpg";
-import cryptography from "./img/posters/books/cryptography_library_600x900.jpg";
-import richard_dawkins_climbing_mount_improbable from "./img/posters/books/richard_dawkins_climbing_mount_improbable.jpg";
-import richard_dawkins_the_ancestors_tale from "./img/posters/books/richard_dawkins_the_ancestors_tale.jpg";
-import richard_dawkins_the_extended_phenotype from "./img/posters/books/richard_dawkins_the_extended_phenotype.jpg";
-import richard_dawkins_the_selfish_gene from "./img/posters/books/richard_dawkins_the_selfish_gene.jpg";
-
 export const projects = [
   {
     name: "Firebelly Fitness",
@@ -103,35 +94,35 @@ export const projects = [
 export const books = [
   {
     title: "The Blind Watchmaker",
-    poster: blindWatchmaker,
+    poster: "/img/posters/books/blindWatchmaker_library_600x900.jpg",
   },
   {
     title: "Climbing Mount Improbable",
-    poster: richard_dawkins_climbing_mount_improbable,
+    poster: "/img/posters/books/richard_dawkins_climbing_mount_improbable.jpg",
   },
   {
     title: "Unweaving The Rainbow",
-    poster: unweavingTheRainbow,
+    poster: "/img/posters/books/unweavingTheRainbow_library_600x900.jpg",
   },
   {
     title: "Code: The Hidden Language of Computer Hardware and Software",
-    poster: code,
+    poster: "/img/posters/books/code_library_600x900.jpg",
   },
   {
     title: "Cryptography: A Very Short Introduction",
-    poster: cryptography,
+    poster: "/img/posters/books/cryptography_library_600x900.jpg",
   },
   {
     title: "The Selfish Gene",
-    poster: richard_dawkins_the_selfish_gene,
+    poster: "/img/posters/books/richard_dawkins_the_selfish_gene.jpg",
   },
   {
     title: "The Extended Phenotype",
-    poster: richard_dawkins_the_extended_phenotype,
+    poster: "/img/posters/books/richard_dawkins_the_extended_phenotype.jpg",
   },
   {
     title: "The Ancestor's Tale",
-    poster: richard_dawkins_the_ancestors_tale,
+    poster: "/img/posters/books/richard_dawkins_the_ancestors_tale.jpg",
   },
 ];
 
