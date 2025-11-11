@@ -1,19 +1,3 @@
-import halo from "./img/posters/games/haloMCC_600x900.jpg";
-import fallout3 from "./img/posters/games/fallout3.png";
-import fallout_new_vegas from "./img/posters/games/fallout_new_vegas.jpg";
-import fallout4 from "./img/posters/games/fallout4_600x900.jpg";
-import arma3 from "./img/posters/games/arma_600x900.jpg";
-import gearsOfWar4 from "./img/posters/games/GearsOfWar4_600x900.jpg";
-import starwarsJKJA from "./img/posters/games/starwars_jkja_600x900.png";
-import portal2 from "./img/posters/games/portal2_600x900.jpg";
-import metroidDread from "./img/posters/games/metroid_dread.png";
-import metroid_fusion from "./img/posters/games/metroid_fusion.png";
-import witcher3 from "./img/posters/games/witcher3.png";
-import forza_horizon_5 from "./img/posters/games/forza_horizon_5.png";
-import super_smash_bros_ultimate from "./img/posters/games/super_smash_bros_ultimate.png";
-import untitled_goose_game from "./img/posters/games/untitled_goose_game.png";
-import binding_of_isaac from "./img/posters/games/binding_of_isaac.png";
-
 import pulpFiction from "./img/posters/movies/pulpFiction_library_600x900.jpg";
 import southPark from "./img/posters/movies/south_park_bigger_longer_and_uncut_library_600x900.jpg";
 import donnieDarko from "./img/posters/movies/donnie_darko_library_600x900.jpg";
@@ -129,63 +113,63 @@ export const books = [
 export const games = [
   {
     title: "Halo: MCC",
-    poster: halo,
+    poster: "/img/posters/games/haloMCC_600x900.jpg",
   },
   {
     title: "Fallout 4",
-    poster: fallout4,
+    poster: "/img/posters/games/fallout4_600x900.jpg",
   },
   {
     title: "Metroid Dread",
-    poster: metroidDread,
+    poster: "/img/posters/games/metroid_dread.png",
   },
   {
     title: "The Witcher 3: Wild Hunt",
-    poster: witcher3,
+    poster: "/img/posters/games/witcher3.png",
   },
   {
     title: "Metroid Fusion",
-    poster: metroid_fusion,
+    poster: "/img/posters/games/metroid_fusion.png",
   },
   {
     title: "Super Smash Bros Ultimate",
-    poster: super_smash_bros_ultimate,
+    poster: "/img/posters/games/super_smash_bros_ultimate.png",
   },
   {
     title: "Forza Horizon 5",
-    poster: forza_horizon_5,
+    poster: "/img/posters/games/forza_horizon_5.png",
   },
   {
     title: "Gears of War 4",
-    poster: gearsOfWar4,
+    poster: "/img/posters/games/GearsOfWar4_600x900.jpg",
   },
   {
     title: "Fallout 3",
-    poster: fallout3,
+    poster: "/img/posters/games/fallout3.png",
   },
   {
     title: "Fallout New Vegas",
-    poster: fallout_new_vegas,
+    poster: "/img/posters/games/fallout_new_vegas.jpg",
   },
   {
     title: "Untitled Goose Game",
-    poster: untitled_goose_game,
+    poster: "/img/posters/games/untitled_goose_game.png",
   },
   {
     title: "Star Wars: Jedi Knight Jedi Academy",
-    poster: starwarsJKJA,
+    poster: "/img/posters/games/starwars_jkja_600x900.png",
   },
   {
     title: "Portal 2",
-    poster: portal2,
+    poster: "/img/posters/games/portal2_600x900.jpg",
   },
   {
     title: "Binding of Isaac",
-    poster: binding_of_isaac,
+    poster: "/img/posters/games/binding_of_isaac.png",
   },
   {
     title: "Arma 3",
-    poster: arma3,
+    poster: "/img/posters/games/arma_600x900.jpg",
   },
 ];
 
