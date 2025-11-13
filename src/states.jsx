@@ -1,17 +1,3 @@
-import pulpFiction from "./img/posters/movies/pulpFiction_library_600x900.jpg";
-import southPark from "./img/posters/movies/south_park_bigger_longer_and_uncut_library_600x900.jpg";
-import donnieDarko from "./img/posters/movies/donnie_darko_library_600x900.jpg";
-import truman from "./img/posters/movies/truman_library_600x900.jpg";
-import nightcrawler from "./img/posters/movies/nightcrawler_600x900.jpg";
-import collector from "./img/posters/movies/collector_600x900.jpg";
-import matrix from "./img/posters/movies/matrix_600x900.jpg";
-import wordwordswords from "./img/posters/movies/wordswordswords_600x900.jpg";
-import django_unchained from "./img/posters/movies/django_unchained_600x900.jpg";
-import inglourious_basterds from "./img/posters/movies/inglourious_basterds_600x900.jpg";
-import kill_bill from "./img/posters/movies/kill_bill_600x900.jpg";
-import hollywood from "./img/posters/movies/hollywood_600x900.jpg";
-import fired_up from "./img/posters/movies/fired_up_600x900.jpg";
-
 export const projects = [
   {
     name: "Firebelly Fitness",
@@ -175,56 +161,56 @@ export const games = [
 
 export const movies = [
   {
-    title: "Nightcrawler",
-    poster: nightcrawler,
-  },
-  {
     title: "Django Unchained",
-    poster: django_unchained,
+    poster: "/img/posters/movies/django_unchained_600x900.jpg",
   },
   {
     title: "Donnie Darko",
-    poster: donnieDarko,
+    poster: "/img/posters/movies/donnie_darko_library_600x900.jpg",
   },
   {
     title: "The Truman Show",
-    poster: truman,
+    poster: "/img/posters/movies/truman_library_600x900.jpg",
   },
   {
     title: "Pulp Fiction",
-    poster: pulpFiction,
-  },
-  {
-    title: "The Collector",
-    poster: collector,
-  },
-  {
-    title: "The Matrix",
-    poster: matrix,
+    poster: "/img/posters/movies/pulpFiction_library_600x900.jpg",
   },
   {
     title: "Inglourious Basterds",
-    poster: inglourious_basterds,
+    poster: "/img/posters/movies/inglourious_basterds_600x900.jpg",
   },
   {
     title: "South Park Bigger Longer & Uncut",
-    poster: southPark,
+    poster: "/img/posters/movies/south_park_bigger_longer_and_uncut_library_600x900.jpg",
+  },
+  {
+    title: "Nightcrawler",
+    poster: "/img/posters/movies/nightcrawler_600x900.jpg",
+  },
+  {
+    title: "The Collector",
+    poster: "/img/posters/movies/collector_600x900.jpg",
+  },
+  {
+    title: "The Matrix",
+    poster: "/img/posters/movies/matrix_600x900.jpg",
   },
   {
     title: "Bo Burnham: Words Words Words",
-    poster: wordwordswords,
+    poster: "/img/posters/movies/wordswordswords_600x900.jpg",
   },
   {
     title: "Kill Bill",
-    poster: kill_bill,
+    poster: "/img/posters/movies/kill_bill_600x900.jpg",
   },
   {
     title: "Fired Up",
-    poster: fired_up,
+    poster: "/img/posters/movies/fired_up_600x900.jpg",
   },
   {
     title: "Once Upon a Time... In Hollywood",
-    poster: hollywood,
+    poster: "/img/posters/movies/hollywood_600x900.jpg",
   },
   // { title: "Idiocracy" },
   // { title: "What." },
