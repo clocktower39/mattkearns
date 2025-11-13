@@ -98,20 +98,28 @@ export const books = [
 
 export const games = [
   {
-    title: "Halo: MCC",
-    poster: "/img/posters/games/haloMCC_600x900.jpg",
-  },
-  {
-    title: "Fallout 4",
-    poster: "/img/posters/games/fallout4_600x900.jpg",
+    title: "Animal Well",
+    poster: "/img/posters/games/animal_well_600x900.jpg",
   },
   {
     title: "Metroid Dread",
     poster: "/img/posters/games/metroid_dread.png",
   },
   {
+    title: "Fallout 4",
+    poster: "/img/posters/games/fallout4_600x900.jpg",
+  },
+  {
     title: "The Witcher 3: Wild Hunt",
     poster: "/img/posters/games/witcher3.png",
+  },
+  {
+    title: "Animal Crossing: New Horizons",
+    poster: "/img/posters/games/animal_crossing_new_horizons_600x900.png",
+  },
+  {
+    title: "Halo: MCC",
+    poster: "/img/posters/games/haloMCC_600x900.jpg",
   },
   {
     title: "Metroid Fusion",
@@ -122,12 +130,8 @@ export const games = [
     poster: "/img/posters/games/super_smash_bros_ultimate.png",
   },
   {
-    title: "Forza Horizon 5",
-    poster: "/img/posters/games/forza_horizon_5.png",
-  },
-  {
-    title: "Gears of War 4",
-    poster: "/img/posters/games/GearsOfWar4_600x900.jpg",
+    title: "Fallout London",
+    poster: "/img/posters/games/fallout_london_600x900.png",
   },
   {
     title: "Fallout 3",
@@ -136,6 +140,14 @@ export const games = [
   {
     title: "Fallout New Vegas",
     poster: "/img/posters/games/fallout_new_vegas.jpg",
+  },
+  {
+    title: "Forza Horizon 5",
+    poster: "/img/posters/games/forza_horizon_5.png",
+  },
+  {
+    title: "Gears of War 4",
+    poster: "/img/posters/games/GearsOfWar4_600x900.jpg",
   },
   {
     title: "Untitled Goose Game",
@@ -156,6 +168,14 @@ export const games = [
   {
     title: "Arma 3",
     poster: "/img/posters/games/arma_600x900.jpg",
+  },
+  {
+    title: "LEGO Star Wars: The Complete Saga",
+    poster: "/img/posters/games/lego_star_wars_the_complete_saga_600x900.png",
+  },
+  {
+    title: "South Park: The Stick of Truth",
+    poster: "/img/posters/games/south_park_the_stick_of_truth_600x900.jpg",
   },
 ];
 
