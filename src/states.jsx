@@ -83,6 +83,18 @@ export const books = [
     poster: "/img/posters/books/cryptography_library_600x900.jpg",
   },
   {
+    title: "The Last Wish",
+    poster: "/img/posters/books/the_last_wish_andrzej_sapkowski.jpg",
+  },
+  {
+    title: "Sword of Destiny",
+    poster: "/img/posters/books/sword_of_destiny_andrzej_sapkowski.jpg",
+  },
+  {
+    title: "Blood of Elves",
+    poster: "/img/posters/books/blood_of_elves_andrzej_sapkowski.jpg",
+  },
+  {
     title: "The Selfish Gene",
     poster: "/img/posters/books/richard_dawkins_the_selfish_gene.jpg",
   },
