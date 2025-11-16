@@ -232,24 +232,70 @@ export const movies = [
     title: "Once Upon a Time... In Hollywood",
     poster: "/img/posters/movies/hollywood_600x900.jpg",
   },
-  // { title: "Idiocracy" },
-  // { title: "What." },
-  // { title: "Fired Up" },
-  // { title: "Gattaca" },
-  // { title: "Gran Torino" },
-  // { title: "The Lego Movie" },
-  // { title: "Shutter Island" },
-  // { title: "Silver Linings Playbook" },
-  // { title: "Step Brothers" },
-  // { title: "Team America World Police" },
-  // { title: "Employee of the Month" },
-  // { title: "Gattaca" },
-  // { title: "Harold & Kumar Go to White Castle" },
-  // { title: "Hot Rod" },
-  // { title: "John Wick" },
-  // { title: "Rubber" },
-  // { title: "Terminator" },
-  // { title: "Logan" },
+  {
+    title: "Idiocracy",
+    poster: "/img/posters/movies/idiocracy.jpg"
+  },
+  {
+    title: "What.",
+    poster: "/img/posters/movies/bo_burnham_what.jpg"
+  },
+  {
+    title: "Gattaca",
+    poster: "/img/posters/movies/gattaca.jpg"
+  },
+  {
+    title: "Gran Torino",
+    poster: "/img/posters/movies/gran_torino.jpg"
+  },
+  {
+    title: "The Lego Movie",
+    poster: "/img/posters/movies/lego_movie.jpg"
+  },
+  {
+    title: "Shutter Island",
+    poster: "/img/posters/movies/shutter_island.jpg"
+  },
+  {
+    title: "Silver Linings Playbook",
+    poster: "/img/posters/movies/silver_linings_playbook.jpg"
+  },
+  {
+    title: "Step Brothers",
+    poster: "/img/posters/movies/step_brothers.jpg"
+  },
+  {
+    title: "Team America World Police",
+    poster: "/img/posters/movies/team_america.jpg"
+  },
+  {
+    title: "Employee of the Month",
+    poster: "/img/posters/movies/employee_of_the_month.jpg"
+  },
+  {
+    title: "Harold & Kumar Go to White Castle",
+    poster: "/img/posters/movies/harold_and_kumar_go_to_white_castle.jpg"
+  },
+  {
+    title: "Hot Rod",
+    poster: "/img/posters/movies/hot_rod.jpg"
+  },
+  {
+    title: "John Wick",
+    poster: "/img/posters/movies/john_wick.jpg"
+  },
+  {
+    title: "Rubber",
+    poster: "/img/posters/movies/rubber.jpg"
+  },
+  {
+    title: "Terminator 2: Judgment Day",
+    poster: "/img/posters/movies/terminator2.jpg"
+  },
+  {
+    title: "Logan",
+    poster: "/img/posters/movies/logan.jpg"
+  },
 ];
 
 export const tvShows = [
