@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, } from "react";
 import Terminal, { TerminalOutput, TerminalInput } from "react-terminal-ui";
 import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
@@ -25,12 +25,12 @@ const BoldItalicSpan = styled("span")`
 `;
 
 const StyledLink = styled("a")`
-  textdecoration: ${(props) => props.textDecoration || "none"};
+  text-decoration: ${(props) => props.textDecoration || "none"};
   color: ${(props) => props.color || "inherit"};
 `;
 
-const ProjectResponse = (p) => (
-  <TerminalOutput key={p.name}>
+const ProjectResponse = (p, lnIndex) => (
+  <TerminalOutput key={`${p.name}-${lnIndex}`}>
     <StyledSpan color={colors.green.hex}>
       <BoldItalicSpan>-Project:</BoldItalicSpan> {p.name}
       <br />
@@ -53,9 +53,18 @@ const ProjectResponse = (p) => (
 
 export default function TerminalController(props = {}) {
   const handleClick = (projectName) => {
-    
-    handleInput(projectName); // Pass the project name as if it was typed in the terminal
+    handleInput(projectName);
   };
+
+  const normalize = (s = "") => s.toLowerCase().trim();
+
+  const projectNameMap = useMemo(() => {
+    const map = new Map();
+    projects.forEach((p, index) => {
+      map.set(normalize(p.name), index);
+    });
+    return map;
+  }, [projects]);
 
   const projectOutputs = projects.map((p) => {
     return (
@@ -100,6 +109,7 @@ export default function TerminalController(props = {}) {
     ld.push(<TerminalInput>{terminalInput}</TerminalInput>);
 
     const command = terminalInput.toLocaleLowerCase().trim();
+    const projectIndex = projectNameMap.get(command);
 
     // Handle different commands
     if (["commands", "help", "man"].includes(command)) {
@@ -129,16 +139,14 @@ export default function TerminalController(props = {}) {
       );
     } else if (["ls", "projects"].includes(command)) {
       ld.push(...projectOutputs, <TerminalOutput></TerminalOutput>);
-    } else if (projects.map((p) => p.name.toLocaleLowerCase().trim()).includes(command)) {
-      const matchingProjectIndex = projects
-        .map((p) => p.name.toLocaleLowerCase().trim())
-        .indexOf(command);
-      ld.push(ProjectResponse(projects[matchingProjectIndex]),
-          <TerminalOutput key="empty"></TerminalOutput>
+    } else if (projectIndex !== undefined) {
+      ld.push(
+        ProjectResponse(projects[projectIndex], ld.length),
+        <TerminalOutput key="empty"></TerminalOutput>
       );
     } else if (command === "clear") {
       // Reset to the initial view
-      ld = [initTerminalLineData];
+      ld = [...initTerminalLineData];
     } else if (terminalInput) {
       ld.push(
         <TerminalOutput>
