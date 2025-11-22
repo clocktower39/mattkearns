@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useMemo, useState, useCallback, useEffect } from "react";
 import Terminal, { TerminalOutput, TerminalInput } from "react-terminal-ui";
 import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
@@ -70,7 +70,7 @@ const buildInitialLines = () => [
 ];
 
 export default function TerminalController() {
-  // map project names → index for quick lookup
+  // map project names to use as index for quick lookup
   const projectNameMap = useMemo(() => {
     const map = new Map();
     projects.forEach((p, i) => {
@@ -101,6 +101,11 @@ export default function TerminalController() {
     ...projectOutputs,
     <TerminalOutput key="blank-end"></TerminalOutput>,
   ]);
+
+  // command history and navigation
+  const [history, setHistory] = useState(['ls',]);
+  const [historyIndex, setHistoryIndex] = useState(null);
+  const [inputValue, setInputValue] = useState("");
 
   const runProjectDetails = useCallback(
     (ld, projectNameRaw) => {
@@ -298,15 +303,57 @@ export default function TerminalController() {
 
         return ld;
       });
+
+      if (terminalInput.trim()) {
+        setHistory((prev) => [...prev, terminalInput]);
+      }
+      setHistoryIndex(null);
+      setInputValue("");
     },
     [projectNameMap, projectOutputs, runProjectDetails]
-  );
+  );  
+  
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // you *can* add extra checks here if you only want it active when the terminal is focused
+      if (e.key === "ArrowUp") {
+        if (!history.length) return;
+        e.preventDefault();
+
+        let newIndex;
+        if (historyIndex === null) {
+          newIndex = history.length - 1; // start from most recent
+        } else {
+          newIndex = Math.max(0, historyIndex - 1);
+        }
+
+        setHistoryIndex(newIndex);
+        setInputValue(history[newIndex]);
+      } else if (e.key === "ArrowDown") {
+        if (!history.length || historyIndex === null) return;
+        e.preventDefault();
+
+        let newIndex = historyIndex + 1;
+        if (newIndex >= history.length) {
+          // past the newest and then clear input
+          setHistoryIndex(null);
+          setInputValue("");
+        } else {
+          setHistoryIndex(newIndex);
+          setInputValue(history[newIndex]);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [history, historyIndex]);
+
 
   // Terminal
   return (
     <Grid container>
-      <Terminal name="- MattKearns ./Projects" onInput={handleInput}>
-        {/* Reuse terminalLineData; optionally you could integrate clickableProjectOutputs there */}
+      <Terminal name="- MattKearns ./" onInput={handleInput} startingInputValue={inputValue} >
         {terminalLineData}
       </Terminal>
     </Grid>
