@@ -2,7 +2,7 @@ import React, { useMemo, useState, useCallback, useEffect } from "react";
 import Terminal, { TerminalOutput, TerminalInput } from "react-terminal-ui";
 import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
-import { projects } from "../states";
+import { projects, games } from "../states";
 
 const colors = {
   green: { hex: "#01A252" },
@@ -59,6 +59,16 @@ const ProjectResponse = (p, lnIndex) => (
   </TerminalOutput>
 );
 
+const GameResponse = (g, lnIndex) => (
+  <TerminalOutput key={`${g.title}-${lnIndex}`}>
+    <StyledSpan color={colors.green.hex}>
+      <BoldItalicSpan>-Game:</BoldItalicSpan> {g.title}
+    </StyledSpan>
+    <div>{g.poster && <img src={g.poster} style={{ maxWidth: "500px" }} />}</div>
+  </TerminalOutput>
+);
+
+// Initial header + first ls
 const buildInitialLines = () => [
   <TerminalOutput key="prompt-line">
     <StyledSpan color={colors.green.hex}>user@MattKearns</StyledSpan>{" "}
@@ -70,7 +80,7 @@ const buildInitialLines = () => [
 ];
 
 export default function TerminalController() {
-  // map project names to use as index for quick lookup
+  // quick lookup maps
   const projectNameMap = useMemo(() => {
     const map = new Map();
     projects.forEach((p, i) => {
@@ -79,31 +89,36 @@ export default function TerminalController() {
     return map;
   }, [projects]);
 
-  const projectOutputs = useMemo(
-    () =>
-      projects.map((p) => (
-        <TerminalOutput key={`project-list-${p.name}`}>
-          <StyledSpan
-            color={colors.green.hex}
-            cursor="pointer"
-            onClick={() => handleInput(p.name)}
-            data-project-name={p.name}
-          >
-            {p.name}
-          </StyledSpan>
-        </TerminalOutput>
-      )),
-    []
-  );
+  const gameNameMap = useMemo(() => {
+    const map = new Map();
+    games.forEach((g, i) => {
+      map.set(normalize(g.title), i);
+    });
+    return map;
+  }, [games]);
+
+  // "filesystem"
+  const [currentDir, setCurrentDir] = useState("Projects"); // "Projects" | "Games"
 
   const [terminalLineData, setTerminalLineData] = useState(() => [
     ...buildInitialLines(),
-    ...projectOutputs,
+    // initial ls for Projects
+    ...projects.map((p) => (
+      <TerminalOutput key={`project-list-init-${p.name}`}>
+        <StyledSpan
+          color={colors.green.hex}
+          cursor="pointer"
+          onClick={() => handleInput(p.name)}
+        >
+          {p.name}
+        </StyledSpan>
+      </TerminalOutput>
+    )),
     <TerminalOutput key="blank-end"></TerminalOutput>,
   ]);
 
   // command history and navigation
-  const [history, setHistory] = useState(['ls',]);
+  const [history, setHistory] = useState(["ls"]);
   const [historyIndex, setHistoryIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
 
@@ -129,6 +144,28 @@ export default function TerminalController() {
     [projectNameMap]
   );
 
+  const runGameDetails = useCallback(
+    (ld, gameTitleRaw) => {
+      const key = normalize(gameTitleRaw);
+      const idx = gameNameMap.get(key);
+      if (idx === undefined) {
+        ld.push(
+          <TerminalOutput key={`unknown-game-${gameTitleRaw}`}>
+            <span style={{ color: colors.red.hex, whiteSpace: "pre-wrap" }}>
+              Unknown game: <strong>{gameTitleRaw}</strong>
+            </span>
+          </TerminalOutput>
+        );
+        return;
+      }
+
+      const game = games[idx];
+      ld.push(GameResponse(game, ld.length));
+      ld.push(<TerminalOutput key={`after-game-${game.title}`}></TerminalOutput>);
+    },
+    [gameNameMap]
+  );
+
   const handleInput = useCallback(
     (terminalInput) => {
       const rawInput = terminalInput.trim();
@@ -141,15 +178,22 @@ export default function TerminalController() {
         ld.push(<TerminalInput key={`input-${ld.length}`}>{terminalInput}</TerminalInput>);
 
         const [rawCmd, ...rawArgs] = rawInput.split(/\s+/);
-        const cmd = normalize(rawCmd);
-        const args = rawArgs.join(" "); // everything after the command
+        let cmd = normalize(rawCmd);
+        let args = rawArgs.join(" ");
 
+        // Allow bare path-style commands like "../games" to act like cd
+        if (cmd.startsWith("./") || cmd.startsWith("../")) {
+          args = rawInput;
+          cmd = "cd";
+        }
+
+        // ---- command handling ----
         if (["commands", "help", "man"].includes(cmd)) {
           ld.push(
             <TerminalOutput key="help-1">
               <StyledSpan color={colors.green.hex}>
-                <BoldItalicSpan>ls, projects: </BoldItalicSpan>
-                list all projects
+                <BoldItalicSpan>ls: </BoldItalicSpan>
+                list items in the current directory
               </StyledSpan>
             </TerminalOutput>
           );
@@ -158,7 +202,15 @@ export default function TerminalController() {
             <TerminalOutput key="help-2">
               <StyledSpan color={colors.green.hex}>
                 <BoldItalicSpan>[project title]: </BoldItalicSpan>
-                list all information for the project
+                show project details (when in ./Projects)
+              </StyledSpan>
+            </TerminalOutput>
+          );
+          ld.push(
+            <TerminalOutput key="help-2b">
+              <StyledSpan color={colors.green.hex}>
+                <BoldItalicSpan>[game title]: </BoldItalicSpan>
+                show game poster (when in ./games)
               </StyledSpan>
             </TerminalOutput>
           );
@@ -166,37 +218,129 @@ export default function TerminalController() {
           ld.push(
             <TerminalOutput key="help-3">
               <StyledSpan color={colors.green.hex}>
-                <BoldItalicSpan>open [project]: </BoldItalicSpan>
-                open project link in new tab
+                <BoldItalicSpan>cd ../games: </BoldItalicSpan>
+                go to games directory (also accepts just <code>../games</code>)
               </StyledSpan>
             </TerminalOutput>
           );
           ld.push(
+            <TerminalOutput key="help-3b">
+              <StyledSpan color={colors.green.hex}>
+                <BoldItalicSpan>cd ../Projects: </BoldItalicSpan>
+                go back to projects
+              </StyledSpan>
+            </TerminalOutput>
+          );
+          ld.push(<TerminalOutput key="help-blank-3"></TerminalOutput>);
+          ld.push(
             <TerminalOutput key="help-4">
+              <StyledSpan color={colors.green.hex}>
+                <BoldItalicSpan>open [project]: </BoldItalicSpan>
+                open project link in new tab (Projects only)
+              </StyledSpan>
+            </TerminalOutput>
+          );
+          ld.push(
+            <TerminalOutput key="help-5">
               <StyledSpan color={colors.green.hex}>
                 <BoldItalicSpan>source [project]: </BoldItalicSpan>
                 show project source links
               </StyledSpan>
             </TerminalOutput>
           );
-          ld.push(<TerminalOutput key="help-blank-3"></TerminalOutput>);
+          ld.push(<TerminalOutput key="help-blank-4"></TerminalOutput>);
           ld.push(
-            <TerminalOutput key="help-5">
+            <TerminalOutput key="help-6">
               <StyledSpan color={colors.green.hex}>
                 <BoldItalicSpan>clear: </BoldItalicSpan>
-                reset to original view
+                clear the screen
               </StyledSpan>
             </TerminalOutput>
           );
-          ld.push(<TerminalOutput key="help-blank-4"></TerminalOutput>);
+          ld.push(<TerminalOutput key="help-blank-5"></TerminalOutput>);
         } else if (["ls", "projects"].includes(cmd)) {
-          ld.push(...projectOutputs);
+          if (currentDir === "Projects") {
+            ld.push(
+              ...projects.map((p) => (
+                <TerminalOutput key={`project-list-${p.name}-${ld.length}`}>
+                  <StyledSpan
+                    color={colors.green.hex}
+                    cursor="pointer"
+                    onClick={() => handleInput(p.name)}
+                  >
+                    {p.name}
+                  </StyledSpan>
+                </TerminalOutput>
+              ))
+            );
+          } else if (currentDir === "Games") {
+            ld.push(
+              ...games.map((g) => (
+                <TerminalOutput key={`game-list-${g.title}-${ld.length}`}>
+                  <StyledSpan
+                    color={colors.green.hex}
+                    cursor="pointer"
+                    onClick={() => handleInput(g.title)}
+                  >
+                    {g.title}
+                  </StyledSpan>
+                </TerminalOutput>
+              ))
+            );
+          }
           ld.push(<TerminalOutput key={`ls-blank-${ld.length}`}></TerminalOutput>);
+        } else if (cmd === "cd") {
+          const path = args.trim();
+          if (!path) {
+            ld.push(
+              <TerminalOutput key={`cd-usage-${ld.length}`}>
+                <span style={{ color: colors.red.hex }}>
+                  Usage: <strong>cd ../games</strong> or <strong>cd ../Projects</strong>
+                </span>
+              </TerminalOutput>
+            );
+          } else {
+            let targetDir = currentDir;
+
+            const lowerPath = path.toLowerCase();
+            if (
+              lowerPath === "../games" ||
+              lowerPath === "games" ||
+              lowerPath === "./games"
+            ) {
+              targetDir = "Games";
+            } else if (
+              lowerPath === "../projects" ||
+              lowerPath === "projects" ||
+              lowerPath === "./projects"
+            ) {
+              targetDir = "Projects";
+            } else {
+              ld.push(
+                <TerminalOutput key={`cd-nosuch-${ld.length}`}>
+                  <span style={{ color: colors.red.hex }}>
+                    No such directory: <strong>{path}</strong>
+                  </span>
+                </TerminalOutput>
+              );
+            }
+
+            if (targetDir !== currentDir) {
+              setCurrentDir(targetDir);
+              ld.push(
+                <TerminalOutput key={`cd-${targetDir}-${ld.length}`}>
+                  <StyledSpan color={colors.green.hex}>user@MattKearns</StyledSpan>{" "}
+                  <StyledSpan color={colors.yellow.hex}>
+                    {targetDir === "Projects" ? "~/Projects" : "~/games"}
+                  </StyledSpan>
+                </TerminalOutput>
+              );
+              ld.push(<TerminalOutput key={`cd-blank-${ld.length}`}></TerminalOutput>);
+            }
+          }
         } else if (cmd === "clear") {
-          console.log(ld);
-          ld = [
-            <TerminalOutput key={`blank-end-${Date.now()}`}></TerminalOutput>,
-          ];
+          // Clear the screen, keep current directory/history
+          ld = [];
         } else if (cmd === "open") {
           const projectName = args;
           if (!projectName) {
@@ -281,10 +425,14 @@ export default function TerminalController() {
             }
           }
         } else {
-          // Treat the entire input as a potential project name
+          // try project or game name
           const projectIndex = projectNameMap.get(normalize(rawInput));
+          const gameIndex = gameNameMap.get(normalize(rawInput));
+
           if (projectIndex !== undefined) {
             runProjectDetails(ld, rawInput);
+          } else if (gameIndex !== undefined) {
+            runGameDetails(ld, rawInput);
           } else {
             ld.push(
               <TerminalOutput key={`unknown-command-${ld.length}`}>
@@ -310,19 +458,19 @@ export default function TerminalController() {
       setHistoryIndex(null);
       setInputValue("");
     },
-    [projectNameMap, projectOutputs, runProjectDetails]
-  );  
-  
+    [currentDir, projectNameMap, gameNameMap, runProjectDetails, runGameDetails]
+  );
+
+  // history navigation with arrow keys
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // you *can* add extra checks here if you only want it active when the terminal is focused
       if (e.key === "ArrowUp") {
         if (!history.length) return;
         e.preventDefault();
 
         let newIndex;
         if (historyIndex === null) {
-          newIndex = history.length - 1; // start from most recent
+          newIndex = history.length - 1;
         } else {
           newIndex = Math.max(0, historyIndex - 1);
         }
@@ -335,7 +483,6 @@ export default function TerminalController() {
 
         let newIndex = historyIndex + 1;
         if (newIndex >= history.length) {
-          // past the newest and then clear input
           setHistoryIndex(null);
           setInputValue("");
         } else {
@@ -349,11 +496,16 @@ export default function TerminalController() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [history, historyIndex]);
 
-
   // Terminal
+  const pathLabel = currentDir === "Projects" ? "~/Projects" : "~/games";
+
   return (
     <Grid container>
-      <Terminal name="- MattKearns ./" onInput={handleInput} startingInputValue={inputValue} >
+      <Terminal
+        name={`- MattKearns ${pathLabel}`}
+        onInput={handleInput}
+        startingInputValue={inputValue}
+      >
         {terminalLineData}
       </Terminal>
     </Grid>
