@@ -542,6 +542,7 @@ export default function TerminalController() {
         name={`- MattKearns ${pathLabel}`}
         onInput={handleInput}
         startingInputValue={inputValue}
+        prompt={`[user@MattKearns ${pathLabel}]$ `}
       >
         {terminalLineData}
       </Terminal>
