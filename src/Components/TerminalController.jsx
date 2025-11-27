@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import Terminal, { TerminalOutput, TerminalInput } from "react-terminal-ui";
 import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
-import { projects, games } from "../states";
+import { projects, games, books } from "../states";
 
 const colors = {
   green: { hex: "#01A252" },
@@ -68,6 +68,15 @@ const GameResponse = (g, lnIndex) => (
   </TerminalOutput>
 );
 
+const BookResponse = (b, lnIndex) => (
+  <TerminalOutput key={`${b.title}-${lnIndex}`}>
+    <StyledSpan color={colors.green.hex}>
+      <BoldItalicSpan>-Book:</BoldItalicSpan> {b.title}
+    </StyledSpan>
+    <div>{b.poster && <img src={b.poster} style={{ maxWidth: "500px" }} />}</div>
+  </TerminalOutput>
+);
+
 // Initial header + first ls
 const buildInitialLines = () => [
   <TerminalOutput key="prompt-line">
@@ -97,10 +106,19 @@ export default function TerminalController() {
     return map;
   }, [games]);
 
+  const bookNameMap = useMemo(() => {
+    const map = new Map();
+    books.forEach((b, i) => {
+      map.set(normalize(b.title), i);
+    });
+    return map;
+  }, [books]);
+
   // directory structure:
   // "~" (home)
   //   ├─ Projects
-  //   └─ games
+  //   ├─ games
+  //   └─ books
   const [currentDir, setCurrentDir] = useState("Projects");
 
   const [terminalLineData, setTerminalLineData] = useState(() => [
@@ -124,7 +142,7 @@ export default function TerminalController() {
   const [historyIndex, setHistoryIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
 
-  const directories = ["Projects", "games"]; // children of ~
+  const directories = ["Projects", "games", "books"]; // children of ~
 
   const runProjectDetails = (ld, projectNameRaw) => {
     const key = normalize(projectNameRaw);
@@ -164,7 +182,26 @@ export default function TerminalController() {
     ld.push(<TerminalOutput key={`after-game-${game.title}`}></TerminalOutput>);
   };
 
-  const handleInput = (terminalInput) => {
+  const runBookDetails = (ld, bookTitleRaw) => {
+    const key = normalize(bookTitleRaw);
+    const idx = bookNameMap.get(key);
+    if (idx === undefined) {
+      ld.push(
+        <TerminalOutput key={`unknown-book-${bookTitleRaw}`}>
+          <span style={{ color: colors.red.hex, whiteSpace: "pre-wrap" }}>
+            Unknown book: <strong>{bookTitleRaw}</strong>
+          </span>
+        </TerminalOutput>
+      );
+      return;
+    }
+
+    const book = books[idx];
+    ld.push(BookResponse(book, ld.length));
+    ld.push(<TerminalOutput key={`after-book-${book.title}`}></TerminalOutput>);
+  };
+
+  function handleInput(terminalInput) {
     const rawInput = terminalInput.trim();
     if (!rawInput) return;
 
@@ -211,6 +248,14 @@ export default function TerminalController() {
             </StyledSpan>
           </TerminalOutput>
         );
+        ld.push(
+          <TerminalOutput key="help-2c">
+            <StyledSpan color={colors.green.hex}>
+              <BoldItalicSpan>[book title]: </BoldItalicSpan>
+              show book cover (when in ~/books)
+            </StyledSpan>
+          </TerminalOutput>
+        );
         ld.push(<TerminalOutput key="help-blank-2"></TerminalOutput>);
         ld.push(
           <TerminalOutput key="help-3">
@@ -233,6 +278,14 @@ export default function TerminalController() {
             <StyledSpan color={colors.green.hex}>
               <BoldItalicSpan>cd ../Projects: </BoldItalicSpan>
               go back to projects (also accepts <code>cd projects</code>)
+            </StyledSpan>
+          </TerminalOutput>
+        );
+        ld.push(
+          <TerminalOutput key="help-3d">
+            <StyledSpan color={colors.green.hex}>
+              <BoldItalicSpan>cd ../books: </BoldItalicSpan>
+              go to books (also accepts <code>cd books</code>)
             </StyledSpan>
           </TerminalOutput>
         );
@@ -307,6 +360,20 @@ export default function TerminalController() {
               </TerminalOutput>
             );
           });
+        } else if (currentDir === "books") {
+          books.forEach((b) => {
+            ld.push(
+              <TerminalOutput key={`book-list-${b.title}-${ld.length}`}>
+                <StyledSpan
+                  color={colors.green.hex}
+                  cursor="pointer"
+                  onClick={() => handleInput(b.title)}
+                >
+                  {b.title}
+                </StyledSpan>
+              </TerminalOutput>
+            );
+          });
         }
         ld.push(<TerminalOutput key={`ls-blank-${ld.length}`}></TerminalOutput>);
       } else if (cmd === "cd") {
@@ -345,6 +412,13 @@ export default function TerminalController() {
             lowerPath === "~/projects"
           ) {
             targetDir = "Projects";
+          } else if (
+            lowerPath === "../books" ||
+            lowerPath === "./books" ||
+            lowerPath === "books" ||
+            lowerPath === "~/books"
+          ) {
+            targetDir = "books";
           } else {
             ld.push(
               <TerminalOutput key={`cd-nosuch-${ld.length}`}>
@@ -363,7 +437,9 @@ export default function TerminalController() {
                 ? "~"
                 : targetDir === "Projects"
                 ? "~/Projects"
-                : "~/games";
+                : targetDir === "games"
+                ? "~/games"
+                : "~/books";
 
             ld.push(
               <TerminalOutput key={`cd-${targetDir}-${ld.length}`}>
@@ -460,14 +536,18 @@ export default function TerminalController() {
           }
         }
       } else {
-        // treat as possible project or game name
-        const projIdx = projectNameMap.get(normalize(rawInput));
-        const gameIdx = gameNameMap.get(normalize(rawInput));
+        // treat as possible project, game, or book name
+        const normalized = normalize(rawInput);
+        const projIdx = projectNameMap.get(normalized);
+        const gameIdx = gameNameMap.get(normalized);
+        const bookIdx = bookNameMap.get(normalized);
 
         if (projIdx !== undefined) {
           runProjectDetails(ld, rawInput);
         } else if (gameIdx !== undefined) {
           runGameDetails(ld, rawInput);
+        } else if (bookIdx !== undefined) {
+          runBookDetails(ld, rawInput);
         } else {
           ld.push(
             <TerminalOutput key={`unknown-command-${ld.length}`}>
@@ -534,7 +614,9 @@ export default function TerminalController() {
       ? "~"
       : currentDir === "Projects"
       ? "~/Projects"
-      : "~/games";
+      : currentDir === "games"
+      ? "~/games"
+      : "~/books";
 
   return (
     <Grid container>
