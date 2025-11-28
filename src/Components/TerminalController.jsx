@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import Terminal, { TerminalOutput, TerminalInput } from "react-terminal-ui";
 import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
-import { projects, games, books } from "../states";
+import { projects, games, books, movies } from "../states";
 
 const colors = {
   green: { hex: "#01A252" },
@@ -77,6 +77,15 @@ const BookResponse = (b, lnIndex) => (
   </TerminalOutput>
 );
 
+const MovieResponse = (m, lnIndex) => (
+  <TerminalOutput key={`${m.title}-${lnIndex}`}>
+    <StyledSpan color={colors.green.hex}>
+      <BoldItalicSpan>-Movie:</BoldItalicSpan> {m.title}
+    </StyledSpan>
+    <div>{m.poster && <img src={m.poster} style={{ maxWidth: "500px" }} />}</div>
+  </TerminalOutput>
+);
+
 // Initial header + first ls
 const buildInitialLines = () => [
   <TerminalOutput key="prompt-line">
@@ -114,11 +123,20 @@ export default function TerminalController() {
     return map;
   }, [books]);
 
+  const movieNameMap = useMemo(() => {
+    const map = new Map();
+    movies.forEach((m, i) => {
+      map.set(normalize(m.title), i);
+    });
+    return map;
+  }, [movies]);
+
   // directory structure:
   // "~" (home)
   //   ├─ Projects
   //   ├─ games
-  //   └─ books
+  //   ├─ books
+  //   └─ movies
   const [currentDir, setCurrentDir] = useState("Projects");
 
   const [terminalLineData, setTerminalLineData] = useState(() => [
@@ -142,7 +160,7 @@ export default function TerminalController() {
   const [historyIndex, setHistoryIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
 
-  const directories = ["Projects", "games", "books"]; // children of ~
+  const directories = ["Projects", "games", "books", "movies"]; // children of ~
 
   const runProjectDetails = (ld, projectNameRaw) => {
     const key = normalize(projectNameRaw);
@@ -201,6 +219,25 @@ export default function TerminalController() {
     ld.push(<TerminalOutput key={`after-book-${book.title}`}></TerminalOutput>);
   };
 
+  const runMovieDetails = (ld, movieTitleRaw) => {
+    const key = normalize(movieTitleRaw);
+    const idx = movieNameMap.get(key);
+    if (idx === undefined) {
+      ld.push(
+        <TerminalOutput key={`unknown-movie-${movieTitleRaw}`}>
+          <span style={{ color: colors.red.hex, whiteSpace: "pre-wrap" }}>
+            Unknown movie: <strong>{movieTitleRaw}</strong>
+          </span>
+        </TerminalOutput>
+      );
+      return;
+    }
+
+    const movie = movies[idx];
+    ld.push(MovieResponse(movie, ld.length));
+    ld.push(<TerminalOutput key={`after-movie-${movie.title}`}></TerminalOutput>);
+  };
+
   function handleInput(terminalInput) {
     const rawInput = terminalInput.trim();
     if (!rawInput) return;
@@ -256,6 +293,14 @@ export default function TerminalController() {
             </StyledSpan>
           </TerminalOutput>
         );
+        ld.push(
+          <TerminalOutput key="help-2d">
+            <StyledSpan color={colors.green.hex}>
+              <BoldItalicSpan>[movie title]: </BoldItalicSpan>
+              show movie poster (when in ~/movies)
+            </StyledSpan>
+          </TerminalOutput>
+        );
         ld.push(<TerminalOutput key="help-blank-2"></TerminalOutput>);
         ld.push(
           <TerminalOutput key="help-3">
@@ -286,6 +331,14 @@ export default function TerminalController() {
             <StyledSpan color={colors.green.hex}>
               <BoldItalicSpan>cd ../books: </BoldItalicSpan>
               go to books (also accepts <code>cd books</code>)
+            </StyledSpan>
+          </TerminalOutput>
+        );
+        ld.push(
+          <TerminalOutput key="help-3e">
+            <StyledSpan color={colors.green.hex}>
+              <BoldItalicSpan>cd ../movies: </BoldItalicSpan>
+              go to movies (also accepts <code>cd movies</code>)
             </StyledSpan>
           </TerminalOutput>
         );
@@ -374,6 +427,20 @@ export default function TerminalController() {
               </TerminalOutput>
             );
           });
+        } else if (currentDir === "movies") {
+          movies.forEach((m) => {
+            ld.push(
+              <TerminalOutput key={`movie-list-${m.title}-${ld.length}`}>
+                <StyledSpan
+                  color={colors.green.hex}
+                  cursor="pointer"
+                  onClick={() => handleInput(m.title)}
+                >
+                  {m.title}
+                </StyledSpan>
+              </TerminalOutput>
+            );
+          });
         }
         ld.push(<TerminalOutput key={`ls-blank-${ld.length}`}></TerminalOutput>);
       } else if (cmd === "cd") {
@@ -419,6 +486,13 @@ export default function TerminalController() {
             lowerPath === "~/books"
           ) {
             targetDir = "books";
+          } else if (
+            lowerPath === "../movies" ||
+            lowerPath === "./movies" ||
+            lowerPath === "movies" ||
+            lowerPath === "~/movies"
+          ) {
+            targetDir = "movies";
           } else {
             ld.push(
               <TerminalOutput key={`cd-nosuch-${ld.length}`}>
@@ -439,7 +513,9 @@ export default function TerminalController() {
                 ? "~/Projects"
                 : targetDir === "games"
                 ? "~/games"
-                : "~/books";
+                : targetDir === "books"
+                ? "~/books"
+                : "~/movies";
 
             ld.push(
               <TerminalOutput key={`cd-${targetDir}-${ld.length}`}>
@@ -536,11 +612,12 @@ export default function TerminalController() {
           }
         }
       } else {
-        // treat as possible project, game, or book name
+        // treat as possible project, game, book, or movie name
         const normalized = normalize(rawInput);
         const projIdx = projectNameMap.get(normalized);
         const gameIdx = gameNameMap.get(normalized);
         const bookIdx = bookNameMap.get(normalized);
+        const movieIdx = movieNameMap.get(normalized);
 
         if (projIdx !== undefined) {
           runProjectDetails(ld, rawInput);
@@ -548,6 +625,8 @@ export default function TerminalController() {
           runGameDetails(ld, rawInput);
         } else if (bookIdx !== undefined) {
           runBookDetails(ld, rawInput);
+        } else if (movieIdx !== undefined) {
+          runMovieDetails(ld, rawInput);
         } else {
           ld.push(
             <TerminalOutput key={`unknown-command-${ld.length}`}>
@@ -616,7 +695,9 @@ export default function TerminalController() {
       ? "~/Projects"
       : currentDir === "games"
       ? "~/games"
-      : "~/books";
+      : currentDir === "books"
+      ? "~/books"
+      : "~/movies";
 
   return (
     <Grid container>
