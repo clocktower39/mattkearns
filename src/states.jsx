@@ -311,27 +311,86 @@ export const movies = [
 ];
 
 export const tvShows = [
-  { title: "South Park" },
-  { title: "Archer" },
-  { title: "Bob's Burgers" },
-  { title: "Criminal Minds" },
-  { title: "Dexter" },
-  { title: "Rick and Morty" },
-  { title: "The Office" },
-  { title: "Futurama" },
-  { title: "Aqua Team Hunger Force" },
-  { title: "Chernobyl" },
-  { title: "Barry" },
-  { title: "Avatar: The Last Airbender" },
-  { title: "Criminal Minds" },
-  { title: "Fallout" },
-  { title: "Mr. Robot" },
-  { title: "Nathan for You" },
-  { title: "Severance" },
-  { title: "Scavengers Reign" },
-  { title: "Trailer Park Boys" },
-  { title: "True Detective" },
-  { title: "It's Always Sunny in Philadelphia" },
+  {
+    title: "South Park",
+    poster: "/img/posters/tv/south_park.jpg",
+  },
+  {
+    title: "Archer",
+    poster: "/img/posters/tv/archer.jpg",
+  },
+  {
+    title: "Bob's Burgers",
+    poster: "/img/posters/tv/bobs_burgers.jpg",
+  },
+  {
+    title: "Criminal Minds",
+    poster: "/img/posters/tv/criminal_minds.jpg",
+  },
+  {
+    title: "Dexter",
+    poster: "/img/posters/tv/dexter.jpg",
+  },
+  {
+    title: "Rick and Morty",
+    poster: "/img/posters/tv/rick_and_morty.jpg",
+  },
+  {
+    title: "The Office",
+    poster: "/img/posters/tv/the_office.jpg",
+  },
+  {
+    title: "Futurama",
+    poster: "/img/posters/tv/futurama.jpg",
+  },
+  {
+    title: "Aqua Teen Hunger Force",
+    poster: "/img/posters/tv/aqua_teen_hunger_force.jpg",
+  },
+  {
+    title: "Chernobyl",
+    poster: "/img/posters/tv/chernobyl.jpg",
+  },
+  {
+    title: "Barry",
+    poster: "/img/posters/tv/barry.jpg",
+  },
+  {
+    title: "Avatar: The Last Airbender",
+    poster: "/img/posters/tv/avatar_the_last_airbender.jpg",
+  },
+  {
+    title: "Fallout",
+    poster: "/img/posters/tv/fallout.png",
+  },
+  {
+    title: "Mr. Robot",
+    poster: "/img/posters/tv/mr_robot.jpg",
+  },
+  {
+    title: "Nathan for You",
+    poster: "/img/posters/tv/nathan_for_you.jpg",
+  },
+  {
+    title: "Severance",
+    poster: "/img/posters/tv/severance.jpg",
+  },
+  {
+    title: "Scavengers Reign",
+    poster: "/img/posters/tv/scavengers_reign.jpg",
+  },
+  {
+    title: "Trailer Park Boys",
+    poster: "/img/posters/tv/trailer_park_boys.jpg",
+  },
+  {
+    title: "True Detective",
+    poster: "/img/posters/tv/true_detective.jpg",
+  },
+  {
+    title: "It's Always Sunny in Philadelphia",
+    poster: "/img/posters/tv/its_always_sunny_in_philadelphia.jpg",
+  },
 ];
 
 export const inspirational = [

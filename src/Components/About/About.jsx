@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import Footer from '../Footer';
 import FavoritesList from "./FavoritesList";
-import { books, movies, games } from "../../states";
+import { books, movies, games, tvShows, } from "../../states";
 
 const styles = () => ({
   AboutContainer: {
@@ -61,6 +61,9 @@ export default function About() {
             </Grid>
             <Grid container size={12} >
               <FavoritesList list={games} />
+            </Grid>
+            <Grid container size={12} >
+              <FavoritesList list={tvShows} />
             </Grid>
         </Grid>
       </Container>
