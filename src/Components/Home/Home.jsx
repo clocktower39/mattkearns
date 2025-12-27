@@ -68,6 +68,27 @@ const styles = () => ({
   DescriptionSpan: { color: "#73D90D", textTransform: "uppercase" },
   ButtonContainer: { margin: "5px", padding: "5px 0px" },
   Button: { color: "white", borderRadius: "25px" },
+  IntroContainer: {
+    maxWidth: "560px",
+    margin: "0 auto",
+  },
+  IntroLead: {
+    opacity: 0.95,
+    marginBottom: "0.9rem",
+    letterSpacing: "0.02em",
+    textShadow: "0 2px 10px rgba(0,0,0,0.6)",
+  },
+  IntroParagraph: {
+    opacity: 0.88,
+    lineHeight: 1.75,
+    marginBottom: "1rem",
+    textShadow: "0 2px 10px rgba(0,0,0,0.55)",
+  },
+  SubtleAccent: {
+    color: "#73D90D",
+    fontWeight: 500,
+  },
+
 });
 
 export default function Home() {
@@ -100,42 +121,35 @@ export default function Home() {
                 </Grid>
 
                 <Grid size={12} sx={classes.GridAreaC}>
-                  <Typography variant="h5">
-                    I'm a self taught <span style={classes.DescriptionSpan}>Web Developer.</span>
-                  </Typography>
-                  <br />
-                  <Typography variant="h5">
-                    I specialize in building modern web apps using the MERN stack and have hands-on
-                    experience managing servers, including Apache, NGINX, and WordPress.
-                  </Typography>
-                  <br />
-                  <Typography variant="h5">
-                    My workflow includes everything from coding and debugging to deployment on
-                    platforms like AWS and other hosting services.
-                  </Typography>
-                  <br />
-                  <Typography variant="h5">
-                    I am passionate about smart home technology, using Home Assistant to create
-                    integrated and automated setups.
-                  </Typography>
-                  <br />
-                  <Typography variant="h5">
-                    Whether it’s building websites, optimizing workflows, or solving unique
-                    challenges, I focus on making ideas functional and impactful.
-                  </Typography>
+                  <Box sx={classes.IntroContainer}>
+                      <Typography variant="subtitle1" sx={classes.IntroLead}>
+                        <span style={classes.SubtleAccent}>I like figuring things out.</span>
+                      </Typography>
 
-                  <Grid container size={{ xs: 12, sm: 6, }} sx={classes.ButtonContainer}>
-                    {/* <Button
-                      fullWidth
-                      variant="contained"
-                      sx={classes.Button}
-                      component={Link}
-                      to="/about"
-                    >
-                      About Me
-                    </Button> */}
-                  </Grid>
+                      <Typography variant="body1" sx={classes.IntroParagraph}>
+                        Most of my time is spent building, breaking, fixing, and rebuilding things, usually with code,
+                        hardware, or systems that weren’t quite working the way they should.
+                      </Typography>
+
+                      <Typography variant="body1" sx={classes.IntroParagraph}>
+                        I care about why something exists, how it fits into real life, and
+                        whether it actually does what it’s supposed to do.
+                      </Typography>
+
+                      <Typography variant="body1" sx={classes.IntroParagraph}>
+                        I work across web development, automation, and self-hosted tech, but what really drives me is
+                        problem-solving. If something feels inefficient or fragile, I’ll probably take it apart just
+                        to understand it and then put it back together.
+                      </Typography>
+
+                      <Typography variant="body1" sx={{ ...classes.IntroParagraph, marginBottom: 0 }}>
+                        Outside of tech, I coach cheer and tumbling, experiment with 3D printing, and constantly tinker
+                        with smart-home setups. When I’m not doing that, I’m usually lifting or gaming.
+                      </Typography>
+                  </Box>
                 </Grid>
+
+
               </Box>
             </Grid>
           </Container>
