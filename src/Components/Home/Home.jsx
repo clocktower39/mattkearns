@@ -72,6 +72,16 @@ const styles = () => ({
     maxWidth: "560px",
     margin: "0 auto",
   },
+  HeroCard: {
+    position: "relative",
+    zIndex: 2,
+    padding: "18px 18px",
+    borderRadius: "18px",
+    background: "rgba(0,0,0,0.35)", // dark glass
+    backdropFilter: "blur(2px)",
+    border: "1px solid rgba(115, 217, 13, 0.18)",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
+  },
   IntroLead: {
     opacity: 0.95,
     marginBottom: "0.9rem",
@@ -100,7 +110,7 @@ export default function Home() {
         <ParticleBackground>
           <Container maxWidth="md" sx={classes.WelcomeContainer}>
             <Grid container sx={classes.WelcomeGridContainer}>
-              <Box sx={classes.CssGridBox}>
+              <Box sx={{...classes.CssGridBox, ...classes.HeroCard, }}>
                 <Grid container size={12} sx={classes.GridAreaB}>
                   <div style={classes.HeadshotContainer}>
                     <img src={headshot} alt="Avatar" style={classes.Headshot} />
