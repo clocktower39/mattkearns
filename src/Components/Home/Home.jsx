@@ -147,13 +147,13 @@ export default function Home() {
                     </Typography>
 
                     <Typography variant="body1" sx={classes.IntroParagraph}>
-                      Whether it's web development, automation, or self-hosted tech what really drives me is problem-solving.
+                      Whether it's web development, automation, or self-hosted tech, problem-solving is what really drives me.
                       If something feels inefficient or fragile, I’ll probably take it apart just to understand it and then put it back together.
                     </Typography>
 
                     <Typography variant="body1" sx={{ ...classes.IntroParagraph, marginBottom: 0 }}>
-                      Outside of tech, I coach cheer and tumbling, experiment with 3D printing, and constantly tinker
-                      with smart-home setups. When I’m not doing that, I’m usually lifting or gaming.
+                      I work where I enjoy the environment, and I build technology because I love it. 
+                      Outside of that, I’m coaching cheer and tumbling, lifting, gaming, or tinkering purely for fun.
                     </Typography>
                   </Box>
                 </Grid>
