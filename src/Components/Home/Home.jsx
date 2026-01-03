@@ -110,7 +110,7 @@ export default function Home() {
         <ParticleBackground>
           <Container maxWidth="md" sx={classes.WelcomeContainer}>
             <Grid container sx={classes.WelcomeGridContainer}>
-              <Box sx={{...classes.CssGridBox, ...classes.HeroCard, }}>
+              <Box sx={{ ...classes.CssGridBox, ...classes.HeroCard, }}>
                 <Grid container size={12} sx={classes.GridAreaB}>
                   <div style={classes.HeadshotContainer}>
                     <img src={headshot} alt="Avatar" style={classes.Headshot} />
@@ -132,30 +132,29 @@ export default function Home() {
 
                 <Grid size={12} sx={classes.GridAreaC}>
                   <Box sx={classes.IntroContainer}>
-                      <Typography variant="subtitle1" sx={classes.IntroLead}>
-                        <span style={classes.SubtleAccent}>I like figuring things out.</span>
-                      </Typography>
+                    <Typography variant="subtitle1" sx={classes.IntroLead}>
+                      <span style={classes.SubtleAccent}>I like figuring things out.</span>
+                    </Typography>
 
-                      <Typography variant="body1" sx={classes.IntroParagraph}>
-                        Most of my time is spent building, breaking, fixing, and rebuilding things, usually with code,
-                        hardware, or systems that weren’t quite working the way they should.
-                      </Typography>
+                    <Typography variant="body1" sx={classes.IntroParagraph}>
+                      Most of my time is spent building, breaking, fixing, and rebuilding things, usually with code,
+                      hardware, or systems that weren’t quite working the way they should.
+                    </Typography>
 
-                      <Typography variant="body1" sx={classes.IntroParagraph}>
-                        I care about why something exists, how it fits into real life, and
-                        whether it actually does what it’s supposed to do.
-                      </Typography>
+                    <Typography variant="body1" sx={classes.IntroParagraph}>
+                      I care about why something exists, how it fits into real life, and
+                      whether it actually does what it’s supposed to do.
+                    </Typography>
 
-                      <Typography variant="body1" sx={classes.IntroParagraph}>
-                        I work across web development, automation, and self-hosted tech, but what really drives me is
-                        problem-solving. If something feels inefficient or fragile, I’ll probably take it apart just
-                        to understand it and then put it back together.
-                      </Typography>
+                    <Typography variant="body1" sx={classes.IntroParagraph}>
+                      Whether it's web development, automation, or self-hosted tech what really drives me is problem-solving.
+                      If something feels inefficient or fragile, I’ll probably take it apart just to understand it and then put it back together.
+                    </Typography>
 
-                      <Typography variant="body1" sx={{ ...classes.IntroParagraph, marginBottom: 0 }}>
-                        Outside of tech, I coach cheer and tumbling, experiment with 3D printing, and constantly tinker
-                        with smart-home setups. When I’m not doing that, I’m usually lifting or gaming.
-                      </Typography>
+                    <Typography variant="body1" sx={{ ...classes.IntroParagraph, marginBottom: 0 }}>
+                      Outside of tech, I coach cheer and tumbling, experiment with 3D printing, and constantly tinker
+                      with smart-home setups. When I’m not doing that, I’m usually lifting or gaming.
+                    </Typography>
                   </Box>
                 </Grid>
 
