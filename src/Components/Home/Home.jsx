@@ -152,7 +152,6 @@ export default function Home() {
                     </Typography>
 
                     <Typography variant="body1" sx={{ ...classes.IntroParagraph, marginBottom: 0 }}>
-                      I work where I enjoy the environment, and I build technology because I love it. 
                       Outside of that, I’m coaching cheer and tumbling, lifting, gaming, or tinkering purely for fun.
                     </Typography>
                   </Box>
