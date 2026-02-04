@@ -22,6 +22,7 @@ export default function Logos() {
   const classes = styles();
   const logos = [
     "/img/logos/javascript_logo.svg",
+    "/img/logos/ts-logo.svg",
     "/img/logos/reactjs_logo.svg",
     "/img/logos/redux_logo.svg",
     "/img/logos/mui_logo.svg",
@@ -31,6 +32,7 @@ export default function Logos() {
     "/img/logos/python_logo.svg",
     "/img/logos/php_logo.svg",
     "/img/logos/mongodb_logo.svg",
+    "/img/logos/postgresql-logo.svg",
     "/img/logos/socketio_logo.svg",
     "/img/logos/git_logo.svg",
     "/img/logos/heroku_logo.svg",
