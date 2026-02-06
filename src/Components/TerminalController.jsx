@@ -779,6 +779,20 @@ export default function TerminalController() {
       : currentDir === "movies"
       ? "~/movies"
       : "~/shows";
+  
+  const [terminalHeight, setTerminalHeight] = useState('600px');
+  
+  const onRedButtonClick = (e) => {
+    setTerminalHeight('0px')
+  }
+
+  const onYellowButtonClick = (e) => {
+    setTerminalHeight('600px')
+  }
+
+  const onGreenButtonClick = (e) => {
+    setTerminalHeight('100vh')
+  }
 
   return (
     <Grid container>
@@ -787,6 +801,11 @@ export default function TerminalController() {
         onInput={handleInput}
         startingInputValue={inputValue}
         prompt={`[user@MattKearns ${pathLabel}]$ `}
+        height={terminalHeight}
+        style={{ minHeight: "600px" }}
+        redBtnCallback={onRedButtonClick}
+        yellowBtnCallback={onYellowButtonClick}
+        greenBtnCallback={onGreenButtonClick}
       >
         {terminalLineData}
       </Terminal>
