@@ -16,3 +16,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.react-terminal-active-input {
+  position: relative;
+}
+
+.react-terminal-active-input .terminal-ghost {
+  top: 0;
+  left: var(--ghost-left, 0px);
+  color: #6b7785;
+  opacity: 0.6;
+  pointer-events: none;
+  white-space: pre;
+  font: inherit;
+  line-height: inherit;
+}

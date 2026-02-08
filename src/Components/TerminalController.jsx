@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import Terminal, { TerminalOutput, TerminalInput } from "react-terminal-ui";
 import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
@@ -30,6 +30,8 @@ const StyledLink = styled("a")`
 `;
 
 const normalize = (s = "") => s.toLowerCase().trim();
+const COMMANDS = ["help", "man", "commands", "ls", "cd", "clear", "open", "source", "projects"];
+const DIRECTORIES = ["Projects", "games", "books", "movies", "shows"];
 
 const ProjectResponse = (p, lnIndex) => (
   <TerminalOutput key={`${p.name}-${lnIndex}`}>
@@ -96,10 +98,10 @@ const ShowResponse = (s, lnIndex) => (
 );
 
 // Initial header + first ls
-const buildInitialLines = () => [
+const buildInitialLines = (pathLabel) => [
   <TerminalOutput key="prompt-line">
     <StyledSpan color={colors.green.hex}>user@MattKearns</StyledSpan>{" "}
-    <StyledSpan color={colors.yellow.hex}>~/Projects</StyledSpan>
+    <StyledSpan color={colors.yellow.hex}>{pathLabel}</StyledSpan>
   </TerminalOutput>,
   <TerminalOutput key="blank-1"></TerminalOutput>,
   <TerminalOutput key="ls-line">$ ls</TerminalOutput>,
@@ -155,18 +157,18 @@ export default function TerminalController() {
   //   ├─ books
   //   ├─ movies
   //   └─ shows
-  const [currentDir, setCurrentDir] = useState("Projects");
+  const [currentDir, setCurrentDir] = useState("~");
 
   const [terminalLineData, setTerminalLineData] = useState(() => [
-    ...buildInitialLines(),
-    ...projects.map((p) => (
-      <TerminalOutput key={`project-list-init-${p.name}`}>
+    ...buildInitialLines("~"),
+    ...DIRECTORIES.map((dirName) => (
+      <TerminalOutput key={`dir-init-${dirName}`}>
         <StyledSpan
-          color={colors.green.hex}
+          color={colors.blue.hex}
           cursor="pointer"
-          onClick={() => handleInput(p.name)}
+          onClick={() => handleInput(`cd ./${dirName}`)}
         >
-          {p.name}
+          {dirName}
         </StyledSpan>
       </TerminalOutput>
     )),
@@ -177,8 +179,18 @@ export default function TerminalController() {
   const [history, setHistory] = useState(["ls"]);
   const [historyIndex, setHistoryIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
+  const [currentInput, setCurrentInput] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const currentInputRef = useRef("");
+  const suggestionsRef = useRef([]);
 
-  const directories = ["Projects", "games", "books", "movies", "shows"]; // children of ~
+  useEffect(() => {
+    currentInputRef.current = currentInput;
+  }, [currentInput]);
+
+  useEffect(() => {
+    suggestionsRef.current = suggestions;
+  }, [suggestions]);
 
   const runProjectDetails = (ld, projectNameRaw) => {
     const key = normalize(projectNameRaw);
@@ -274,6 +286,170 @@ export default function TerminalController() {
     ld.push(ShowResponse(show, ld.length));
     ld.push(<TerminalOutput key={`after-show-${show.title}`}></TerminalOutput>);
   };
+
+  const getItemsForDir = (dirName) => {
+    if (dirName === "Projects") return projects.map((p) => p.name);
+    if (dirName === "games") return games.map((g) => g.title);
+    if (dirName === "books") return books.map((b) => b.title);
+    if (dirName === "movies") return movies.map((m) => m.title);
+    if (dirName === "shows") return tvShows.map((s) => s.title);
+    return [];
+  };
+
+  const buildSuggestionList = (inputValueRaw) => {
+    const raw = inputValueRaw || "";
+    const trimmedStart = raw.replace(/^\s+/, "");
+    if (!trimmedStart) return [];
+
+    const firstSpaceIdx = trimmedStart.indexOf(" ");
+    const hasArgs = firstSpaceIdx !== -1;
+    const cmdPart = hasArgs ? trimmedStart.slice(0, firstSpaceIdx) : trimmedStart;
+    const cmdNorm = normalize(cmdPart);
+    const argPartRaw = hasArgs ? trimmedStart.slice(firstSpaceIdx + 1) : "";
+    const argPrefix = normalize(argPartRaw);
+
+    const filterByPrefix = (list, prefix) =>
+      list.filter((item) => normalize(item).startsWith(prefix));
+
+    if (!hasArgs) {
+      const candidates = [...COMMANDS];
+      if (currentDir === "~") {
+        candidates.push(...DIRECTORIES);
+      } else {
+        candidates.push(...getItemsForDir(currentDir));
+      }
+      const matches = filterByPrefix(candidates, cmdNorm)
+        .filter((item) => normalize(item) !== cmdNorm)
+        .slice(0, 5);
+      return Array.from(new Set(matches));
+    }
+
+    if (cmdNorm === "cd") {
+      const cdTargets = ["..", "~", ...DIRECTORIES];
+      return filterByPrefix(cdTargets, argPrefix)
+        .map((match) => `cd ${match}`)
+        .filter((item) => normalize(item) !== normalize(trimmedStart))
+        .slice(0, 5);
+    }
+
+    if (cmdNorm === "open" || cmdNorm === "source") {
+      return filterByPrefix(
+        projects.map((p) => p.name),
+        argPrefix
+      )
+        .map((match) => `${cmdNorm} ${match}`)
+        .filter((item) => normalize(item) !== normalize(trimmedStart))
+        .slice(0, 5);
+    }
+
+    return [];
+  };
+
+  useEffect(() => {
+    const inputEl = document.querySelector(".terminal-hidden-input");
+    if (!inputEl) return;
+
+    const handleInputChange = (event) => {
+      setCurrentInput(event.target.value);
+    };
+
+    inputEl.addEventListener("input", handleInputChange);
+    return () => inputEl.removeEventListener("input", handleInputChange);
+  }, []);
+
+  useEffect(() => {
+    setSuggestions(buildSuggestionList(currentInput));
+  }, [currentInput, currentDir, projects, games, books, movies, tvShows]);
+
+  useEffect(() => {
+    if (inputValue !== currentInput) {
+      setCurrentInput(inputValue);
+    }
+  }, [inputValue]);
+
+  useEffect(() => {
+    const handleTabKey = (event) => {
+      if (event.key !== "Tab") return;
+      const nextValue = suggestionsRef.current?.[0];
+      if (!nextValue) return;
+      if (!currentInputRef.current) return;
+      event.preventDefault();
+      setInputValue(nextValue);
+      setCurrentInput(nextValue);
+    };
+
+    window.addEventListener("keydown", handleTabKey);
+    return () => window.removeEventListener("keydown", handleTabKey);
+  }, []);
+
+  const measureTextWidth = (text, referenceEl) => {
+    if (!referenceEl) return 0;
+    const span = document.createElement("span");
+    const styles = window.getComputedStyle(referenceEl);
+    span.style.visibility = "hidden";
+    span.style.whiteSpace = "pre";
+    span.style.fontSize = styles.fontSize;
+    span.style.fontFamily = styles.fontFamily;
+    span.innerText = text || "";
+    document.body.appendChild(span);
+    const width = span.getBoundingClientRect().width;
+    document.body.removeChild(span);
+    return width;
+  };
+
+  useEffect(() => {
+    const activeLine = document.querySelector(".react-terminal-active-input");
+    if (!activeLine) return;
+
+    let ghostEl = activeLine.querySelector(".terminal-ghost");
+    if (!ghostEl) {
+      ghostEl = document.createElement("span");
+      ghostEl.className = "terminal-ghost";
+      activeLine.appendChild(ghostEl);
+    }
+
+    const hiddenInput = document.querySelector(".terminal-hidden-input");
+    if (
+      hiddenInput &&
+      hiddenInput.selectionStart !== null &&
+      hiddenInput.selectionStart !== hiddenInput.value.length
+    ) {
+      ghostEl.textContent = "";
+      activeLine.style.removeProperty("--ghost-left");
+      return;
+    }
+
+    const suggestion = suggestions[0] || "";
+    const input = currentInput || "";
+    const suggestionLower = suggestion.toLowerCase();
+    const inputLower = input.toLowerCase();
+
+    if (!suggestion || !input || !suggestionLower.startsWith(inputLower)) {
+      ghostEl.textContent = "";
+      activeLine.style.removeProperty("--ghost-left");
+      return;
+    }
+
+    const remainder = suggestion.slice(input.length);
+    if (!remainder) {
+      ghostEl.textContent = "";
+      activeLine.style.removeProperty("--ghost-left");
+      return;
+    }
+
+    const promptText = activeLine.getAttribute("data-terminal-prompt") || "$";
+    const promptWidth = measureTextWidth(promptText, activeLine);
+    const inputWidth = measureTextWidth(input, activeLine);
+    const fontSize = parseFloat(window.getComputedStyle(activeLine).fontSize || "16");
+    const promptGap = fontSize * 0.75;
+    const cursorEl = activeLine.querySelector(".cursor");
+    const cursorWidth =
+      cursorEl?.getBoundingClientRect().width || Math.max(6, fontSize * 0.55);
+    const left = promptWidth + promptGap + inputWidth + cursorWidth;
+
+    activeLine.style.setProperty("--ghost-left", `${left}px`);
+    ghostEl.textContent = remainder;
+  }, [currentInput, suggestions]);
 
   function handleInput(terminalInput) {
     const rawInput = terminalInput.trim();
@@ -421,11 +597,19 @@ export default function TerminalController() {
             </StyledSpan>
           </TerminalOutput>
         );
+        ld.push(
+          <TerminalOutput key="help-7">
+            <StyledSpan color={colors.green.hex}>
+              <BoldItalicSpan>tab: </BoldItalicSpan>
+              autocomplete the top suggestion
+            </StyledSpan>
+          </TerminalOutput>
+        );
         ld.push(<TerminalOutput key="help-blank-5"></TerminalOutput>);
       } else if (["ls", "projects"].includes(cmd)) {
         if (currentDir === "~") {
           // list directories
-          directories.forEach((dirName) => {
+          DIRECTORIES.forEach((dirName) => {
             ld.push(
               <TerminalOutput key={`dir-${dirName}-${ld.length}`}>
                 <StyledSpan
@@ -730,6 +914,8 @@ export default function TerminalController() {
     }
     setHistoryIndex(null);
     setInputValue("");
+    setCurrentInput("");
+    setSuggestions([]);
   }
 
   // history navigation (up/down)
