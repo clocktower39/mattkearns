@@ -12,9 +12,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/about" element={<About />} />
-          <Route exact path="/web_resume" element={<Resume />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/web_resume" element={<Resume />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>

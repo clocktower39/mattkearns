@@ -1,9 +1,8 @@
-import React from "react";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import type { CSSProperties } from "react";
+
 import Logos from "./Logos";
 import headshot from "../../img/avatar2.jpg";
-// import Projects from "./Projects";
 import TerminalController from "../TerminalController";
 import Footer from "../Footer";
 import { theme } from "../../theme";
@@ -49,7 +48,7 @@ const styles = () => ({
     height: "100%",
     width: "100%",
     border: "3px solid white",
-  },
+  } satisfies CSSProperties,
   SalutationContainer: {
     padding: '7.5px 0px',
     textAlign: "center",
@@ -163,7 +162,6 @@ export default function Home() {
           </Container>
         </ParticleBackground>
       </Box>
-      {/* <Projects /> */}
       <TerminalController />
       <Logos />
       <Footer />
