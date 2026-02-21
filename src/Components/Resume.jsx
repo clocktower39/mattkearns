@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Container, Grid, IconButton, Typography } from "@mui/material";
+import { Avatar, Button, Container, Grid, IconButton, Typography } from "@mui/material";
 import {
   Code,
   EmojiPeople,
@@ -8,38 +8,31 @@ import {
   Source as SourceIcon,
   GitHub,
   LinkedIn,
-  Instagram,
+  Print,
 } from "@mui/icons-material";
 import img from "../img/avatar.jpg";
 
 export default function Resume() {
-  const tools = [
-    "Javascript",
-    "Node.js",
-    "MongoDB",
-    "CSS",
-    "Yarn",
-    "NPM",
-    "Mongoose",
-    "HTML",
-    "Express",
-    "Multer",
-    "React",
-    "Python",
-    "Redux",
-    "PHP",
-    "Material-UI",
-    "Socket.IO",
-    "SQL",
-    "D3",
-    "JWT",
-    "AWS",
-    "Git",
-    "Puppeteer",
-    "Docker",
-    "Heroku",
-    "cPanel",
+  const coreSkills = [
+    {
+      label: "Frontend",
+      items: "React, TypeScript, Next.js, Vite, Redux, MUI, HTML, CSS",
+    },
+    {
+      label: "Backend",
+      items: "Node.js, Express, MongoDB, Mongoose, JWT, Socket.IO, GridFS",
+    },
+    {
+      label: "Infrastructure",
+      items: "Docker, NGINX, AWS (Lightsail, S3, CloudFront), Cloudflare (DNS/SSL)",
+    },
+    {
+      label: "Engineering",
+      items:
+        "Refactoring, performance optimization, debugging production issues, SEO/SSG/SSR, CI/CD basics",
+    },
   ];
+
   return (
     <Container maxWidth="md" disableGutters>
       <Grid container>
@@ -48,10 +41,11 @@ export default function Resume() {
           container
           sx={{
             fontWeight: 500,
-            backgroundColor: "#2D3D4C",
+            backgroundColor: "#263544",
             borderRadius: "12.5px 12.5px 0 0",
             color: "white",
             order: 1,
+            position: "relative",
           }}
         >
           <Grid container size={4} sx={{ justifyContent: "center" }}>
@@ -71,8 +65,31 @@ export default function Resume() {
               <Typography variant="h2">Matt Kearns</Typography>
             </Grid>
             <Grid size={12}>
-              <Typography variant="h6">Full Stack Developer</Typography>
+              <Typography variant="h6">Senior Frontend / Full-Stack Engineer</Typography>
             </Grid>
+            <Grid size={12}>
+              <Typography variant="subtitle2">
+                Gilbert, AZ • Open to Onsite / Hybrid / Remote
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid sx={{ position: "absolute", top: 6, right: 40, display: "flex" }}>
+            <IconButton
+              aria-label="Print to PDF"
+              onClick={() => window.print()}
+              sx={{
+                color: "white",
+                border: "1px solid rgba(255,255,255,0.6)",
+                borderRadius: "8px",
+                padding: "6px",
+                "&:hover": {
+                  borderColor: "white",
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                },
+              }}
+            >
+              <Print fontSize="small" />
+            </IconButton>
           </Grid>
         </Grid>
 
@@ -81,8 +98,9 @@ export default function Resume() {
           sm={12}
           md={4}
           sx={{
-            backgroundColor: "#EDEDED",
+            backgroundColor: "#F3F3F3",
             textAlign: "center",
+            color: "#1D1D1D",
             order: {
               xs: 4,
               md: 2,
@@ -102,22 +120,34 @@ export default function Resume() {
                 <Typography variant="subtitle1">Email</Typography>
               </Grid>
               <Grid size={12}>
-                <Typography variant="caption">matt@mattkearns.dev</Typography>
+                <Typography variant="caption">matt.kearns39@gmail.com</Typography>
               </Grid>
             </Grid>
 
             <Grid container size={12} sx={{ paddingBottom: "7.5px" }}>
               <Grid size={12}>
-                <Typography variant="subtitle1">Tools</Typography>
+                <Typography variant="subtitle1">Core Skills</Typography>
               </Grid>
-              {tools.map((tool) => (
-                <Grid size={4} key={tools}>
-                  <Typography variant="caption">{tool}</Typography>
+              {coreSkills.map((group) => (
+                <Grid key={group.label} size={12} sx={{ textAlign: "left", paddingBottom: "6px" }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                    {group.label}
+                  </Typography>
+                  <Typography variant="body2">{group.items}</Typography>
                 </Grid>
               ))}
             </Grid>
 
-            <Grid container size={12} sx={{ paddingBottom: "7.5px" }}>
+            <Grid
+              container
+              size={12}
+              sx={{
+                paddingBottom: "7.5px",
+                "@media print": {
+                  display: "none",
+                },
+              }}
+            >
               <Grid size={12}>
                 <Typography variant="subtitle1">Social Media</Typography>
               </Grid>
@@ -137,11 +167,6 @@ export default function Resume() {
                   <LinkedIn />
                 </IconButton>
               </Grid>
-              <Grid size={12}>
-                <IconButton>
-                  <Instagram />
-                </IconButton>
-              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -150,99 +175,73 @@ export default function Resume() {
           container
           size={{ sm: 12, md: 8, }}
           sx={{
-            backgroundColor: "#FEFEFE",
+            backgroundColor: "#FFFFFF",
+            color: "#111111",
             order: 3,
             padding: "10px",
           }}
         >
-          <Typography variant="h4">
-            <EmojiPeople /> About Me
+          <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
+            <EmojiPeople /> Summary
           </Typography>
-          <Grid container size={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
-            <Typography variant="body2">
-              Experienced and self-motivated web developer with over six years of expertise in
-              JavaScript, React, and building responsive, user-centric interfaces. Proficient with
-              modern frameworks, libraries, and tools, with a strong commitment to optimizing
-              codebases for scalability and maintainability. Adept at collaborating with
-              cross-functional teams to deliver innovative solutions.
+          <Grid container size={12} sx={{ paddingLeft: "25px", paddingBottom: "20px" }}>
+            <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+              Systems-focused software engineer with 6+ years of experience building and
+              refactoring production web applications. Strong in React-based frontends and
+              full-stack JavaScript systems, with emphasis on reliability, performance, and
+              maintainability. Experienced owning features end-to-end, from frontend architecture
+              through backend APIs and infrastructure.
             </Typography>
           </Grid>
 
-          <Typography variant="h4">
-            <Code /> Projects
+          <Typography variant="4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
+            <Code /> Selected Projects
           </Typography>
-          <Grid container size={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
+          <Grid container size={12} sx={{ paddingLeft: "25px", paddingBottom: "20px" }}>
             <Grid size={12}>
-              <Typography variant="h6" component="a" href="https://mattkearns.dev/">
-                Personal Website
+              <Typography variant="h6">Firebelly Fitness (Trainer/Client Platform)</Typography>
+              <Typography variant="subtitle2">
+                React, Redux, Node.js, MongoDB, Socket.IO, JWT
               </Typography>
               <Typography variant="body2">
-                • Learn more about me and check out some of my projects
+                • Built trainer-client workflows with real-time updates and secure auth.
+              </Typography>
+              <Typography variant="body2">
+                • Implemented predictable state management to prevent client/server
+                desynchronization.
               </Typography>
             </Grid>
             <Grid size={12}>
-              <Typography variant="h6" component="a" href="https://www.firebellyfitness.com">
-                Firebelly Fitness
+              <Typography variant="h6">Dauntless Athletics (Site Migration + Infra)</Typography>
+              <Typography variant="subtitle2">
+                React, MUI, AWS Lightsail, NGINX, Cloudflare
               </Typography>
               <Typography variant="body2">
-                • Personal Trainer website and web application for tracking workouts and
-                progression.
+                • Migrated a WordPress site to a custom React frontend.
+              </Typography>
+              <Typography variant="body2">
+                • Configured NGINX + SSL/DNS routing for stable deployments and improved
+                performance.
               </Typography>
             </Grid>
             <Grid size={12}>
-              <Typography
-                variant="h6"
-                component="a"
-                href="https://mattkearns.dev/social-picture-app"
-              >
-                Social Picture App
-              </Typography>
+              <Typography variant="h6">Social Picture App</Typography>
+              <Typography variant="subtitle2">React, Node.js, MongoDB, Multer, JWT</Typography>
               <Typography variant="body2">
-                • Share photos with friends, comment, react, and message.
-              </Typography>
-            </Grid>
-            <Grid size={12}>
-              <Typography
-                variant="h6"
-                component="a"
-                href="https://mattkearns.dev/self-driving-car-sim"
-              >
-                Self Driving Car Simulator
-              </Typography>
-              <Typography variant="body2">
-                • 1000 instances of a car are deployed, save the best car position to teach the
-                neural network how to drive and avoid cars.
-              </Typography>
-            </Grid>
-            <Grid size={12}>
-              <Typography
-                variant="h6"
-                component="a"
-                href="https://github.com/clocktower39/tv-controller"
-              >
-                CEC-TV-Controller
-              </Typography>
-              <Typography variant="body2">
-                • Control your TV via a raspberry pi using the HDMI CEC commands.
-              </Typography>
-            </Grid>
-            <Grid size={12}>
-              <Typography variant="h6" component="a" href="https://mattkearns.dev/activity-tracker">
-                Activity Tracker
-              </Typography>
-              <Typography variant="body2">
-                • Create personalized daily tasks to check off each day and track progress.
+                • Built an authenticated image-sharing app with secure upload handling.
               </Typography>
             </Grid>
           </Grid>
 
-          <Typography variant="h4">
+          <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
             <SourceIcon /> Experience
           </Typography>
-          <Grid container size={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
-            <Typography variant="subtitle1">Freelance Web Developer</Typography>
+          <Grid container size={12} sx={{ paddingLeft: "25px", paddingBottom: "20px" }}>
+            <Typography variant="subtitle1">
+              Senior Web Developer / Systems Engineer (Freelance / Independent)
+            </Typography>
             <Grid size={12}>
-              <Typography variant="subtitle2">2018 - Current</Typography>
+              <Typography variant="subtitle2">2018 - Present</Typography>
             </Grid>
             <Grid
               size={12}
@@ -255,34 +254,44 @@ export default function Resume() {
               }}
             >
               <Typography variant="body2">
-                • Collaborate with clients to create and launch responsive and user-friendly
-                websites tailored to their specific needs
+                • Designed, built, and maintained production React and full-stack applications for
+                small businesses and real users.
               </Typography>
               <Typography variant="body2">
-                • Utilize a combination of JavaScript, CSS, HTML, and frameworks like React to build
-                interactive and dynamic front-end interfaces
+                • Owned end-to-end delivery: requirements → implementation → deployment → monitoring
+                and bug fixes.
               </Typography>
               <Typography variant="body2">
-                • Developed back-end functionalities using Node.js, Express, JWT, and MongoDB to
-                ensure smooth data handling, seamless user interactions, and proper authentication
+                • Built real-time workflows (messaging, presence, updates) using Socket.IO with
+                server-side authorization checks.
               </Typography>
               <Typography variant="body2">
-                • Conducted regular maintenance and updates to ensure websites remain up-to-date and
-                functional
+                • Migrated WordPress sites to modern static/hybrid architectures (Vite/SSG + CDN) to
+                improve performance and SEO.
               </Typography>
               <Typography variant="body2">
-                • Provided training and support to clients for content management and website
-                maintenance
+                • Implemented authentication and role-based access control using JWT and secure
+                backend patterns.
+              </Typography>
+              <Typography variant="body2">
+                • Diagnosed and resolved infrastructure issues involving NGINX, SSL, DNS, and
+                reverse proxies.
+              </Typography>
+              <Typography variant="body2">
+                • Reduced recurring production issues via targeted refactors (state ownership, data
+                flow cleanup, and component reuse).
               </Typography>
             </Grid>
           </Grid>
-          <Typography variant="h4">
-            <Work /> NON-RELATED WORK HISTORY
+          <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
+            <Work /> Additional Experience
           </Typography>
-          <Grid container size={12} sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
-            <Typography variant="subtitle1">Operation Support Lead | McKesson</Typography>
+          <Grid container size={12} sx={{ paddingLeft: "25px", paddingBottom: "20px" }}>
+            <Typography variant="subtitle1">
+              Operations Support Lead — McKesson Specialty Health (Scottsdale, AZ)
+            </Typography>
             <Grid size={12}>
-              <Typography variant="subtitle2">March 2019 - Current</Typography>
+              <Typography variant="subtitle2">2019 - 2024</Typography>
             </Grid>
             <Grid
               size={12}
@@ -295,36 +304,29 @@ export default function Resume() {
               }}
             >
               <Typography variant="body2">
-                • Automate reports and tasks using Sharepoint, firefox extensions and web scraping
-                tools.
+                • Automated reporting and operational workflows using SharePoint, scripting, and
+                browser automation/web scraping.
               </Typography>
               <Typography variant="body2">
-                • Participate in IT meetings and assist with customer facing bugs as needed
+                • Acted as operations liaison to IT to diagnose customer-facing issues and support
+                production triage.
               </Typography>
               <Typography variant="body2">
-                • Resolve system issues and handle system-related production support tickets
+                • Led team meetings, training, and documentation improvements (SOPs/work
+                instructions).
               </Typography>
               <Typography variant="body2">
-                • Took lead on noncompliance investigations and provided reports to management.
+                • Performed data analysis and reporting to support program performance improvements.
               </Typography>
-              <Typography variant="body2">
-                • Provided data analysis and generated reports for program performance improvement
-              </Typography>
-              <Typography variant="body2">
-                • Reviewed and provided revisions for work instruction SOPs and other documentation
-              </Typography>
-              <Typography variant="body2">
-                • Coordinated and led team meetings and training sessions
-              </Typography>
-              <Typography variant="body2">• Scheduled and ran program meetings.</Typography>
-              <Typography variant="body2"></Typography>
             </Grid>
 
             <Grid size={12}>
-              <Typography variant="subtitle1">Seasonal Operations Supervisor | McKesson</Typography>
+              <Typography variant="subtitle1">
+                Seasonal Supervisor — McKesson Specialty Health (Scottsdale, AZ)
+              </Typography>
             </Grid>
             <Grid size={12}>
-              <Typography variant="subtitle2">September 2021 - March 2022</Typography>
+              <Typography variant="subtitle2">2021 - 2022</Typography>
             </Grid>
             <Grid
               size={12}
@@ -337,103 +339,26 @@ export default function Resume() {
               }}
             >
               <Typography variant="body2">
-                • Assist with integration and development of new tools into the existing system.
+                • Supervised and trained team members; ran QA checks and coached on accuracy and
+                process improvements.
               </Typography>
               <Typography variant="body2">
-                • Primary contact for highest severity IT tickets for all employees in contact
-                center such as entire system outages.
-              </Typography>
-              <Typography variant="body2">
-                • Supervised and trained new team members to ensure they were proficient in their
-                roles
-              </Typography>
-              <Typography variant="body2">
-                • Monitored team performance and identified areas for improvement to ensure service
-                level agreements are met
-              </Typography>
-              <Typography variant="body2">
-                • Coordinated and facilitated training sessions and team building events to improve
-                team communication and morale
-              </Typography>
-              <Typography variant="body2">
-                • Conducted quality assurance checks to ensure accuracy and completeness of work,
-                and provided feedback to team members to promote continuous improvement
-              </Typography>
-              <Typography variant="body2">
-                • Collaborated with other supervisors and managers to ensure cross-functional
-                alignment and consistency in processes and procedures
-              </Typography>
-              <Typography variant="body2"></Typography>
-            </Grid>
-
-            <Typography variant="subtitle1">REMS Support Representative | McKesson</Typography>
-            <Grid size={12}>
-              <Typography variant="subtitle2">
-                July 2018 - March 2019 (Contractor December 2017 - July 2018)
-              </Typography>
-            </Grid>
-            <Grid
-              size={12}
-              sx={{
-                paddingLeft: "35px",
-                paddingBottom: "7.5px",
-                "& p": {
-                  paddingBottom: "7.5px",
-                },
-              }}
-            >
-              <Typography variant="body2">
-                • Served as subject matter expert for new hire training class
-              </Typography>
-              <Typography variant="body2">
-                • Identified potential adverse events and product complaints
-              </Typography>
-              <Typography variant="body2">
-                • Provided support for multiple programs and assisted stakeholders with registration
-                and website issues
+                • Coordinated training sessions and improved team communication to meet
+                service-level goals.
               </Typography>
             </Grid>
           </Grid>
 
-          <Typography variant="h4">
+          <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
             <Subject /> Education
           </Typography>
-          <Grid container sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
-            <Typography variant="subtitle1">FreeCodeCamp</Typography>
-            <Grid
-              size={12}
-              sx={{
-                paddingLeft: "35px",
-                paddingBottom: "7.5px",
-                "& p": {
-                  paddingBottom: "7.5px",
-                },
-              }}
-            >
-              <Typography variant="body2">• Responsive Web Design Certification</Typography>
+          <Grid container sx={{ paddingLeft: "25px", paddingBottom: "20px" }}>
+            <Typography variant="subtitle1">
+              Self-taught software engineer
+            </Typography>
+            <Grid size={12} sx={{ paddingLeft: "35px", paddingBottom: "7.5px" }}>
               <Typography variant="body2">
-                • JavaScript Algorithms and Data Structures Certification
-              </Typography>
-              <Typography variant="body2">• Front End Libraries Certification</Typography>
-              <Typography variant="body2">• Data Visualization Certification</Typography>
-              <Typography variant="body2">• APIs and Microservices Certification</Typography>
-            </Grid>
-          </Grid>
-
-          <Grid container sx={{ paddingLeft: "35px", paddingBottom: "25px" }}>
-            <Typography variant="subtitle1">LinkedIn</Typography>
-            <Grid
-              size={12}
-              sx={{
-                paddingLeft: "35px",
-                paddingBottom: "7.5px",
-                "& p": {
-                  paddingBottom: "7.5px",
-                },
-              }}
-            >
-              <Typography variant="body2">
-                • 100+ software development and related technical courses completed and certified.
+                • Ongoing independent study in web architecture, system design, and infrastructure.
               </Typography>
             </Grid>
           </Grid>
