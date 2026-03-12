@@ -204,24 +204,32 @@ export default function Resume() {
                 React, Redux, Node.js, MongoDB, Socket.IO, JWT
               </Typography>
               <Typography variant="body2">
-                • Built trainer-client workflows with real-time updates and secure auth.
+                • Built trainer/client workflows with real-time updates, secure auth, and role-based
+                views.
               </Typography>
               <Typography variant="body2">
-                • Implemented predictable state management to prevent client/server
-                desynchronization.
+                • Delivered scheduling, client dashboards, and body metrics tracking.
+              </Typography>
+              <Typography variant="body2">
+                • Implemented group workouts and consistent state management to prevent
+                client/server desynchronization.
               </Typography>
             </Grid>
             <Grid size={12}>
               <Typography variant="h6">Dauntless Athletics (Site Migration + Infra)</Typography>
               <Typography variant="subtitle2">
-                React, MUI, AWS Lightsail, NGINX, Cloudflare
+                React, TypeScript, MUI, Postgres, AWS Lightsail, NGINX, Cloudflare
               </Typography>
               <Typography variant="body2">
-                • Migrated a WordPress site to a custom React frontend.
+                • Migrated a WordPress site to a custom React + TypeScript frontend.
               </Typography>
               <Typography variant="body2">
                 • Configured NGINX + SSL/DNS routing for stable deployments and improved
                 performance.
+              </Typography>
+              <Typography variant="body2">
+                • Built an admin dashboard to manage athletes, schools, teams, employees, and
+                surveys backed by Postgres.
               </Typography>
             </Grid>
             <Grid size={12}>
