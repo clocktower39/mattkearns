@@ -408,6 +408,7 @@ export const inspirational = [
   { firstName: "Alan", lastName: "Turning", medium: "computing" },
   { firstName: "Jay", lastName: "Freeman", medium: "developer" },
   { firstName: "Ian", lastName: "Beer", medium: "security" },
+  { firstName: "Billy", lastName: "Basso", medium: "video game developer"},
 ];
 
 export const list = [...books, ...movies, ...games];
