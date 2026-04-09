@@ -326,14 +326,6 @@ export default function Resume() {
                 performance.
               </Typography>
             </Grid>
-            <Grid size={12}>
-              <Typography variant="h6">Social Picture App</Typography>
-              <Typography variant="subtitle2">React, Node.js, MongoDB, Multer, JWT</Typography>
-              <Typography variant="body2">
-                • Built an authenticated image-sharing app that combined secure upload handling,
-                media workflows, and social interaction patterns in a full-stack product.
-              </Typography>
-            </Grid>
           </Grid>
 
           <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
