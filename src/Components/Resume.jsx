@@ -1,10 +1,25 @@
 import React from "react";
-import { Avatar, Button, Container, Grid, IconButton, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import {
+  Avatar,
+  Button,
+  Checkbox,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import {
   Code,
   EmojiPeople,
   Work,
   Subject,
+  ArrowBack,
   Source as SourceIcon,
   GitHub,
   LinkedIn,
@@ -13,6 +28,11 @@ import {
 import img from "../img/avatar.jpg";
 
 export default function Resume() {
+  const [optionsOpen, setOptionsOpen] = React.useState(false);
+  const [hidePicture, setHidePicture] = React.useState(false);
+  const [hideSectionIcons, setHideSectionIcons] = React.useState(false);
+  const [pendingPrint, setPendingPrint] = React.useState(false);
+
   const coreSkills = [
     {
       label: "Frontend",
@@ -33,6 +53,17 @@ export default function Resume() {
     },
   ];
 
+  React.useEffect(() => {
+    if (!optionsOpen && pendingPrint) {
+      const timeoutId = window.setTimeout(() => {
+        window.print();
+        setPendingPrint(false);
+      }, 150);
+
+      return () => window.clearTimeout(timeoutId);
+    }
+  }, [optionsOpen, pendingPrint]);
+
   return (
     <Container maxWidth="md" disableGutters>
       <Grid container>
@@ -48,19 +79,62 @@ export default function Resume() {
             position: "relative",
           }}
         >
-          <Grid container size={4} sx={{ justifyContent: "center" }}>
-            <Avatar
-              alt="pic"
-              src={img}
+          <Grid
+            sx={{
+              position: "absolute",
+              top: 6,
+              left: 12,
+              display: "flex",
+              "@media print": {
+                display: "none",
+              },
+            }}
+          >
+            <IconButton
+              aria-label="Back to home"
+              component={Link}
+              to="/"
               sx={{
-                height: "125px",
-                width: "125px",
-                margin: "5px",
+                color: "white",
+                border: "1px solid rgba(255,255,255,0.6)",
+                borderRadius: "8px",
+                padding: "6px",
+                "&:hover": {
+                  borderColor: "white",
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                },
               }}
-            />
+            >
+              <ArrowBack fontSize="small" />
+            </IconButton>
           </Grid>
+          {!hidePicture && (
+            <Grid container size={4} sx={{ justifyContent: "center" }}>
+              <Avatar
+                alt="pic"
+                src={img}
+                sx={{
+                  height: "125px",
+                  width: "125px",
+                  margin: "5px",
+                }}
+              />
+            </Grid>
+          )}
 
-          <Grid container size={8} sx={{ paddingLeft: "12.5px", alignItems: "center" }}>
+          <Grid
+            container
+            size={hidePicture ? 12 : 8}
+            sx={{
+              paddingLeft: hidePicture ? "75px" : "12.5px",
+              paddingRight: "92px",
+              paddingTop: "4px",
+              alignItems: "center",
+              "@media print": {
+                paddingLeft: "0px",
+              },
+            }}
+          >
             <Grid size={12}>
               <Typography variant="h2">Matt Kearns</Typography>
             </Grid>
@@ -72,8 +146,39 @@ export default function Resume() {
                 Gilbert, AZ • Open to Onsite / Hybrid / Remote
               </Typography>
             </Grid>
+            <Grid size={12}>
+              <Typography variant="subtitle2">matt.kearns39@gmail.com</Typography>
+            </Grid>
           </Grid>
-          <Grid sx={{ position: "absolute", top: 6, right: 40, display: "flex" }}>
+          <Grid
+            sx={{
+              position: "absolute",
+              top: 6,
+              right: 12,
+              display: "flex",
+              gap: "8px",
+              "@media print": {
+                display: "none",
+              },
+            }}
+          >
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => setOptionsOpen(true)}
+              sx={{
+                color: "white",
+                borderColor: "rgba(255,255,255,0.35)",
+                textTransform: "none",
+                minWidth: "auto",
+                "&:hover": {
+                  borderColor: "white",
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                },
+              }}
+            >
+              Options
+            </Button>
             <IconButton
               aria-label="Print to PDF"
               onClick={() => window.print()}
@@ -109,21 +214,6 @@ export default function Resume() {
           }}
         >
           <Grid container size={12}>
-            <Grid size={12} sx={{ paddingBottom: "7.5px" }}>
-              <Typography variant="h4" sx={{ color: "black" }}>
-                CONTACT
-              </Typography>
-            </Grid>
-
-            <Grid container size={12} sx={{ paddingBottom: "7.5px" }}>
-              <Grid size={12}>
-                <Typography variant="subtitle1">Email</Typography>
-              </Grid>
-              <Grid size={12}>
-                <Typography variant="caption">matt.kearns39@gmail.com</Typography>
-              </Grid>
-            </Grid>
-
             <Grid container size={12} sx={{ paddingBottom: "7.5px" }}>
               <Grid size={12}>
                 <Typography variant="subtitle1">Core Skills</Typography>
@@ -157,8 +247,6 @@ export default function Resume() {
                 >
                   <GitHub />
                 </IconButton>
-              </Grid>
-              <Grid size={12}>
                 <IconButton
                   onClick={() =>
                     window.open("https://www.linkedin.com/in/matthew-kearns-6b8865117/", "_blank")
@@ -182,20 +270,24 @@ export default function Resume() {
           }}
         >
           <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
-            <EmojiPeople /> Summary
+            {!hideSectionIcons && (
+              <EmojiPeople sx={{ verticalAlign: "middle", marginRight: "6px" }} />
+            )}
+            Summary
           </Typography>
           <Grid container size={12} sx={{ paddingLeft: "25px", paddingBottom: "20px" }}>
             <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
-              Systems-focused software engineer with 6+ years of experience building and
-              refactoring production web applications. Strong in React-based frontends and
-              full-stack JavaScript systems, with emphasis on reliability, performance, and
-              maintainability. Experienced owning features end-to-end, from frontend architecture
-              through backend APIs and infrastructure.
+              Systems-focused software engineer building and refactoring production web
+              applications since 2018. Strong in React-based frontends and full-stack JavaScript
+              systems, with emphasis on reliability, performance, and maintainability. Experienced
+              owning features end-to-end, from frontend architecture through backend APIs and
+              infrastructure.
             </Typography>
           </Grid>
 
-          <Typography variant="4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
-            <Code /> Selected Projects
+          <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
+            {!hideSectionIcons && <Code sx={{ verticalAlign: "middle", marginRight: "6px" }} />}
+            Selected Projects
           </Typography>
           <Grid container size={12} sx={{ paddingLeft: "25px", paddingBottom: "20px" }}>
             <Grid size={12}>
@@ -204,15 +296,16 @@ export default function Resume() {
                 React, Redux, Node.js, MongoDB, Socket.IO, JWT
               </Typography>
               <Typography variant="body2">
-                • Built trainer/client workflows with real-time updates, secure auth, and role-based
-                views.
+                • Built a trainer/client platform with secure role-based access, real-time updates,
+                scheduling, and shared visibility across both sides of the product.
               </Typography>
               <Typography variant="body2">
-                • Delivered scheduling, client dashboards, and body metrics tracking.
+                • Added client dashboards, body metrics tracking, and group workout workflows to
+                support ongoing coaching and progress tracking in one system.
               </Typography>
               <Typography variant="body2">
-                • Implemented group workouts and consistent state management to prevent
-                client/server desynchronization.
+                • Implemented predictable state management to reduce client/server
+                desynchronization and keep real-time workout data consistent.
               </Typography>
             </Grid>
             <Grid size={12}>
@@ -221,28 +314,33 @@ export default function Resume() {
                 React, TypeScript, MUI, Postgres, AWS Lightsail, NGINX, Cloudflare
               </Typography>
               <Typography variant="body2">
-                • Migrated a WordPress site to a custom React + TypeScript frontend.
+                • Migrated a WordPress site to a custom React + TypeScript frontend to improve
+                maintainability and support custom application workflows.
               </Typography>
               <Typography variant="body2">
-                • Configured NGINX + SSL/DNS routing for stable deployments and improved
+                • Built an admin dashboard backed by Postgres to manage athletes, schools, teams,
+                employees, and surveys from a single internal interface.
+              </Typography>
+              <Typography variant="body2">
+                • Configured NGINX, SSL, and DNS routing for stable deployments and stronger site
                 performance.
-              </Typography>
-              <Typography variant="body2">
-                • Built an admin dashboard to manage athletes, schools, teams, employees, and
-                surveys backed by Postgres.
               </Typography>
             </Grid>
             <Grid size={12}>
               <Typography variant="h6">Social Picture App</Typography>
               <Typography variant="subtitle2">React, Node.js, MongoDB, Multer, JWT</Typography>
               <Typography variant="body2">
-                • Built an authenticated image-sharing app with secure upload handling.
+                • Built an authenticated image-sharing app that combined secure upload handling,
+                media workflows, and social interaction patterns in a full-stack product.
               </Typography>
             </Grid>
           </Grid>
 
           <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
-            <SourceIcon /> Experience
+            {!hideSectionIcons && (
+              <SourceIcon sx={{ verticalAlign: "middle", marginRight: "6px" }} />
+            )}
+            Experience
           </Typography>
           <Grid container size={12} sx={{ paddingLeft: "25px", paddingBottom: "20px" }}>
             <Typography variant="subtitle1">
@@ -292,7 +390,8 @@ export default function Resume() {
             </Grid>
           </Grid>
           <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
-            <Work /> Additional Experience
+            {!hideSectionIcons && <Work sx={{ verticalAlign: "middle", marginRight: "6px" }} />}
+            Additional Experience
           </Typography>
           <Grid container size={12} sx={{ paddingLeft: "25px", paddingBottom: "20px" }}>
             <Typography variant="subtitle1">
@@ -358,7 +457,10 @@ export default function Resume() {
           </Grid>
 
           <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: "6px", color: "#111" }}>
-            <Subject /> Education
+            {!hideSectionIcons && (
+              <Subject sx={{ verticalAlign: "middle", marginRight: "6px" }} />
+            )}
+            Education
           </Typography>
           <Grid container sx={{ paddingLeft: "25px", paddingBottom: "20px" }}>
             <Typography variant="subtitle1">
@@ -372,6 +474,76 @@ export default function Resume() {
           </Grid>
         </Grid>
       </Grid>
+      <Dialog
+        open={optionsOpen}
+        onClose={() => setOptionsOpen(false)}
+        fullWidth
+        maxWidth="xs"
+        PaperProps={{
+          sx: {
+            backgroundColor: "#F6F8FA",
+            color: "#111111",
+            "& .MuiTypography-root": {
+              color: "#111111",
+            },
+            "& .MuiFormControlLabel-label": {
+              color: "#111111",
+            },
+            "& .MuiButton-text": {
+              color: "#111111",
+            },
+            "& .MuiButton-contained": {
+              color: "#111111",
+            },
+          },
+        }}
+      >
+        <DialogTitle sx={{ color: "#111111" }}>Resume Display Options</DialogTitle>
+        <DialogContent sx={{ color: "#111111" }}>
+          <FormControlLabel
+            sx={{ color: "#111111", display: "flex", marginBottom: "4px" }}
+            control={
+              <Checkbox
+                checked={hidePicture}
+                onChange={(event) => setHidePicture(event.target.checked)}
+                sx={{ color: "#263544", "&.Mui-checked": { color: "#263544" } }}
+              />
+            }
+            label="Hide profile picture"
+          />
+          <FormControlLabel
+            sx={{ color: "#111111", display: "flex", marginBottom: "4px" }}
+            control={
+              <Checkbox
+                checked={hideSectionIcons}
+                onChange={(event) => setHideSectionIcons(event.target.checked)}
+                sx={{ color: "#263544", "&.Mui-checked": { color: "#263544" } }}
+              />
+            }
+            label="Hide section header icons"
+          />
+          <Typography variant="body2" sx={{ marginTop: "8px", color: "#4B5563" }}>
+            These settings affect the page view and the PDF if you print from here.
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ padding: "8px 24px 20px" }}>
+          <Button onClick={() => setOptionsOpen(false)} sx={{ color: "#263544" }}>
+            Close
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              color: "#111111",
+            }}
+            onClick={() => {
+              setOptionsOpen(false);
+              setPendingPrint(true);
+            }}
+          >
+            Print PDF
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
