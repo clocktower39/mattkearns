@@ -10,12 +10,16 @@ const colors = {
   yellow: { hex: "#FDED02" },
   blue: { hex: "#01A0E4" },
   purple: { hex: "#A16A94" },
+  grey: { hex: "#8a93a0" },
 };
 
 const StyledSpan = styled("span")`
   color: ${(props) => props.color || "inherit"};
   cursor: ${(props) => (props.cursor ? "pointer" : "inherit")};
   word-wrap: ${(props) => props.word || "break-word"};
+  &:hover {
+    text-decoration: ${(props) => (props.cursor ? "underline" : "none")};
+  }
 `;
 
 const BoldItalicSpan = styled("span")`
@@ -26,163 +30,266 @@ const BoldItalicSpan = styled("span")`
 
 const StyledLink = styled("a")`
   text-decoration: ${(props) => props.textDecoration || "none"};
-  color: ${(props) => props.color || "inherit"};
+  color: ${(props) => props.color || colors.blue.hex};
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const Pre = styled("span")`
+  white-space: pre-wrap;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 `;
 
 const normalize = (s = "") => s.toLowerCase().trim();
-const COMMANDS = ["help", "man", "commands", "ls", "cd", "clear", "open", "source", "projects"];
-const DIRECTORIES = ["Projects", "games", "books", "movies", "shows"];
 
-const ProjectResponse = (p, lnIndex) => (
-  <TerminalOutput key={`${p.name}-${lnIndex}`}>
-    <StyledSpan color={colors.green.hex}>
-      <BoldItalicSpan>-Project:</BoldItalicSpan> {p.name}
-      <br />
-      <BoldItalicSpan>-Link:</BoldItalicSpan>{" "}
+const slugify = (s = "") =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+/* ----------------------------------------------------------------------------
+ * Virtual filesystem
+ * --------------------------------------------------------------------------
+ * Everything the terminal can navigate lives in a single tree rooted at "~".
+ * A node is either a directory (has `children`) or a file (has a `kind` that
+ * tells `cat`/`open` how to render it). Path resolution is done generically,
+ * so cd/ls/cat/tree all understand "~", "/", "..", ".", and multi-segment
+ * relative or absolute paths — just like a real shell.
+ * ------------------------------------------------------------------------- */
+
+const ABOUT_TXT = `Matt Kearns — developer, tinkerer, problem-solver.
+
+I spend most of my time building, breaking, fixing, and rebuilding
+things, usually with code, hardware, or systems that weren't quite
+working the way they should. I care about why something exists, how it
+fits into real life, and whether it actually does what it's supposed to.
+
+Outside of code I'm coaching cheer and tumbling, lifting, gaming, or
+tinkering purely for fun.
+
+Tip: try 'ls', 'cd projects', then 'cat <name>'. 'help' lists everything.`;
+
+const STACK_TXT = `Languages    JavaScript · TypeScript · Python · PHP
+Frontend     React · Redux · MUI · HTML5 · CSS · Bootstrap
+Backend      Node.js · Express · Socket.IO · JWT
+Data         MongoDB · PostgreSQL
+Infra        Docker · Nginx · Linux · AWS · Cloudflare · Let's Encrypt
+Tools        Git · Postman · Figma · VS Code`;
+
+const buildContactNode = () => ({
+  type: "file",
+  name: "contact.txt",
+  kind: "contact",
+});
+
+// Builds the children map for a media category (games/books/movies/shows).
+const buildPosterDir = (name, items, label) => {
+  const children = {};
+  items.forEach((item, i) => {
+    let slug = slugify(item.title);
+    if (!slug) slug = `${name}-${i}`;
+    if (children[slug]) slug = `${slug}-${i}`;
+    children[slug] = {
+      type: "file",
+      name: slug,
+      kind: "poster",
+      label,
+      display: item.title,
+      data: item,
+    };
+  });
+  return { type: "dir", name, children };
+};
+
+const buildProjectsDir = () => {
+  const children = {};
+  projects.forEach((p, i) => {
+    let slug = slugify(p.name);
+    if (!slug) slug = `project-${i}`;
+    if (children[slug]) slug = `${slug}-${i}`;
+    children[slug] = {
+      type: "file",
+      name: slug,
+      kind: "project",
+      display: p.name,
+      data: p,
+    };
+  });
+  return { type: "dir", name: "projects", children };
+};
+
+const ROOT = {
+  type: "dir",
+  name: "~",
+  children: {
+    "about.txt": { type: "file", name: "about.txt", kind: "text", content: ABOUT_TXT },
+    "stack.txt": { type: "file", name: "stack.txt", kind: "text", content: STACK_TXT },
+    "contact.txt": buildContactNode(),
+    resume: { type: "file", name: "resume", kind: "route", route: "/web_resume" },
+    projects: buildProjectsDir(),
+    games: buildPosterDir("games", games, "Game"),
+    books: buildPosterDir("books", books, "Book"),
+    movies: buildPosterDir("movies", movies, "Movie"),
+    shows: buildPosterDir("shows", tvShows, "Show"),
+  },
+};
+
+// Resolve a path string against a current working directory (array of
+// segments). Returns the resolved segment array (relative to ~). Supports
+// "~", "/", ".", "..", and any number of segments.
+const resolvePath = (cwdSegs, input = "") => {
+  const trimmed = input.trim();
+  let parts;
+  if (trimmed === "" || trimmed === ".") return [...cwdSegs];
+  if (trimmed === "~" || trimmed === "/") return [];
+  if (trimmed.startsWith("~/")) parts = trimmed.slice(2).split("/");
+  else if (trimmed.startsWith("/")) parts = trimmed.slice(1).split("/");
+  else parts = [...cwdSegs, ...trimmed.split("/")];
+
+  const out = [];
+  for (const raw of parts) {
+    const seg = raw.trim();
+    if (seg === "" || seg === ".") continue;
+    if (seg === "~") {
+      out.length = 0;
+      continue;
+    }
+    if (seg === "..") {
+      out.pop();
+      continue;
+    }
+    out.push(seg.toLowerCase());
+  }
+  return out;
+};
+
+// Walk the tree to the node at the given resolved segments. null if missing.
+const nodeAt = (segs) => {
+  let node = ROOT;
+  for (const seg of segs) {
+    if (node.type !== "dir") return null;
+    const child = node.children[seg];
+    if (!child) return null;
+    node = child;
+  }
+  return node;
+};
+
+const segsToLabel = (segs) => (segs.length ? `~/${segs.join("/")}` : "~");
+const segsToPath = (segs) => (segs.length ? `~/${segs.join("/")}` : "~");
+
+// --- file renderers -------------------------------------------------------
+
+const ProjectResponse = (p) => (
+  <StyledSpan color={colors.green.hex}>
+    <BoldItalicSpan>Project:</BoldItalicSpan> {p.name}
+    <br />
+    <BoldItalicSpan>Link:</BoldItalicSpan>{" "}
+    {p.link ? (
       <StyledLink href={p.link} target="_blank" rel="noreferrer">
-        {p.link || "null"}
+        {p.link}
       </StyledLink>
-      <br />
-      <BoldItalicSpan>-Client Source Code:</BoldItalicSpan>{" "}
+    ) : (
+      <span style={{ color: colors.grey.hex }}>null</span>
+    )}
+    <br />
+    <BoldItalicSpan>Client Source:</BoldItalicSpan>{" "}
+    {p.github.client ? (
       <StyledLink href={p.github.client} target="_blank" rel="noreferrer">
-        {p.github.client || "null"}
+        {p.github.client}
       </StyledLink>
-      <br />
-      <BoldItalicSpan>-Server Source Code:</BoldItalicSpan>{" "}
+    ) : (
+      <span style={{ color: colors.grey.hex }}>null</span>
+    )}
+    <br />
+    <BoldItalicSpan>Server Source:</BoldItalicSpan>{" "}
+    {p.github.server ? (
       <StyledLink href={p.github.server} target="_blank" rel="noreferrer">
-        {p.github.server || "null"}
+        {p.github.server}
       </StyledLink>
-      <br />
-      <span style={{ whiteSpace: "pre-wrap" }}>
-        <BoldItalicSpan>-Description:</BoldItalicSpan> {p.desc}
-      </span>
-    </StyledSpan>
-    <div>{p.img && <img src={p.img} style={{ maxWidth: "500px" }} />}</div>
-  </TerminalOutput>
+    ) : (
+      <span style={{ color: colors.grey.hex }}>null</span>
+    )}
+    <br />
+    <Pre>
+      <BoldItalicSpan>Description:</BoldItalicSpan> {p.desc}
+    </Pre>
+    {p.img && (
+      <div>
+        <img src={p.img} alt={p.name} style={{ maxWidth: "500px", marginTop: "8px" }} />
+      </div>
+    )}
+  </StyledSpan>
 );
 
-const GameResponse = (g, lnIndex) => (
-  <TerminalOutput key={`${g.title}-${lnIndex}`}>
-    <StyledSpan color={colors.green.hex}>
-      <BoldItalicSpan>-Game:</BoldItalicSpan> {g.title}
-    </StyledSpan>
-    <div>{g.poster && <img src={g.poster} style={{ maxWidth: "500px" }} />}</div>
-  </TerminalOutput>
+const PosterResponse = (node) => (
+  <StyledSpan color={colors.green.hex}>
+    <BoldItalicSpan>{node.label}:</BoldItalicSpan> {node.display}
+    {node.data.poster && (
+      <div>
+        <img
+          src={node.data.poster}
+          alt={node.display}
+          style={{ maxWidth: "500px", marginTop: "8px" }}
+        />
+      </div>
+    )}
+  </StyledSpan>
 );
-
-const BookResponse = (b, lnIndex) => (
-  <TerminalOutput key={`${b.title}-${lnIndex}`}>
-    <StyledSpan color={colors.green.hex}>
-      <BoldItalicSpan>-Book:</BoldItalicSpan> {b.title}
-    </StyledSpan>
-    <div>{b.poster && <img src={b.poster} style={{ maxWidth: "500px" }} />}</div>
-  </TerminalOutput>
-);
-
-const MovieResponse = (m, lnIndex) => (
-  <TerminalOutput key={`${m.title}-${lnIndex}`}>
-    <StyledSpan color={colors.green.hex}>
-      <BoldItalicSpan>-Movie:</BoldItalicSpan> {m.title}
-    </StyledSpan>
-    <div>{m.poster && <img src={m.poster} style={{ maxWidth: "500px" }} />}</div>
-  </TerminalOutput>
-);
-
-const ShowResponse = (s, lnIndex) => (
-  <TerminalOutput key={`${s.title}-${lnIndex}`}>
-    <StyledSpan color={colors.green.hex}>
-      <BoldItalicSpan>-Show:</BoldItalicSpan> {s.title}
-    </StyledSpan>
-    <div>{s.poster && <img src={s.poster} style={{ maxWidth: "500px" }} />}</div>
-  </TerminalOutput>
-);
-
-// Initial header + first ls
-const buildInitialLines = (pathLabel) => [
-  <TerminalOutput key="prompt-line">
-    <StyledSpan color={colors.green.hex}>user@MattKearns</StyledSpan>{" "}
-    <StyledSpan color={colors.yellow.hex}>{pathLabel}</StyledSpan>
-  </TerminalOutput>,
-  <TerminalOutput key="blank-1"></TerminalOutput>,
-  <TerminalOutput key="ls-line">$ ls</TerminalOutput>,
-  <TerminalOutput key="blank-2"></TerminalOutput>,
-];
 
 export default function TerminalController() {
-  // quick lookup maps
-  const projectNameMap = useMemo(() => {
-    const map = new Map();
-    projects.forEach((p, i) => {
-      map.set(normalize(p.name), i);
-    });
-    return map;
-  }, [projects]);
+  // current working directory as resolved segments ([] === home/~)
+  const [cwd, setCwd] = useState([]);
+  const cwdRef = useRef([]);
+  useEffect(() => {
+    cwdRef.current = cwd;
+  }, [cwd]);
 
-  const gameNameMap = useMemo(() => {
-    const map = new Map();
-    games.forEach((g, i) => {
-      map.set(normalize(g.title), i);
-    });
-    return map;
-  }, [games]);
-
-  const bookNameMap = useMemo(() => {
-    const map = new Map();
-    books.forEach((b, i) => {
-      map.set(normalize(b.title), i);
-    });
-    return map;
-  }, [books]);
-
-  const movieNameMap = useMemo(() => {
-    const map = new Map();
-    movies.forEach((m, i) => {
-      map.set(normalize(m.title), i);
-    });
-    return map;
-  }, [movies]);
-
-  const showNameMap = useMemo(() => {
-    const map = new Map();
-    tvShows.forEach((s, i) => {
-      map.set(normalize(s.title), i);
-    });
-    return map;
-  }, [tvShows]);
-
-  // directory structure:
-  // "~" (home)
-  //   ├─ Projects
-  //   ├─ games
-  //   ├─ books
-  //   ├─ movies
-  //   └─ shows
-  const [currentDir, setCurrentDir] = useState("~");
-
-  const [terminalLineData, setTerminalLineData] = useState(() => [
-    ...buildInitialLines("~"),
-    ...DIRECTORIES.map((dirName) => (
-      <TerminalOutput key={`dir-init-${dirName}`}>
-        <StyledSpan
-          color={colors.blue.hex}
-          cursor="pointer"
-          onClick={() => handleInput(`cd ./${dirName}`)}
-        >
-          {dirName}
-        </StyledSpan>
-      </TerminalOutput>
-    )),
-    <TerminalOutput key="blank-end"></TerminalOutput>,
-  ]);
+  // command registry (used for help + command-name autocomplete)
+  const COMMANDS = useMemo(
+    () => [
+      { name: "help", usage: "help", desc: "list available commands" },
+      { name: "man", usage: "man <command>", desc: "show usage for a command" },
+      { name: "ls", usage: "ls [-l] [path]", desc: "list directory contents" },
+      {
+        name: "cd",
+        usage: "cd <path>",
+        desc: "change directory (supports ~, .., absolute & relative paths)",
+      },
+      { name: "pwd", usage: "pwd", desc: "print the current directory path" },
+      { name: "cat", usage: "cat <file>", desc: "print a file (project info, poster, text)" },
+      { name: "tree", usage: "tree [path]", desc: "print the directory tree" },
+      { name: "open", usage: "open <project>", desc: "open a project's live link in a new tab" },
+      { name: "source", usage: "source <project>", desc: "show a project's source code links" },
+      { name: "whoami", usage: "whoami", desc: "print the current user" },
+      { name: "echo", usage: "echo <text>", desc: "print text back" },
+      { name: "history", usage: "history", desc: "show command history" },
+      { name: "date", usage: "date", desc: "print the current date and time" },
+      { name: "clear", usage: "clear", desc: "clear the screen" },
+    ],
+    []
+  );
+  const commandNames = useMemo(() => COMMANDS.map((c) => c.name), [COMMANDS]);
 
   // command history / navigation
-  const [history, setHistory] = useState(["ls"]);
+  const [history, setHistory] = useState([]);
+  const historyRef = useRef([]);
+  useEffect(() => {
+    historyRef.current = history;
+  }, [history]);
+
   const [historyIndex, setHistoryIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [currentInput, setCurrentInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const currentInputRef = useRef("");
   const suggestionsRef = useRef([]);
+
+  // monotonically increasing key generator so React keys never collide
+  const keyCounter = useRef(0);
+  const nextKey = () => `ln-${keyCounter.current++}`;
 
   useEffect(() => {
     currentInputRef.current = currentInput;
@@ -192,110 +299,52 @@ export default function TerminalController() {
     suggestionsRef.current = suggestions;
   }, [suggestions]);
 
-  const runProjectDetails = (ld, projectNameRaw) => {
-    const key = normalize(projectNameRaw);
-    const idx = projectNameMap.get(key);
-    if (idx === undefined) {
-      ld.push(
-        <TerminalOutput key={`unknown-project-${projectNameRaw}`}>
-          <span style={{ color: colors.red.hex, whiteSpace: "pre-wrap" }}>
-            Unknown project: <strong>{projectNameRaw}</strong>
-          </span>
+  // --- listing helper: turns a directory node into clickable lines --------
+  const listingLines = (targetSegs, dirNode) => {
+    const entries = Object.values(dirNode.children);
+    if (!entries.length) {
+      return [
+        <TerminalOutput key={nextKey()}>
+          <StyledSpan color={colors.grey.hex}>(empty)</StyledSpan>
+        </TerminalOutput>,
+      ];
+    }
+    return entries.map((child) => {
+      const isDir = child.type === "dir";
+      const abs = segsToPath([...targetSegs, child.name]);
+      const cmd = isDir ? `cd ${abs}` : `cat ${abs}`;
+      return (
+        <TerminalOutput key={nextKey()}>
+          <StyledSpan
+            color={isDir ? colors.blue.hex : colors.green.hex}
+            cursor="pointer"
+            onClick={() => handleInput(cmd)}
+          >
+            {child.name}
+            {isDir ? "/" : ""}
+          </StyledSpan>
         </TerminalOutput>
       );
-      return;
-    }
-
-    const project = projects[idx];
-    ld.push(ProjectResponse(project, ld.length));
-    ld.push(<TerminalOutput key={`after-project-${project.name}`}></TerminalOutput>);
+    });
   };
 
-  const runGameDetails = (ld, gameTitleRaw) => {
-    const key = normalize(gameTitleRaw);
-    const idx = gameNameMap.get(key);
-    if (idx === undefined) {
-      ld.push(
-        <TerminalOutput key={`unknown-game-${gameTitleRaw}`}>
-          <span style={{ color: colors.red.hex, whiteSpace: "pre-wrap" }}>
-            Unknown game: <strong>{gameTitleRaw}</strong>
-          </span>
-        </TerminalOutput>
-      );
-      return;
-    }
+  // initial scrollback: a short banner + `ls` of home
+  const [terminalLineData, setTerminalLineData] = useState(() => [
+    <TerminalOutput key={nextKey()}>
+      <StyledSpan color={colors.purple.hex}>Welcome to mattkearns.dev</StyledSpan> — type{" "}
+      <BoldItalicSpan>help</BoldItalicSpan> to get started.
+    </TerminalOutput>,
+    <TerminalOutput key={nextKey()}></TerminalOutput>,
+    <TerminalOutput key={nextKey()}>
+      <StyledSpan color={colors.green.hex}>user@MattKearns</StyledSpan>{" "}
+      <StyledSpan color={colors.yellow.hex}>~</StyledSpan>
+    </TerminalOutput>,
+    <TerminalInput key={nextKey()}>ls</TerminalInput>,
+    ...listingLines([], ROOT),
+    <TerminalOutput key={nextKey()}></TerminalOutput>,
+  ]);
 
-    const game = games[idx];
-    ld.push(GameResponse(game, ld.length));
-    ld.push(<TerminalOutput key={`after-game-${game.title}`}></TerminalOutput>);
-  };
-
-  const runBookDetails = (ld, bookTitleRaw) => {
-    const key = normalize(bookTitleRaw);
-    const idx = bookNameMap.get(key);
-    if (idx === undefined) {
-      ld.push(
-        <TerminalOutput key={`unknown-book-${bookTitleRaw}`}>
-          <span style={{ color: colors.red.hex, whiteSpace: "pre-wrap" }}>
-            Unknown book: <strong>{bookTitleRaw}</strong>
-          </span>
-        </TerminalOutput>
-      );
-      return;
-    }
-
-    const book = books[idx];
-    ld.push(BookResponse(book, ld.length));
-    ld.push(<TerminalOutput key={`after-book-${book.title}`}></TerminalOutput>);
-  };
-
-  const runMovieDetails = (ld, movieTitleRaw) => {
-    const key = normalize(movieTitleRaw);
-    const idx = movieNameMap.get(key);
-    if (idx === undefined) {
-      ld.push(
-        <TerminalOutput key={`unknown-movie-${movieTitleRaw}`}>
-          <span style={{ color: colors.red.hex, whiteSpace: "pre-wrap" }}>
-            Unknown movie: <strong>{movieTitleRaw}</strong>
-          </span>
-        </TerminalOutput>
-      );
-      return;
-    }
-
-    const movie = movies[idx];
-    ld.push(MovieResponse(movie, ld.length));
-    ld.push(<TerminalOutput key={`after-movie-${movie.title}`}></TerminalOutput>);
-  };
-
-  const runShowDetails = (ld, showTitleRaw) => {
-    const key = normalize(showTitleRaw);
-    const idx = showNameMap.get(key);
-    if (idx === undefined) {
-      ld.push(
-        <TerminalOutput key={`unknown-show-${showTitleRaw}`}>
-          <span style={{ color: colors.red.hex, whiteSpace: "pre-wrap" }}>
-            Unknown show: <strong>{showTitleRaw}</strong>
-          </span>
-        </TerminalOutput>
-      );
-      return;
-    }
-
-    const show = tvShows[idx];
-    ld.push(ShowResponse(show, ld.length));
-    ld.push(<TerminalOutput key={`after-show-${show.title}`}></TerminalOutput>);
-  };
-
-  const getItemsForDir = (dirName) => {
-    if (dirName === "Projects") return projects.map((p) => p.name);
-    if (dirName === "games") return games.map((g) => g.title);
-    if (dirName === "books") return books.map((b) => b.title);
-    if (dirName === "movies") return movies.map((m) => m.title);
-    if (dirName === "shows") return tvShows.map((s) => s.title);
-    return [];
-  };
-
+  // --- autocomplete (path-aware) -----------------------------------------
   const buildSuggestionList = (inputValueRaw) => {
     const raw = inputValueRaw || "";
     const trimmedStart = raw.replace(/^\s+/, "");
@@ -303,43 +352,52 @@ export default function TerminalController() {
 
     const firstSpaceIdx = trimmedStart.indexOf(" ");
     const hasArgs = firstSpaceIdx !== -1;
-    const cmdPart = hasArgs ? trimmedStart.slice(0, firstSpaceIdx) : trimmedStart;
-    const cmdNorm = normalize(cmdPart);
-    const argPartRaw = hasArgs ? trimmedStart.slice(firstSpaceIdx + 1) : "";
-    const argPrefix = normalize(argPartRaw);
 
-    const filterByPrefix = (list, prefix) =>
-      list.filter((item) => normalize(item).startsWith(prefix));
-
+    // still typing the command name
     if (!hasArgs) {
-      const candidates = [...COMMANDS];
-      if (currentDir === "~") {
-        candidates.push(...DIRECTORIES);
-      } else {
-        candidates.push(...getItemsForDir(currentDir));
-      }
-      const matches = filterByPrefix(candidates, cmdNorm)
-        .filter((item) => normalize(item) !== cmdNorm)
-        .slice(0, 5);
-      return Array.from(new Set(matches));
+      const cmdNorm = normalize(trimmedStart);
+      const dirEntries = Object.values(nodeAt(cwdRef.current)?.children || {}).map(
+        (c) => c.name
+      );
+      return Array.from(new Set([...commandNames, ...dirEntries]))
+        .filter((name) => name.startsWith(cmdNorm) && name !== cmdNorm)
+        .slice(0, 6);
     }
 
-    if (cmdNorm === "cd") {
-      const cdTargets = ["..", "~", ...DIRECTORIES];
-      return filterByPrefix(cdTargets, argPrefix)
-        .map((match) => `cd ${match}`)
-        .filter((item) => normalize(item) !== normalize(trimmedStart))
-        .slice(0, 5);
+    const cmd = normalize(trimmedStart.slice(0, firstSpaceIdx));
+    const argRaw = trimmedStart.slice(firstSpaceIdx + 1).replace(/^\s+/, "");
+
+    // path-completing commands
+    if (["cd", "ls", "cat", "tree"].includes(cmd)) {
+      const lastSlash = argRaw.lastIndexOf("/");
+      const dirPart = lastSlash === -1 ? "" : argRaw.slice(0, lastSlash + 1);
+      const base = (lastSlash === -1 ? argRaw : argRaw.slice(lastSlash + 1)).toLowerCase();
+      const dirNode = nodeAt(resolvePath(cwdRef.current, dirPart || "."));
+      if (!dirNode || dirNode.type !== "dir") return [];
+      let entries = Object.values(dirNode.children);
+      if (cmd === "cd") entries = entries.filter((e) => e.type === "dir");
+      return entries
+        .filter((e) => e.name.startsWith(base) && e.name !== base)
+        .slice(0, 6)
+        .map((e) => `${cmd} ${dirPart}${e.name}${e.type === "dir" ? "/" : ""}`);
     }
 
-    if (cmdNorm === "open" || cmdNorm === "source") {
-      return filterByPrefix(
-        projects.map((p) => p.name),
-        argPrefix
-      )
-        .map((match) => `${cmdNorm} ${match}`)
-        .filter((item) => normalize(item) !== normalize(trimmedStart))
-        .slice(0, 5);
+    // project-completing commands
+    if (["open", "source"].includes(cmd)) {
+      const projNode = nodeAt(["projects"]);
+      const base = argRaw.toLowerCase();
+      return Object.values(projNode.children)
+        .filter((e) => e.name.startsWith(base) && e.name !== base)
+        .slice(0, 6)
+        .map((e) => `${cmd} ${e.name}`);
+    }
+
+    if (cmd === "man") {
+      const base = argRaw.toLowerCase();
+      return commandNames
+        .filter((n) => n.startsWith(base) && n !== base)
+        .slice(0, 6)
+        .map((n) => `man ${n}`);
     }
 
     return [];
@@ -348,48 +406,42 @@ export default function TerminalController() {
   useEffect(() => {
     const inputEl = document.querySelector(".terminal-hidden-input");
     if (!inputEl) return;
-
-    const handleInputChange = (event) => {
-      setCurrentInput(event.target.value);
-    };
-
+    const handleInputChange = (event) => setCurrentInput(event.target.value);
     inputEl.addEventListener("input", handleInputChange);
     return () => inputEl.removeEventListener("input", handleInputChange);
   }, []);
 
   useEffect(() => {
     setSuggestions(buildSuggestionList(currentInput));
-  }, [currentInput, currentDir, projects, games, books, movies, tvShows]);
+  }, [currentInput, cwd]);
 
   useEffect(() => {
-    if (inputValue !== currentInput) {
-      setCurrentInput(inputValue);
-    }
+    if (inputValue !== currentInput) setCurrentInput(inputValue);
   }, [inputValue]);
 
+  // Tab → accept top suggestion
   useEffect(() => {
     const handleTabKey = (event) => {
       if (event.key !== "Tab") return;
       const nextValue = suggestionsRef.current?.[0];
-      if (!nextValue) return;
-      if (!currentInputRef.current) return;
+      if (!nextValue || !currentInputRef.current) return;
       event.preventDefault();
       setInputValue(nextValue);
       setCurrentInput(nextValue);
     };
-
     window.addEventListener("keydown", handleTabKey);
     return () => window.removeEventListener("keydown", handleTabKey);
   }, []);
 
+  // --- ghost (inline autocomplete preview) --------------------------------
   const measureTextWidth = (text, referenceEl) => {
     if (!referenceEl) return 0;
     const span = document.createElement("span");
-    const styles = window.getComputedStyle(referenceEl);
+    const stylesComputed = window.getComputedStyle(referenceEl);
     span.style.visibility = "hidden";
     span.style.whiteSpace = "pre";
-    span.style.fontSize = styles.fontSize;
-    span.style.fontFamily = styles.fontFamily;
+    span.style.fontSize = stylesComputed.fontSize;
+    span.style.fontFamily = stylesComputed.fontFamily;
     span.innerText = text || "";
     document.body.appendChild(span);
     const width = span.getBoundingClientRect().width;
@@ -408,32 +460,31 @@ export default function TerminalController() {
       activeLine.appendChild(ghostEl);
     }
 
+    const clearGhost = () => {
+      ghostEl.textContent = "";
+      activeLine.style.removeProperty("--ghost-left");
+    };
+
     const hiddenInput = document.querySelector(".terminal-hidden-input");
     if (
       hiddenInput &&
       hiddenInput.selectionStart !== null &&
       hiddenInput.selectionStart !== hiddenInput.value.length
     ) {
-      ghostEl.textContent = "";
-      activeLine.style.removeProperty("--ghost-left");
+      clearGhost();
       return;
     }
 
     const suggestion = suggestions[0] || "";
     const input = currentInput || "";
-    const suggestionLower = suggestion.toLowerCase();
-    const inputLower = input.toLowerCase();
-
-    if (!suggestion || !input || !suggestionLower.startsWith(inputLower)) {
-      ghostEl.textContent = "";
-      activeLine.style.removeProperty("--ghost-left");
+    if (!suggestion || !input || !suggestion.toLowerCase().startsWith(input.toLowerCase())) {
+      clearGhost();
       return;
     }
 
     const remainder = suggestion.slice(input.length);
     if (!remainder) {
-      ghostEl.textContent = "";
-      activeLine.style.removeProperty("--ghost-left");
+      clearGhost();
       return;
     }
 
@@ -443,475 +494,365 @@ export default function TerminalController() {
     const fontSize = parseFloat(window.getComputedStyle(activeLine).fontSize || "16");
     const promptGap = fontSize * 0.75;
     const cursorEl = activeLine.querySelector(".cursor");
-    const cursorWidth =
-      cursorEl?.getBoundingClientRect().width || Math.max(6, fontSize * 0.55);
-    const left = promptWidth + promptGap + inputWidth + cursorWidth;
-
-    activeLine.style.setProperty("--ghost-left", `${left}px`);
+    const cursorWidth = cursorEl?.getBoundingClientRect().width || Math.max(6, fontSize * 0.55);
+    activeLine.style.setProperty("--ghost-left", `${promptWidth + promptGap + inputWidth + cursorWidth}px`);
     ghostEl.textContent = remainder;
   }, [currentInput, suggestions]);
 
+  // ------------------------------------------------------------------------
+  // command execution
+  // ------------------------------------------------------------------------
   function handleInput(terminalInput) {
-    const rawInput = terminalInput.trim();
-    if (!rawInput) return;
+    const rawInput = (terminalInput || "").trim();
+    const baseCwd = cwdRef.current;
 
     setTerminalLineData((prev) => {
-      let ld = [...prev];
+      const ld = [...prev];
+      const out = (content, color) =>
+        ld.push(
+          <TerminalOutput key={nextKey()}>
+            {color ? <StyledSpan color={color}>{content}</StyledSpan> : content}
+          </TerminalOutput>
+        );
+      const blank = () => ld.push(<TerminalOutput key={nextKey()}></TerminalOutput>);
+      const errorLine = (content) =>
+        ld.push(
+          <TerminalOutput key={nextKey()}>
+            <Pre style={{ color: colors.red.hex }}>{content}</Pre>
+          </TerminalOutput>
+        );
 
-      // echo input
-      ld.push(<TerminalInput key={`input-${ld.length}`}>{terminalInput}</TerminalInput>);
+      // echo the entered command with its prompt
+      ld.push(<TerminalInput key={nextKey()}>{terminalInput}</TerminalInput>);
 
-      let [rawCmd, ...rawArgs] = rawInput.split(/\s+/);
-      let cmd = normalize(rawCmd);
-      let args = rawArgs.join(" ");
+      if (!rawInput) return ld;
 
-      // treat bare paths like "../games" or "../" as cd
-      if (cmd.startsWith("./") || cmd.startsWith("../")) {
-        args = rawInput;
+      const tokens = rawInput.split(/\s+/);
+      let cmd = normalize(tokens[0]);
+      let argTokens = tokens.slice(1);
+
+      // bare path (starts with ./ ../ ~/ or /) is treated as cd
+      if (/^(\.\.?\/|~\/|\/)/.test(tokens[0]) || tokens[0] === ".." || tokens[0] === "~") {
         cmd = "cd";
+        argTokens = tokens;
       }
 
-      // ---- command handling ----
-      if (["commands", "help", "man"].includes(cmd)) {
-        ld.push(
-          <TerminalOutput key="help-1">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>ls: </BoldItalicSpan>
-              list items in the current directory
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(<TerminalOutput key="help-blank-1"></TerminalOutput>);
-        ld.push(
-          <TerminalOutput key="help-2">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>[project title]: </BoldItalicSpan>
-              show project details (when in ~/Projects)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-2b">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>[game title]: </BoldItalicSpan>
-              show game poster (when in ~/games)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-2c">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>[book title]: </BoldItalicSpan>
-              show book cover (when in ~/books)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-2d">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>[movie title]: </BoldItalicSpan>
-              show movie poster (when in ~/movies)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-2e">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>[show title]: </BoldItalicSpan>
-              show TV show poster (when in ~/shows)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(<TerminalOutput key="help-blank-2"></TerminalOutput>);
-        ld.push(
-          <TerminalOutput key="help-3">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>cd .. or cd ../: </BoldItalicSpan>
-              go to parent (~)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-3b">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>cd ../games: </BoldItalicSpan>
-              go to games directory (also accepts <code>cd games</code>)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-3c">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>cd ../Projects: </BoldItalicSpan>
-              go back to projects (also accepts <code>cd projects</code>)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-3d">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>cd ../books: </BoldItalicSpan>
-              go to books (also accepts <code>cd books</code>)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-3e">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>cd ../movies: </BoldItalicSpan>
-              go to movies (also accepts <code>cd movies</code>)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-3f">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>cd ../shows: </BoldItalicSpan>
-              go to TV shows (also accepts <code>cd shows</code>)
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(<TerminalOutput key="help-blank-3"></TerminalOutput>);
-        ld.push(
-          <TerminalOutput key="help-4">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>open [project]: </BoldItalicSpan>
-              open project link in new tab
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-5">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>source [project]: </BoldItalicSpan>
-              show project source links
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(<TerminalOutput key="help-blank-4"></TerminalOutput>);
-        ld.push(
-          <TerminalOutput key="help-6">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>clear: </BoldItalicSpan>
-              clear the screen
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(
-          <TerminalOutput key="help-7">
-            <StyledSpan color={colors.green.hex}>
-              <BoldItalicSpan>tab: </BoldItalicSpan>
-              autocomplete the top suggestion
-            </StyledSpan>
-          </TerminalOutput>
-        );
-        ld.push(<TerminalOutput key="help-blank-5"></TerminalOutput>);
-      } else if (["ls", "projects"].includes(cmd)) {
-        if (currentDir === "~") {
-          // list directories
-          DIRECTORIES.forEach((dirName) => {
+      const argStr = argTokens.join(" ");
+
+      switch (cmd) {
+        case "help":
+        case "commands": {
+          out("Available commands:", colors.purple.hex);
+          COMMANDS.forEach((c) => {
             ld.push(
-              <TerminalOutput key={`dir-${dirName}-${ld.length}`}>
-                <StyledSpan
-                  color={colors.blue.hex}
-                  cursor="pointer"
-                  onClick={() => handleInput(`cd ./${dirName}`)}
-                >
-                  {dirName}
-                </StyledSpan>
+              <TerminalOutput key={nextKey()}>
+                <BoldItalicSpan>{c.usage.padEnd(18)}</BoldItalicSpan>
+                <StyledSpan color={colors.green.hex}>{c.desc}</StyledSpan>
               </TerminalOutput>
             );
           });
-        } else if (currentDir === "Projects") {
-          projects.forEach((p) => {
-            ld.push(
-              <TerminalOutput key={`project-list-${p.name}-${ld.length}`}>
-                <StyledSpan
-                  color={colors.green.hex}
-                  cursor="pointer"
-                  onClick={() => handleInput(p.name)}
-                >
-                  {p.name}
-                </StyledSpan>
-              </TerminalOutput>
-            );
-          });
-        } else if (currentDir === "games") {
-          games.forEach((g) => {
-            ld.push(
-              <TerminalOutput key={`game-list-${g.title}-${ld.length}`}>
-                <StyledSpan
-                  color={colors.green.hex}
-                  cursor="pointer"
-                  onClick={() => handleInput(g.title)}
-                >
-                  {g.title}
-                </StyledSpan>
-              </TerminalOutput>
-            );
-          });
-        } else if (currentDir === "books") {
-          books.forEach((b) => {
-            ld.push(
-              <TerminalOutput key={`book-list-${b.title}-${ld.length}`}>
-                <StyledSpan
-                  color={colors.green.hex}
-                  cursor="pointer"
-                  onClick={() => handleInput(b.title)}
-                >
-                  {b.title}
-                </StyledSpan>
-              </TerminalOutput>
-            );
-          });
-        } else if (currentDir === "movies") {
-          movies.forEach((m) => {
-            ld.push(
-              <TerminalOutput key={`movie-list-${m.title}-${ld.length}`}>
-                <StyledSpan
-                  color={colors.green.hex}
-                  cursor="pointer"
-                  onClick={() => handleInput(m.title)}
-                >
-                  {m.title}
-                </StyledSpan>
-              </TerminalOutput>
-            );
-          });
-        } else if (currentDir === "shows") {
-          tvShows.forEach((s) => {
-            ld.push(
-              <TerminalOutput key={`show-list-${s.title}-${ld.length}`}>
-                <StyledSpan
-                  color={colors.green.hex}
-                  cursor="pointer"
-                  onClick={() => handleInput(s.title)}
-                >
-                  {s.title}
-                </StyledSpan>
-              </TerminalOutput>
-            );
-          });
+          blank();
+          out("Tip: click any highlighted entry, or press Tab to autocomplete.", colors.grey.hex);
+          break;
         }
-        ld.push(<TerminalOutput key={`ls-blank-${ld.length}`}></TerminalOutput>);
-      } else if (cmd === "cd") {
-        const rawPath = args.trim();
-        // no path or "~" => go home
-        if (!rawPath || rawPath === "~") {
-          if (currentDir !== "~") {
-            setCurrentDir("~");
-            ld.push(
-              <TerminalOutput key={`cd-home-${ld.length}`}>
-                <StyledSpan color={colors.green.hex}>user@MattKearns</StyledSpan>{" "}
-                <StyledSpan color={colors.yellow.hex}>~</StyledSpan>
-              </TerminalOutput>
-            );
-            ld.push(<TerminalOutput key={`cd-home-blank-${ld.length}`}></TerminalOutput>);
+
+        case "man": {
+          const target = normalize(argStr);
+          if (!target) {
+            errorLine("Usage: man <command>");
+            break;
           }
-        } else {
-          const lowerPath = rawPath.toLowerCase().replace(/\/+$/, ""); // strip trailing slash
-
-          let targetDir = currentDir;
-
-          if (lowerPath === "..") {
-            // go to parent
-            targetDir = "~";
-          } else if (
-            lowerPath === "../games" ||
-            lowerPath === "./games" ||
-            lowerPath === "games" ||
-            lowerPath === "~/games"
-          ) {
-            targetDir = "games";
-          } else if (
-            lowerPath === "../projects" ||
-            lowerPath === "./projects" ||
-            lowerPath === "projects" ||
-            lowerPath === "~/projects"
-          ) {
-            targetDir = "Projects";
-          } else if (
-            lowerPath === "../books" ||
-            lowerPath === "./books" ||
-            lowerPath === "books" ||
-            lowerPath === "~/books"
-          ) {
-            targetDir = "books";
-          } else if (
-            lowerPath === "../movies" ||
-            lowerPath === "./movies" ||
-            lowerPath === "movies" ||
-            lowerPath === "~/movies"
-          ) {
-            targetDir = "movies";
-          } else if (
-            lowerPath === "../shows" ||
-            lowerPath === "./shows" ||
-            lowerPath === "shows" ||
-            lowerPath === "~/shows"
-          ) {
-            targetDir = "shows";
-          } else {
-            ld.push(
-              <TerminalOutput key={`cd-nosuch-${ld.length}`}>
-                <span style={{ color: colors.red.hex }}>
-                  No such directory: <strong>{rawPath}</strong>
-                </span>
-              </TerminalOutput>
-            );
-            return ld;
+          const c = COMMANDS.find((x) => x.name === target);
+          if (!c) {
+            errorLine(`No manual entry for ${target}`);
+            break;
           }
-
-          if (targetDir !== currentDir) {
-            setCurrentDir(targetDir);
-            const pathLabel =
-              targetDir === "~"
-                ? "~"
-                : targetDir === "Projects"
-                ? "~/Projects"
-                : targetDir === "games"
-                ? "~/games"
-                : targetDir === "books"
-                ? "~/books"
-                : targetDir === "movies"
-                ? "~/movies"
-                : "~/shows";
-
-            ld.push(
-              <TerminalOutput key={`cd-${targetDir}-${ld.length}`}>
-                <StyledSpan color={colors.green.hex}>user@MattKearns</StyledSpan>{" "}
-                <StyledSpan color={colors.yellow.hex}>{pathLabel}</StyledSpan>
-              </TerminalOutput>
-            );
-            ld.push(<TerminalOutput key={`cd-blank-${ld.length}`}></TerminalOutput>);
-          }
+          out(c.usage, colors.yellow.hex);
+          out(c.desc, colors.green.hex);
+          break;
         }
-      } else if (cmd === "clear") {
-        ld = [];
-      } else if (cmd === "open") {
-        const projectName = args;
-        if (!projectName) {
-          ld.push(
-            <TerminalOutput key="open-missing">
-              <span style={{ color: colors.red.hex }}>
-                Usage: <strong>open [project name]</strong>
-              </span>
-            </TerminalOutput>
-          );
-        } else {
-          const key = normalize(projectName);
-          const idx = projectNameMap.get(key);
-          if (idx === undefined) {
-            ld.push(
-              <TerminalOutput key={`open-unknown-${projectName}`}>
-                <span style={{ color: colors.red.hex }}>
-                  Unknown project: <strong>{projectName}</strong>
-                </span>
-              </TerminalOutput>
-            );
-          } else {
-            const proj = projects[idx];
-            if (proj.link) {
-              window.open(proj.link, "_blank", "noopener,noreferrer");
+
+        case "ls": {
+          const pathArgs = argTokens.filter((t) => !t.startsWith("-"));
+          const flags = argTokens.filter((t) => t.startsWith("-")).join("");
+          const longFmt = flags.includes("l");
+          const targetSegs = resolvePath(baseCwd, pathArgs[0] || ".");
+          const node = nodeAt(targetSegs);
+          if (!node) {
+            errorLine(`ls: cannot access '${pathArgs[0]}': No such file or directory`);
+            break;
+          }
+          if (node.type === "file") {
+            out(node.name, colors.green.hex);
+            break;
+          }
+          if (longFmt) {
+            const entries = Object.values(node.children);
+            if (!entries.length) out("(empty)", colors.grey.hex);
+            entries.forEach((child) => {
+              const isDir = child.type === "dir";
+              const abs = segsToPath([...targetSegs, child.name]);
               ld.push(
-                <TerminalOutput key={`open-success-${proj.name}`}>
-                  <span style={{ color: colors.green.hex }}>
-                    Opening <strong>{proj.name}</strong>...
-                  </span>
+                <TerminalOutput key={nextKey()}>
+                  <StyledSpan color={colors.grey.hex}>
+                    {isDir ? "drwxr-xr-x  " : "-rw-r--r--  "}
+                  </StyledSpan>
+                  <StyledSpan
+                    color={isDir ? colors.blue.hex : colors.green.hex}
+                    cursor="pointer"
+                    onClick={() => handleInput(isDir ? `cd ${abs}` : `cat ${abs}`)}
+                  >
+                    {child.name}
+                    {isDir ? "/" : ""}
+                  </StyledSpan>
                 </TerminalOutput>
               );
-            } else {
-              ld.push(
-                <TerminalOutput key={`open-null-${proj.name}`}>
-                  <span style={{ color: colors.red.hex }}>
-                    Project <strong>{proj.name}</strong> has no link.
-                  </span>
-                </TerminalOutput>
-              );
-            }
+            });
+          } else {
+            listingLines(targetSegs, node).forEach((line) => ld.push(line));
           }
+          blank();
+          break;
         }
-      } else if (cmd === "source") {
-        const projectName = args;
-        if (!projectName) {
+
+        case "cd": {
+          const targetSegs = resolvePath(baseCwd, argStr || "~");
+          const node = nodeAt(targetSegs);
+          if (!node) {
+            errorLine(`cd: no such file or directory: ${argStr}`);
+            break;
+          }
+          if (node.type !== "dir") {
+            errorLine(`cd: not a directory: ${argStr}`);
+            break;
+          }
+          setCwd(targetSegs);
           ld.push(
-            <TerminalOutput key="source-missing">
-              <span style={{ color: colors.red.hex }}>
-                Usage: <strong>source [project name]</strong>
-              </span>
+            <TerminalOutput key={nextKey()}>
+              <StyledSpan color={colors.green.hex}>user@MattKearns</StyledSpan>{" "}
+              <StyledSpan color={colors.yellow.hex}>{segsToLabel(targetSegs)}</StyledSpan>
             </TerminalOutput>
           );
-        } else {
-          const key = normalize(projectName);
-          const idx = projectNameMap.get(key);
-          if (idx === undefined) {
+          blank();
+          break;
+        }
+
+        case "pwd": {
+          out(segsToPath(baseCwd), colors.yellow.hex);
+          break;
+        }
+
+        case "cat": {
+          if (!argStr) {
+            errorLine("Usage: cat <file>");
+            break;
+          }
+          // resolve relative to cwd, then fall back to projects/<arg>
+          let node = nodeAt(resolvePath(baseCwd, argStr));
+          if (!node) node = nodeAt(resolvePath([], `projects/${argStr}`));
+          if (!node) {
+            errorLine(`cat: ${argStr}: No such file or directory`);
+            break;
+          }
+          if (node.type === "dir") {
+            errorLine(`cat: ${argStr}: Is a directory`);
+            break;
+          }
+          if (node.kind === "project") {
+            ld.push(<TerminalOutput key={nextKey()}>{ProjectResponse(node.data)}</TerminalOutput>);
+          } else if (node.kind === "poster") {
+            ld.push(<TerminalOutput key={nextKey()}>{PosterResponse(node)}</TerminalOutput>);
+          } else if (node.kind === "text") {
             ld.push(
-              <TerminalOutput key={`source-unknown-${projectName}`}>
-                <span style={{ color: colors.red.hex }}>
-                  Unknown project: <strong>{projectName}</strong>
-                </span>
+              <TerminalOutput key={nextKey()}>
+                <Pre style={{ color: colors.green.hex }}>{node.content}</Pre>
               </TerminalOutput>
             );
-          } else {
-            const proj = projects[idx];
+          } else if (node.kind === "contact") {
             ld.push(
-              <TerminalOutput key={`source-${proj.name}`}>
+              <TerminalOutput key={nextKey()}>
                 <StyledSpan color={colors.green.hex}>
-                  <BoldItalicSpan>-Client Source Code:</BoldItalicSpan>{" "}
-                  <StyledLink href={proj.github.client} target="_blank" rel="noreferrer">
-                    {proj.github.client || "null"}
+                  <BoldItalicSpan>Email:    </BoldItalicSpan>
+                  <StyledLink href="mailto:matt.kearns39@gmail.com">
+                    matt.kearns39@gmail.com
                   </StyledLink>
                   <br />
-                  <BoldItalicSpan>-Server Source Code:</BoldItalicSpan>{" "}
-                  <StyledLink href={proj.github.server} target="_blank" rel="noreferrer">
-                    {proj.github.server || "null"}
+                  <BoldItalicSpan>GitHub:   </BoldItalicSpan>
+                  <StyledLink href="https://github.com/clocktower39" target="_blank" rel="noreferrer">
+                    github.com/clocktower39
+                  </StyledLink>
+                  <br />
+                  <BoldItalicSpan>LinkedIn: </BoldItalicSpan>
+                  <StyledLink
+                    href="https://www.linkedin.com/in/matthew-kearns-6b8865117/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    linkedin.com/in/matthew-kearns
+                  </StyledLink>
+                  <br />
+                  <BoldItalicSpan>Instagram:</BoldItalicSpan>{" "}
+                  <StyledLink href="https://www.instagram.com/kearns39/" target="_blank" rel="noreferrer">
+                    instagram.com/kearns39
                   </StyledLink>
                 </StyledSpan>
               </TerminalOutput>
             );
+          } else if (node.kind === "route") {
+            ld.push(
+              <TerminalOutput key={nextKey()}>
+                <StyledSpan color={colors.green.hex}>
+                  My web resume lives at{" "}
+                  <StyledLink href={node.route}>{node.route}</StyledLink>. Run{" "}
+                  <BoldItalicSpan>open resume</BoldItalicSpan> to go there.
+                </StyledSpan>
+              </TerminalOutput>
+            );
           }
+          blank();
+          break;
         }
-      } else {
-        // treat as possible project, game, book, movie, or show name
-        const normalized = normalize(rawInput);
-        const projIdx = projectNameMap.get(normalized);
-        const gameIdx = gameNameMap.get(normalized);
-        const bookIdx = bookNameMap.get(normalized);
-        const movieIdx = movieNameMap.get(normalized);
-        const showIdx = showNameMap.get(normalized);
 
-        if (projIdx !== undefined) {
-          runProjectDetails(ld, rawInput);
-        } else if (gameIdx !== undefined) {
-          runGameDetails(ld, rawInput);
-        } else if (bookIdx !== undefined) {
-          runBookDetails(ld, rawInput);
-        } else if (movieIdx !== undefined) {
-          runMovieDetails(ld, rawInput);
-        } else if (showIdx !== undefined) {
-          runShowDetails(ld, rawInput);
-        } else {
+        case "tree": {
+          const targetSegs = resolvePath(baseCwd, argStr || ".");
+          const node = nodeAt(targetSegs);
+          if (!node) {
+            errorLine(`tree: ${argStr}: No such file or directory`);
+            break;
+          }
+          const lines = [segsToLabel(targetSegs)];
+          const walk = (n, prefix) => {
+            if (n.type !== "dir") return;
+            const kids = Object.values(n.children);
+            kids.forEach((child, i) => {
+              const last = i === kids.length - 1;
+              lines.push(
+                `${prefix}${last ? "└── " : "├── "}${child.name}${child.type === "dir" ? "/" : ""}`
+              );
+              if (child.type === "dir") walk(child, `${prefix}${last ? "    " : "│   "}`);
+            });
+          };
+          walk(node, "");
           ld.push(
-            <TerminalOutput key={`unknown-command-${ld.length}`}>
-              <span style={{ color: colors.red.hex, whiteSpace: "pre-wrap" }}>
-                Unrecognized command, use{" "}
-                <span style={{ fontStyle: "italic" }}>
-                  <strong>help</strong>
-                </span>{" "}
-                for list of available commands
-              </span>
+            <TerminalOutput key={nextKey()}>
+              <Pre style={{ color: colors.green.hex }}>{lines.join("\n")}</Pre>
             </TerminalOutput>
           );
-          ld.push(<TerminalOutput key={`unknown-command-blank-${ld.length}`}></TerminalOutput>);
+          blank();
+          break;
+        }
+
+        case "open": {
+          if (!argStr) {
+            errorLine("Usage: open <project>");
+            break;
+          }
+          let node = nodeAt(resolvePath(baseCwd, argStr));
+          if (!node) node = nodeAt(resolvePath([], `projects/${argStr}`));
+          if (!node || node.type === "dir") {
+            errorLine(`open: ${argStr}: not an openable file`);
+            break;
+          }
+          if (node.kind === "route") {
+            window.location.assign(node.route);
+            out(`Opening ${node.route} ...`, colors.green.hex);
+            break;
+          }
+          if (node.kind === "project") {
+            if (node.data.link) {
+              window.open(node.data.link, "_blank", "noopener,noreferrer");
+              out(`Opening ${node.display} ...`, colors.green.hex);
+            } else {
+              errorLine(`open: ${node.display} has no live link.`);
+            }
+            break;
+          }
+          errorLine(`open: ${argStr}: nothing to open`);
+          break;
+        }
+
+        case "source": {
+          if (!argStr) {
+            errorLine("Usage: source <project>");
+            break;
+          }
+          let node = nodeAt(resolvePath(baseCwd, argStr));
+          if (!node) node = nodeAt(resolvePath([], `projects/${argStr}`));
+          if (!node || node.kind !== "project") {
+            errorLine(`source: ${argStr}: not a project`);
+            break;
+          }
+          const p = node.data;
+          ld.push(
+            <TerminalOutput key={nextKey()}>
+              <StyledSpan color={colors.green.hex}>
+                <BoldItalicSpan>Client Source:</BoldItalicSpan>{" "}
+                {p.github.client ? (
+                  <StyledLink href={p.github.client} target="_blank" rel="noreferrer">
+                    {p.github.client}
+                  </StyledLink>
+                ) : (
+                  <span style={{ color: colors.grey.hex }}>null</span>
+                )}
+                <br />
+                <BoldItalicSpan>Server Source:</BoldItalicSpan>{" "}
+                {p.github.server ? (
+                  <StyledLink href={p.github.server} target="_blank" rel="noreferrer">
+                    {p.github.server}
+                  </StyledLink>
+                ) : (
+                  <span style={{ color: colors.grey.hex }}>null</span>
+                )}
+              </StyledSpan>
+            </TerminalOutput>
+          );
+          blank();
+          break;
+        }
+
+        case "whoami": {
+          out("matt", colors.green.hex);
+          break;
+        }
+
+        case "echo": {
+          out(argStr, colors.green.hex);
+          break;
+        }
+
+        case "date": {
+          out(new Date().toString(), colors.green.hex);
+          break;
+        }
+
+        case "history": {
+          const hist = [...historyRef.current, rawInput];
+          hist.forEach((h, i) => {
+            ld.push(
+              <TerminalOutput key={nextKey()}>
+                <StyledSpan color={colors.grey.hex}>{String(i + 1).padStart(4)} </StyledSpan>
+                <StyledSpan color={colors.green.hex}>{h}</StyledSpan>
+              </TerminalOutput>
+            );
+          });
+          break;
+        }
+
+        case "clear": {
+          return [];
+        }
+
+        default: {
+          errorLine(`command not found: ${cmd}`);
+          out("Type 'help' for a list of available commands.", colors.grey.hex);
+          break;
         }
       }
 
       return ld;
     });
 
-    if (terminalInput.trim()) {
-      setHistory((prev) => [...prev, terminalInput]);
-    }
+    if (rawInput) setHistory((prev) => [...prev, rawInput]);
     setHistoryIndex(null);
     setInputValue("");
     setCurrentInput("");
@@ -924,21 +865,13 @@ export default function TerminalController() {
       if (e.key === "ArrowUp") {
         if (!history.length) return;
         e.preventDefault();
-
-        let newIndex;
-        if (historyIndex === null) {
-          newIndex = history.length - 1;
-        } else {
-          newIndex = Math.max(0, historyIndex - 1);
-        }
-
+        const newIndex = historyIndex === null ? history.length - 1 : Math.max(0, historyIndex - 1);
         setHistoryIndex(newIndex);
         setInputValue(history[newIndex]);
       } else if (e.key === "ArrowDown") {
         if (!history.length || historyIndex === null) return;
         e.preventDefault();
-
-        let newIndex = historyIndex + 1;
+        const newIndex = historyIndex + 1;
         if (newIndex >= history.length) {
           setHistoryIndex(null);
           setInputValue("");
@@ -948,42 +881,21 @@ export default function TerminalController() {
         }
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [history, historyIndex]);
 
-  const pathLabel =
-    currentDir === "~"
-      ? "~"
-      : currentDir === "Projects"
-      ? "~/Projects"
-      : currentDir === "games"
-      ? "~/games"
-      : currentDir === "books"
-      ? "~/books"
-      : currentDir === "movies"
-      ? "~/movies"
-      : "~/shows";
-  
-  const [terminalHeight, setTerminalHeight] = useState('600px');
-  
-  const onRedButtonClick = (e) => {
-    setTerminalHeight('0px')
-  }
+  const pathLabel = segsToLabel(cwd);
 
-  const onYellowButtonClick = (e) => {
-    setTerminalHeight('600px')
-  }
-
-  const onGreenButtonClick = (e) => {
-    setTerminalHeight('100vh')
-  }
+  const [terminalHeight, setTerminalHeight] = useState("600px");
+  const onRedButtonClick = () => setTerminalHeight("0px");
+  const onYellowButtonClick = () => setTerminalHeight("600px");
+  const onGreenButtonClick = () => setTerminalHeight("100vh");
 
   return (
     <Grid container>
       <Terminal
-        name={`- MattKearns ${pathLabel}`}
+        name={`MattKearns: ${pathLabel}`}
         onInput={handleInput}
         startingInputValue={inputValue}
         prompt={`[user@MattKearns ${pathLabel}]$ `}
