@@ -10,8 +10,8 @@ const GITHUB = "https://github.com/clocktower39";
 // In-page anchors (only meaningful on the home route).
 const SECTIONS = [
   { href: "#projects", label: "Work" },
-  { href: "#gaming", label: "Gaming" },
   { href: "#tech", label: "Tech" },
+  { href: "#gaming", label: "Gaming" },
   { href: "#contact", label: "Contact" },
 ];
 

@@ -1,40 +1,32 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/layout/Section";
-import { GithubGlyph } from "@/components/icons/Brand";
-import { projects } from "../../states";
+import { Badge } from "@/components/ui/badge";
+import { projects } from "@/data/projects";
 
-// Cycle accent colors across the grid so each card has its own identity.
-const ACCENTS = [
-  { bar: "bg-green", glow: "group-hover:shadow-glow" },
-  { bar: "bg-grape", glow: "group-hover:shadow-glow-grape" },
-  { bar: "bg-leaf", glow: "group-hover:shadow-glow-leaf" },
-  { bar: "bg-cyan", glow: "group-hover:shadow-glow" },
-];
+// status → badge variant (mattkearns palette)
+const STATUS_VARIANT = {
+  live: "leaf",
+  building: "green",
+  experiment: "grape",
+  ongoing: "tangerine",
+};
 
-function RepoLink({ href, children }) {
-  if (!href) return null;
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      onClick={(e) => e.stopPropagation()}
-      className="chip transition-colors hover:border-white/30 hover:text-fg"
-    >
-      <GithubGlyph size={12} />
-      {children}
-    </a>
-  );
-}
+// accent → left edge bar
+const ACCENT_BAR = {
+  green: "bg-green",
+  grape: "bg-grape",
+  leaf: "bg-leaf",
+  tangerine: "bg-tangerine",
+  cyan: "bg-cyan",
+};
 
 function ProjectCard({ project, index }) {
-  const accent = ACCENTS[index % ACCENTS.length];
-  const hasLink = Boolean(project.link);
-
-  const open = () => {
-    if (hasLink) window.open(project.link, "_blank", "noopener");
-  };
+  const bar = ACCENT_BAR[project.accent] ?? ACCENT_BAR.green;
+  const Wrapper = project.link ? "a" : "div";
+  const wrapperProps = project.link
+    ? { href: project.link, target: "_blank", rel: "noreferrer" }
+    : {};
 
   return (
     <motion.div
@@ -43,72 +35,67 @@ function ProjectCard({ project, index }) {
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.45, delay: (index % 3) * 0.07 }}
     >
-      <div
-        onClick={open}
-        className={`glass-card lift group relative flex h-full flex-col overflow-hidden ${accent.glow} ${
-          hasLink ? "cursor-pointer" : ""
-        }`}
+      <Wrapper
+        {...wrapperProps}
+        className="glass-card lift group relative block h-full overflow-hidden p-6"
       >
         {/* accent edge */}
         <span
-          className={`absolute inset-y-0 left-0 z-10 w-1 ${accent.bar} opacity-70 transition-all group-hover:w-1.5`}
+          className={`absolute inset-y-0 left-0 w-1 ${bar} opacity-70 transition-all group-hover:w-1.5`}
           aria-hidden="true"
         />
 
-        {/* media / placeholder */}
-        <div className="relative h-40 overflow-hidden border-b border-white/10 bg-ink-800">
-          {project.img ? (
-            <img
-              src={project.img}
-              alt={project.name}
-              loading="lazy"
-              className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
-            />
-          ) : (
-            <div className="grid-bg flex h-full w-full items-center justify-center">
-              <span className="font-mono text-3xl text-fg-faint">
-                {project.name
-                  .split(" ")
-                  .map((w) => w[0])
-                  .join("")
-                  .slice(0, 3)
-                  .toUpperCase()}
-              </span>
-            </div>
-          )}
-        </div>
-
-        <div className="flex flex-1 flex-col p-5">
-          <h3 className="flex items-center gap-1.5 font-display text-lg font-semibold">
-            {project.name}
-            {hasLink && (
-              <ArrowUpRight
-                size={17}
-                className="text-fg-faint transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+        <div className="flex items-start justify-between gap-3">
+          {project.logo ? (
+            <div className="grid h-12 w-12 place-items-center rounded-xl border border-white/10 bg-white/5 p-1.5">
+              <img
+                src={project.logo}
+                alt={`${project.title} logo`}
+                loading="lazy"
+                className="max-h-full max-w-full object-contain"
               />
-            )}
-          </h3>
-          <p className="mt-2 flex-1 text-sm leading-relaxed text-fg-muted">
-            {project.desc}
-          </p>
-
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {hasLink && (
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="chip border-green/40 bg-green/12 text-green transition-colors hover:bg-green/20"
-              >
-                <ExternalLink size={12} /> live
-              </a>
-            )}
-            <RepoLink href={project.github?.client}>client</RepoLink>
-            <RepoLink href={project.github?.server}>server</RepoLink>
-          </div>
+            </div>
+          ) : (
+            <span className="text-3xl">{project.emoji}</span>
+          )}
+          <Badge variant={STATUS_VARIANT[project.status] ?? "default"}>
+            {project.status}
+          </Badge>
         </div>
-      </div>
+
+        <h3 className="mt-4 flex items-center gap-1.5 font-display text-xl font-semibold">
+          {project.title}
+          {project.link && (
+            <ArrowUpRight
+              size={18}
+              className="text-fg-faint transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            />
+          )}
+        </h3>
+
+        <dl className="mt-3 space-y-3 text-sm">
+          <div>
+            <dt className="font-mono text-xs uppercase tracking-wide text-leaf">
+              what it is
+            </dt>
+            <dd className="mt-0.5 text-fg-muted">{project.what}</dd>
+          </div>
+          <div>
+            <dt className="font-mono text-xs uppercase tracking-wide text-grape-soft">
+              why it's cool
+            </dt>
+            <dd className="mt-0.5 text-fg-muted">{project.why}</dd>
+          </div>
+        </dl>
+
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {project.tags.map((tag) => (
+            <span key={tag} className="chip">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </Wrapper>
     </motion.div>
   );
 }
@@ -123,7 +110,7 @@ export default function Projects() {
     >
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((p, i) => (
-          <ProjectCard key={p.name} project={p} index={i} />
+          <ProjectCard key={p.title} project={p} index={i} />
         ))}
       </div>
     </Section>

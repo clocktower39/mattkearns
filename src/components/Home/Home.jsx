@@ -5,6 +5,8 @@ import { ArrowDown, FileText, Rocket } from "lucide-react";
 import Logos from "./Logos";
 import Projects from "./Projects";
 import Gaming from "@/components/sections/Gaming";
+import Hobbies from "@/components/sections/Hobbies";
+import Obsessions from "@/components/sections/Obsessions";
 import headshot from "../../img/avatar2.jpg";
 import TerminalController from "../TerminalController";
 import Footer from "../Footer";
@@ -155,8 +157,10 @@ export default function Home() {
       </Section>
 
       <Projects />
-      <Gaming />
       <Logos />
+      <Obsessions />
+      <Hobbies />
+      <Gaming />
       <Footer />
     </div>
   );
