@@ -10,32 +10,38 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { GithubGlyph, LinkedinGlyph } from "@/components/icons/Brand";
+import { cn } from "@/lib/utils";
 import img from "../img/avatar.jpg";
+
+const THEME_OPTIONS = ["system", "light", "dark"];
 
 const CORE_SKILLS = [
   {
     label: "Frontend",
-    items: "React, TypeScript, Next.js, Vite, Redux, MUI, HTML, CSS",
+    items: "React, TypeScript, Next.js, Vite, Redux, Tailwind CSS, MUI, HTML, CSS",
   },
   {
     label: "Backend",
-    items: "Node.js, Express, MongoDB, Mongoose, JWT, Socket.IO, GridFS",
+    items: "Node.js, Express, MongoDB, PostgreSQL, Mongoose, REST APIs, JWT, Socket.IO",
   },
   {
     label: "Infrastructure",
-    items: "Docker, NGINX, AWS (Lightsail, S3, CloudFront), Cloudflare (DNS/SSL)",
+    items:
+      "Docker, NGINX, Linux, AWS (Lightsail, S3, CloudFront), Cloudflare (DNS/SSL), Raspberry Pi",
   },
   {
     label: "Engineering",
     items:
-      "Refactoring, performance optimization, debugging production issues, SEO/SSG/SSR, CI/CD basics",
+      "Refactoring, performance optimization, debugging production issues, SEO/SSG/SSR, CI/CD, AI coding agents (Claude Code, Codex)",
   },
 ];
 
 function SectionHeading({ icon: Icon, children, hideIcon }) {
   return (
-    <h2 className="mb-1.5 flex items-center gap-2 text-2xl font-semibold text-[#111]">
-      {!hideIcon && <Icon size={20} className="text-[#263544]" />}
+    <h2 className="mb-1.5 flex items-center gap-2 text-2xl font-semibold text-[#111] dark:text-fg">
+      {!hideIcon && (
+        <Icon size={20} className="text-[#263544] dark:text-green" />
+      )}
       {children}
     </h2>
   );
@@ -46,6 +52,31 @@ export default function Resume() {
   const [hidePicture, setHidePicture] = useState(false);
   const [hideSectionIcons, setHideSectionIcons] = useState(false);
   const [pendingPrint, setPendingPrint] = useState(false);
+
+  // Theme: "system" follows the OS, "light"/"dark" override it. Persisted.
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") return "system";
+    return window.localStorage.getItem("resumeTheme") || "system";
+  });
+  const [systemDark, setSystemDark] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const sync = () => setSystemDark(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem("resumeTheme", theme);
+    } catch {
+      /* localStorage unavailable — ignore */
+    }
+  }, [theme]);
+
+  const isDark = theme === "dark" || (theme === "system" && systemDark);
 
   // Close the options dialog before printing so it doesn't appear in the PDF.
   useEffect(() => {
@@ -59,10 +90,15 @@ export default function Resume() {
   }, [optionsOpen, pendingPrint]);
 
   return (
-    <div className="min-h-screen bg-[#e9eef2] py-0 font-body sm:py-8 print:bg-white print:py-0">
-      <div className="mx-auto max-w-3xl overflow-hidden bg-white text-[#111] shadow-xl [print-color-adjust:exact] [-webkit-print-color-adjust:exact] sm:rounded-xl print:shadow-none">
+    <div
+      className={cn(
+        "min-h-screen bg-[#e9eef2] py-0 font-body dark:bg-ink-950 sm:py-8 print:bg-white print:py-0",
+        isDark && "dark"
+      )}
+    >
+      <div className="resume-doc mx-auto max-w-3xl overflow-hidden bg-white text-[#111] shadow-xl [print-color-adjust:exact] [-webkit-print-color-adjust:exact] dark:border dark:border-white/10 dark:bg-ink-900 dark:text-fg sm:rounded-xl print:shadow-none">
         {/* header */}
-        <header className="relative bg-[#263544] px-6 py-5 text-white">
+        <header className="resume-header relative bg-[#263544] px-6 py-5 text-white dark:border-b dark:border-green/20 dark:bg-ink-800">
           <Link
             to="/"
             aria-label="Back to home"
@@ -76,7 +112,7 @@ export default function Resume() {
               <img
                 src={img}
                 alt="Matt Kearns"
-                className="h-28 w-28 shrink-0 rounded-full object-cover"
+                className="h-28 w-28 shrink-0 rounded-full object-cover dark:ring-2 dark:ring-green/50"
               />
             )}
             <div className={hidePicture ? "w-full text-center" : ""}>
@@ -111,15 +147,19 @@ export default function Resume() {
         </header>
 
         {/* body */}
-        <div className="grid md:grid-cols-3">
+        <div className="resume-body grid md:grid-cols-3">
           {/* sidebar */}
-          <aside className="bg-[#F3F3F3] p-5 text-[#1D1D1D] md:col-span-1">
+          <aside className="resume-side bg-[#F3F3F3] p-5 text-[#1D1D1D] dark:bg-ink-800 dark:text-fg md:col-span-1">
             <h2 className="mb-2 text-lg font-semibold">Core Skills</h2>
             <div className="space-y-3">
               {CORE_SKILLS.map((group) => (
                 <div key={group.label}>
-                  <h3 className="text-sm font-semibold">{group.label}</h3>
-                  <p className="text-sm text-[#333]">{group.items}</p>
+                  <h3 className="text-sm font-semibold dark:text-green">
+                    {group.label}
+                  </h3>
+                  <p className="text-sm text-[#333] dark:text-fg-muted">
+                    {group.items}
+                  </p>
                 </div>
               ))}
             </div>
@@ -132,7 +172,7 @@ export default function Resume() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="GitHub"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-black/15 text-[#263544] transition-colors hover:bg-black/5"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-black/15 text-[#263544] transition-colors hover:bg-black/5 dark:border-white/15 dark:text-green dark:hover:bg-white/5"
                 >
                   <GithubGlyph size={18} />
                 </a>
@@ -141,7 +181,7 @@ export default function Resume() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-black/15 text-[#263544] transition-colors hover:bg-black/5"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-black/15 text-[#263544] transition-colors hover:bg-black/5 dark:border-white/15 dark:text-green dark:hover:bg-white/5"
                 >
                   <LinkedinGlyph size={18} />
                 </a>
@@ -150,18 +190,18 @@ export default function Resume() {
           </aside>
 
           {/* main */}
-          <main className="space-y-6 bg-white p-5 text-[#111] md:col-span-2">
+          <main className="resume-main space-y-6 bg-white p-5 text-[#111] dark:bg-ink-900 dark:text-fg md:col-span-2">
             <section>
               <SectionHeading icon={UserRound} hideIcon={hideSectionIcons}>
                 Summary
               </SectionHeading>
-              <p className="pl-6 text-sm leading-relaxed text-[#222]">
+              <p className="pl-6 text-sm leading-relaxed text-[#222] dark:text-fg-muted">
                 Systems-focused software engineer building and refactoring production
-                web applications since 2018. Strong in React-based frontends and
-                full-stack JavaScript systems, with emphasis on reliability,
-                performance, and maintainability. Experienced owning features
-                end-to-end, from frontend architecture through backend APIs and
-                infrastructure.
+                web applications since 2018. Strong in React/TypeScript frontends and
+                full-stack JavaScript, with an emphasis on reliability, performance, and
+                maintainability. Comfortable owning features end-to-end — from frontend
+                architecture through backend APIs and infrastructure — and increasingly
+                using AI coding agents to ship faster.
               </p>
             </section>
 
@@ -169,13 +209,14 @@ export default function Resume() {
               <SectionHeading icon={Code} hideIcon={hideSectionIcons}>
                 Selected Projects
               </SectionHeading>
-              <div className="space-y-4 pl-6 text-sm text-[#222]">
+              <div className="space-y-4 pl-6 text-sm text-[#222] dark:text-fg-muted">
                 <div>
-                  <h3 className="text-base font-semibold">
+                  <h3 className="text-base font-semibold text-[#111] dark:text-fg">
                     Firebelly Fitness (Trainer/Client Platform)
                   </h3>
-                  <p className="text-[#555]">
-                    React, Redux, Node.js, MongoDB, Socket.IO, JWT
+                  <p className="text-[#555] dark:text-fg-faint">
+                    React, Redux, shadcn/ui, Node.js, MongoDB, Socket.IO, JWT ·
+                    Oracle Cloud VPS, Cloudflare
                   </p>
                   <ul className="mt-1 space-y-1">
                     <li>
@@ -193,13 +234,17 @@ export default function Resume() {
                       client/server desynchronization and keep real-time workout data
                       consistent.
                     </li>
+                    <li>
+                      • Deployed on an Oracle Cloud VPS behind Cloudflare (DNS, SSL,
+                      CDN) and modernized the frontend with shadcn/ui components.
+                    </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-base font-semibold">
+                  <h3 className="text-base font-semibold text-[#111] dark:text-fg">
                     Dauntless Athletics (Site Migration + Infra)
                   </h3>
-                  <p className="text-[#555]">
+                  <p className="text-[#555] dark:text-fg-faint">
                     React, TypeScript, MUI, Postgres, AWS Lightsail, NGINX, Cloudflare
                   </p>
                   <ul className="mt-1 space-y-1">
@@ -219,6 +264,24 @@ export default function Resume() {
                     </li>
                   </ul>
                 </div>
+                <div>
+                  <h3 className="text-base font-semibold text-[#111] dark:text-fg">
+                    Lil Miss Soy Sauce (Athlete Brand Site)
+                  </h3>
+                  <p className="text-[#555] dark:text-fg-faint">
+                    React, Vite, responsive design
+                  </p>
+                  <ul className="mt-1 space-y-1">
+                    <li>
+                      • Designed and built a fast, mobile-first personal brand and
+                      highlight site for a competitive cheer &amp; tumbling athlete.
+                    </li>
+                    <li>
+                      • Focused on clean performance, easy content updates, and a
+                      playful identity that still loads quickly on any device.
+                    </li>
+                  </ul>
+                </div>
               </div>
             </section>
 
@@ -226,11 +289,11 @@ export default function Resume() {
               <SectionHeading icon={Briefcase} hideIcon={hideSectionIcons}>
                 Experience
               </SectionHeading>
-              <div className="pl-6 text-sm text-[#222]">
-                <h3 className="text-base font-semibold">
+              <div className="pl-6 text-sm text-[#222] dark:text-fg-muted">
+                <h3 className="text-base font-semibold text-[#111] dark:text-fg">
                   Senior Web Developer / Systems Engineer (Freelance / Independent)
                 </h3>
-                <p className="text-[#555]">2018 - Present</p>
+                <p className="text-[#555] dark:text-fg-faint">2018 - Present</p>
                 <ul className="mt-1 space-y-1.5 pl-3">
                   <li>
                     • Designed, built, and maintained production React and full-stack
@@ -268,12 +331,12 @@ export default function Resume() {
               <SectionHeading icon={Building2} hideIcon={hideSectionIcons}>
                 Additional Experience
               </SectionHeading>
-              <div className="space-y-3 pl-6 text-sm text-[#222]">
+              <div className="space-y-3 pl-6 text-sm text-[#222] dark:text-fg-muted">
                 <div>
-                  <h3 className="text-base font-semibold">
+                  <h3 className="text-base font-semibold text-[#111] dark:text-fg">
                     Operations Support Lead — McKesson Specialty Health (Scottsdale, AZ)
                   </h3>
-                  <p className="text-[#555]">2019 - 2024</p>
+                  <p className="text-[#555] dark:text-fg-faint">2019 - 2024</p>
                   <ul className="mt-1 space-y-1.5 pl-3">
                     <li>
                       • Automated reporting and operational workflows using SharePoint,
@@ -294,10 +357,10 @@ export default function Resume() {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-base font-semibold">
+                  <h3 className="text-base font-semibold text-[#111] dark:text-fg">
                     Seasonal Supervisor — McKesson Specialty Health (Scottsdale, AZ)
                   </h3>
-                  <p className="text-[#555]">2021 - 2022</p>
+                  <p className="text-[#555] dark:text-fg-faint">2021 - 2022</p>
                   <ul className="mt-1 space-y-1.5 pl-3">
                     <li>
                       • Supervised and trained team members; ran QA checks and coached
@@ -316,8 +379,10 @@ export default function Resume() {
               <SectionHeading icon={GraduationCap} hideIcon={hideSectionIcons}>
                 Education
               </SectionHeading>
-              <div className="pl-6 text-sm text-[#222]">
-                <h3 className="text-base font-semibold">Self-taught software engineer</h3>
+              <div className="pl-6 text-sm text-[#222] dark:text-fg-muted">
+                <h3 className="text-base font-semibold text-[#111] dark:text-fg">
+                  Self-taught software engineer
+                </h3>
                 <ul className="mt-1 space-y-1 pl-3">
                   <li>
                     • Ongoing independent study in web architecture, system design, and
@@ -337,16 +402,38 @@ export default function Resume() {
           onClick={() => setOptionsOpen(false)}
         >
           <div
-            className="w-full max-w-sm rounded-xl bg-[#F6F8FA] p-5 text-[#111] shadow-2xl"
+            className="w-full max-w-sm rounded-xl bg-[#F6F8FA] p-5 text-[#111] shadow-2xl dark:bg-ink-800 dark:text-fg"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="mb-4 text-lg font-semibold">Resume Display Options</h2>
+
+            <div className="mb-4">
+              <p className="mb-2 text-sm font-medium">Theme</p>
+              <div className="flex gap-2">
+                {THEME_OPTIONS.map((opt) => (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => setTheme(opt)}
+                    className={cn(
+                      "flex-1 rounded-md border px-3 py-1.5 text-sm capitalize transition-colors",
+                      theme === opt
+                        ? "border-[#263544] bg-[#263544] text-white dark:border-green dark:bg-green dark:text-[#06140a]"
+                        : "border-black/15 hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/5"
+                    )}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <label className="mb-3 flex items-center gap-2.5 text-sm">
               <input
                 type="checkbox"
                 checked={hidePicture}
                 onChange={(e) => setHidePicture(e.target.checked)}
-                className="h-4 w-4 accent-[#263544]"
+                className="h-4 w-4 accent-[#263544] dark:accent-green"
               />
               Hide profile picture
             </label>
@@ -355,18 +442,18 @@ export default function Resume() {
                 type="checkbox"
                 checked={hideSectionIcons}
                 onChange={(e) => setHideSectionIcons(e.target.checked)}
-                className="h-4 w-4 accent-[#263544]"
+                className="h-4 w-4 accent-[#263544] dark:accent-green"
               />
               Hide section header icons
             </label>
-            <p className="mt-3 text-sm text-[#4B5563]">
+            <p className="mt-3 text-sm text-[#4B5563] dark:text-fg-faint">
               These settings affect the page view and the PDF if you print from here.
             </p>
             <div className="mt-5 flex justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setOptionsOpen(false)}
-                className="rounded-md px-4 py-2 text-sm font-medium text-[#263544] hover:bg-black/5"
+                className="rounded-md px-4 py-2 text-sm font-medium text-[#263544] hover:bg-black/5 dark:text-fg dark:hover:bg-white/5"
               >
                 Close
               </button>
@@ -376,7 +463,7 @@ export default function Resume() {
                   setOptionsOpen(false);
                   setPendingPrint(true);
                 }}
-                className="rounded-md bg-[#263544] px-4 py-2 text-sm font-medium text-white hover:bg-[#31455a]"
+                className="rounded-md bg-[#263544] px-4 py-2 text-sm font-medium text-white hover:bg-[#31455a] dark:bg-green dark:text-[#06140a] dark:hover:bg-green-soft"
               >
                 Print PDF
               </button>

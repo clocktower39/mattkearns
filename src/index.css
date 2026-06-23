@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
 /*
+  Make the `dark:` variant selector-based (.dark ancestor) instead of the
+  default media query. The rest of the site is unconditionally dark and does
+  not use `dark:` utilities — only the Resume does — so this lets the Resume
+  override the system theme via a toggle while leaving everything else alone.
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
   ─────────────────────────────────────────────────────────────
   mattkearns.dev — design system
   Dark by default. Neon-green signature accent. Terminal/dev energy,
@@ -299,4 +307,45 @@
   white-space: pre;
   font: inherit;
   line-height: inherit;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Resume: the on-screen view follows the system light/dark theme
+   (via Tailwind `dark:` = prefers-color-scheme). When printing, force
+   a clean, natural light document regardless of the screen theme —
+   these !important rules beat the dark-mode media styles at print time.
+   ───────────────────────────────────────────────────────────── */
+@media print {
+  .resume-doc,
+  .resume-doc * {
+    color: #1d1d1d !important;
+    border-color: #e5e7eb !important;
+    box-shadow: none !important;
+  }
+  .resume-doc {
+    background: #ffffff !important;
+  }
+  .resume-main {
+    background: #ffffff !important;
+  }
+  .resume-side {
+    /* single-column print (set below) reads cleaner without the gray band */
+    background: #ffffff !important;
+  }
+  .resume-header {
+    background: #263544 !important;
+  }
+  .resume-header,
+  .resume-header * {
+    color: #ffffff !important;
+  }
+  /* Stack the body into one flowing column so Summary/Projects sit directly
+     under Core Skills and pages fill top-to-bottom instead of leaving a gap. */
+  .resume-body {
+    display: block !important;
+  }
+  .resume-body section,
+  .resume-body .resume-block {
+    break-inside: avoid;
+  }
 }

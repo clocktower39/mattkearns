@@ -13,6 +13,8 @@ const GROUPS = [
       { name: "TypeScript", src: "/img/logos/ts-logo.svg" },
       { name: "React", src: "/img/logos/reactjs_logo.svg" },
       { name: "Redux", src: "/img/logos/redux_logo.svg" },
+      { name: "Tailwind CSS", src: "/img/logos/tailwindcss_logo.svg" },
+      { name: "shadcn/ui", src: "/img/logos/shadcnui_logo.svg" },
       { name: "MUI", src: "/img/logos/mui_logo.svg" },
       { name: "HTML5", src: "/img/logos/html5_logo.svg" },
       { name: "CSS", src: "/img/logos/css_logo.svg" },
@@ -34,11 +36,23 @@ const GROUPS = [
     ],
   },
   {
+    label: "ai & agents",
+    items: [
+      { name: "Claude", src: "/img/logos/claude_logo.svg" },
+      { name: "Codex", src: "/img/logos/codex_logo.svg" },
+      { name: "OpenCode", src: "/img/logos/opencode_logo.svg" },
+      { name: "Playwright", src: "/img/logos/playwright_logo.svg" },
+      { name: "Browser Harness", src: "/img/logos/browserharness_logo.svg" },
+      { name: "QuiverAI", src: "/img/logos/quiverai_logo.svg" },
+    ],
+  },
+  {
     label: "infrastructure",
     items: [
       { name: "Docker", src: "/img/logos/docker_logo.svg" },
       { name: "NGINX", src: "/img/logos/nginx_logo.svg" },
       { name: "AWS", src: "/img/logos/amazon_web_services_logo.svg" },
+      { name: "Oracle Cloud", src: "/img/logos/oracle_logo.svg" },
       { name: "Cloudflare", src: "/img/logos/cloudflare_logo.svg" },
       { name: "Linux", src: "/img/logos/linux_logo.svg" },
       { name: "Arch", src: "/img/logos/archlinux_logo.svg" },
