@@ -1,7 +1,5 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Terminal, { TerminalOutput, TerminalInput } from "react-terminal-ui";
-import { Grid } from "@mui/material";
-import { styled } from "@mui/system";
 import { projects, games, books, movies, tvShows } from "../states";
 
 const colors = {
@@ -13,33 +11,65 @@ const colors = {
   grey: { hex: "#8a93a0" },
 };
 
-const StyledSpan = styled("span")`
-  color: ${(props) => props.color || "inherit"};
-  cursor: ${(props) => (props.cursor ? "pointer" : "inherit")};
-  word-wrap: ${(props) => props.word || "break-word"};
-  &:hover {
-    text-decoration: ${(props) => (props.cursor ? "underline" : "none")};
-  }
-`;
+// Lightweight presentational components — same prop API the rest of the file
+// expects, but plain inline styles instead of Emotion `styled`. Clickable
+// elements get a class so `:hover` underline can live in index.css.
+const StyledSpan = ({ color, cursor, word, style, children, ...rest }) => (
+  <span
+    {...rest}
+    className={cursor ? "term-clickable" : undefined}
+    style={{
+      color: color || "inherit",
+      cursor: cursor ? "pointer" : "inherit",
+      wordWrap: word || "break-word",
+      ...style,
+    }}
+  >
+    {children}
+  </span>
+);
 
-const BoldItalicSpan = styled("span")`
-  color: ${(props) => props.color || colors.yellow.hex};
-  font-weight: ${(props) => props.fontWeight || "500"};
-  font-style: ${(props) => props.fontStyle || "italic"};
-`;
+const BoldItalicSpan = ({ color, fontWeight, fontStyle, style, children, ...rest }) => (
+  <span
+    {...rest}
+    style={{
+      color: color || colors.yellow.hex,
+      fontWeight: fontWeight || 500,
+      fontStyle: fontStyle || "italic",
+      ...style,
+    }}
+  >
+    {children}
+  </span>
+);
 
-const StyledLink = styled("a")`
-  text-decoration: ${(props) => props.textDecoration || "none"};
-  color: ${(props) => props.color || colors.blue.hex};
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+const StyledLink = ({ textDecoration, color, style, children, ...rest }) => (
+  <a
+    {...rest}
+    className="term-link"
+    style={{
+      textDecoration: textDecoration || "none",
+      color: color || colors.blue.hex,
+      ...style,
+    }}
+  >
+    {children}
+  </a>
+);
 
-const Pre = styled("span")`
-  white-space: pre-wrap;
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-`;
+const Pre = ({ style, children, ...rest }) => (
+  <span
+    {...rest}
+    style={{
+      whiteSpace: "pre-wrap",
+      fontFamily:
+        'source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace',
+      ...style,
+    }}
+  >
+    {children}
+  </span>
+);
 
 const normalize = (s = "") => s.toLowerCase().trim();
 
@@ -893,7 +923,7 @@ export default function TerminalController() {
   const onGreenButtonClick = () => setTerminalHeight("100vh");
 
   return (
-    <Grid container>
+    <div className="w-full">
       <Terminal
         name={`MattKearns: ${pathLabel}`}
         onInput={handleInput}
@@ -907,6 +937,6 @@ export default function TerminalController() {
       >
         {terminalLineData}
       </Terminal>
-    </Grid>
+    </div>
   );
 }

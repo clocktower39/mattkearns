@@ -1,9 +1,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import path from "node:path";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      // `@` → src, so imports read `@/components/...` (shadcn convention)
+      "@": path.resolve(import.meta.dirname, "./src"),
+    },
+  },
   build: {
     rollupOptions: {
       output: {
@@ -13,12 +21,12 @@ export default defineConfig({
           if (id.includes("react") || id.includes("react-dom")) return "react-vendor";
 
           if (
-            id.includes("@mui/material") ||
-            id.includes("@mui/icons-material") ||
-            id.includes("@emotion/react") ||
-            id.includes("@emotion/styled")
+            id.includes("motion") ||
+            id.includes("@radix-ui") ||
+            id.includes("class-variance-authority") ||
+            id.includes("lucide-react")
           ) {
-            return "mui-vendor";
+            return "ui-vendor";
           }
 
           if (
@@ -29,12 +37,7 @@ export default defineConfig({
             return "particles";
           }
 
-          if (
-            id.includes("pathseg") ||
-            id.includes("react-google-recaptcha") ||
-            id.includes("react-photo-gallery") ||
-            id.includes("react-terminal-ui")
-          ) {
+          if (id.includes("pathseg") || id.includes("react-terminal-ui")) {
             return "utils";
           }
         },
