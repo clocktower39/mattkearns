@@ -5,7 +5,7 @@
 */
 
 export const steamProfile = {
-  username: "Matt Kearns",
+  username: "Nude Pineapple",
   url: "https://steamcommunity.com/id/NudePineapple/",
   friendCode: "139399224",
   status: "online", // "in-game" | "online" | "away" | "offline"
@@ -67,13 +67,27 @@ export const favoriteGames = [
     accent: "grape",
     poster: "/img/posters/games/metroid_dread.png",
   },
+  {
+    title: "Super Smash Bros. Ultimate",
+    blurb:
+      "Couch-multiplayer chaos with every fighter under the sun. Just one more stock.",
+    platform: "Switch",
+    accent: "tangerine",
+    poster: "/img/posters/games/super_smash_bros_ultimate.png",
+  },
 ];
 
 // Recently played — title + on-record hours, links to the Steam app page.
 export const recentlyPlayed = [
   {
+    title: "MECCHA CHAMELEON",
+    hours: "4h",
+    url: "https://steamcommunity.com/app/4704690",
+    icon: "/img/games/meccha-chameleon.jpg",
+  },
+  {
     title: "Sons Of The Forest",
-    hours: "23h",
+    hours: "26h",
     url: "https://steamcommunity.com/app/1326470",
     icon: "/img/games/sons-of-the-forest.jpg",
   },
