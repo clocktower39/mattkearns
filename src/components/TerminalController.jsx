@@ -1,6 +1,9 @@
 import { useMemo, useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Terminal, { TerminalOutput, TerminalInput } from "react-terminal-ui";
 import { projects, games, books, movies, tvShows } from "../states";
+import { facts } from "../data/facts";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const colors = {
   green: { hex: "#01A252" },
@@ -254,20 +257,184 @@ const ProjectResponse = (p) => (
   </StyledSpan>
 );
 
-const PosterResponse = (node) => (
-  <StyledSpan color={colors.green.hex}>
-    <BoldItalicSpan>{node.label}:</BoldItalicSpan> {node.display}
+// `cat <item>` — a compact poster card (cover + label + title) for the
+// games/books/movies/shows categories. Replaces the old PosterResponse.
+const PosterCard = (node) => (
+  <div className="term-poster-card">
     {node.data.poster && (
-      <div>
-        <img
-          src={node.data.poster}
-          alt={node.display}
-          style={{ maxWidth: "500px", marginTop: "8px" }}
-        />
-      </div>
+      <img className="term-poster-cover" src={node.data.poster} alt={node.display} />
     )}
-  </StyledSpan>
+    <div>
+      <div style={{ color: colors.yellow.hex, fontStyle: "italic", marginBottom: 4 }}>
+        {node.label}
+      </div>
+      <div style={{ color: colors.green.hex, fontWeight: 600, fontSize: "1.05em" }}>
+        {node.display}
+      </div>
+    </div>
+  </div>
 );
+
+// A directory whose every child is a poster (games/books/movies/shows) gets a
+// thumbnail gallery from `ls` instead of a plain list of names.
+const isPosterDir = (node) =>
+  node?.type === "dir" &&
+  Object.values(node.children).length > 0 &&
+  Object.values(node.children).every((c) => c.kind === "poster");
+
+const posterGrid = (targetSegs, dirNode, onItemClick) => (
+  <div className="term-poster-grid">
+    {Object.values(dirNode.children).map((child) => {
+      const abs = segsToPath([...targetSegs, child.name]);
+      return (
+        <button
+          type="button"
+          key={child.name}
+          className="term-poster"
+          title={child.display}
+          onClick={() => onItemClick(`cat ${abs}`)}
+        >
+          {child.data?.poster ? (
+            <img src={child.data.poster} alt={child.display} loading="lazy" />
+          ) : (
+            <span className="term-poster-fallback">{child.display}</span>
+          )}
+          <span className="term-poster-label">{child.display}</span>
+        </button>
+      );
+    })}
+  </div>
+);
+
+// --- neofetch -------------------------------------------------------------
+
+const MK_LOGO = ` __  __ _  __
+|  \\/  | |/ /
+| |\\/| | ' /
+| |  | | . \\
+|_|  |_|_|\\_\\`;
+
+const renderNeofetch = ({ themeName, uptime, cmdCount }) => {
+  const row = (k, v) => (
+    <div key={k}>
+      <span style={{ display: "inline-block", width: 92, color: colors.yellow.hex }}>{k}</span>
+      <span style={{ color: colors.green.hex }}>{v}</span>
+    </div>
+  );
+  const dots = ["#DB2D20", "#FDED02", "#01A252", "#01A0E4", "#A16A94", "#8a93a0"];
+  return (
+    <div className="term-neofetch">
+      <Pre style={{ color: colors.green.hex }}>{MK_LOGO}</Pre>
+      <div className="term-neofetch-info">
+        <div>
+          <span style={{ color: colors.yellow.hex }}>matt</span>@
+          <span style={{ color: colors.yellow.hex }}>mattkearns.dev</span>
+        </div>
+        <div style={{ color: colors.grey.hex }}>─────────────────────</div>
+        {row("OS", "mattOS (web build)")}
+        {row("Shell", "mattsh 1.0")}
+        {row("Uptime", uptime)}
+        {row("Theme", themeName)}
+        {row("Commands", `${cmdCount} run`)}
+        {row("Stack", "React · Node · Linux")}
+        {row("IRL", "cheer & tumbling coach")}
+        {row("Contact", "cat contact.txt")}
+        <div style={{ marginTop: 8, display: "flex", gap: 6 }}>
+          {dots.map((c) => (
+            <span key={c} className="term-neofetch-dot" style={{ background: c }} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- cowsay ---------------------------------------------------------------
+
+const cowsay = (text) => {
+  const t = ` ${text} `;
+  const bar = (ch) => " " + ch.repeat(t.length);
+  return [
+    bar("_"),
+    `<${t}>`,
+    bar("-"),
+    "        \\   ^__^",
+    "         \\  (oo)\\_______",
+    "            (__)\\       )\\/\\",
+    "                ||----w |",
+    "                ||     ||",
+  ].join("\n");
+};
+
+// --- matrix rain ----------------------------------------------------------
+
+const MATRIX_CHARS =
+  "アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘ".split("");
+
+// 🍍 rain — mostly pineapples with the occasional tropical friend.
+const PINEAPPLE_CHARS = ["🍍", "🍍", "🍍", "🍍", "🌴", "🥥"];
+
+function MatrixRain({ onDone, glyphs = MATRIX_CHARS, fontSize = 16 }) {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let raf;
+    let running = true;
+    let drops = [];
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drops = new Array(Math.ceil(canvas.width / fontSize)).fill(1);
+    };
+    resize();
+    const draw = () => {
+      ctx.fillStyle = "rgba(0,0,0,0.07)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#22c55e";
+      ctx.font = `${fontSize}px monospace`;
+      for (let i = 0; i < drops.length; i++) {
+        const ch = glyphs[Math.floor(Math.random() * glyphs.length)];
+        ctx.fillText(ch, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+      if (running) raf = requestAnimationFrame(draw);
+    };
+    draw();
+    const stop = () => onDone(null);
+    const timer = setTimeout(stop, 6000);
+    // Defer the dismiss listeners so the Enter/click that launched matrix
+    // doesn't immediately close it on the same tick.
+    const armTimer = setTimeout(() => {
+      window.addEventListener("keydown", stop);
+      window.addEventListener("click", stop);
+    }, 80);
+    window.addEventListener("resize", resize);
+    return () => {
+      running = false;
+      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+      clearTimeout(armTimer);
+      window.removeEventListener("keydown", stop);
+      window.removeEventListener("click", stop);
+      window.removeEventListener("resize", resize);
+    };
+  }, [onDone, glyphs, fontSize]);
+
+  // Portal to <body> so the fixed overlay escapes any transformed ancestor
+  // (animated sections create a containing block that would otherwise trap it).
+  return createPortal(
+    <>
+      <canvas ref={canvasRef} className="term-matrix" />
+      <div className="term-matrix-hint">press any key to exit</div>
+    </>,
+    document.body
+  );
+}
+
+const THEMES = ["default", "dracula", "solarized", "amber", "matrix"];
 
 export default function TerminalController() {
   // current working directory as resolved segments ([] === home/~)
@@ -276,6 +443,13 @@ export default function TerminalController() {
   useEffect(() => {
     cwdRef.current = cwd;
   }, [cwd]);
+
+  // fun: theme palette, matrix overlay, uptime baseline
+  const [themeName, setThemeName] = useState("default");
+  // matrixCfg is null when off, or { glyphs, fontSize } when the rain is on.
+  const [matrixCfg, setMatrixCfg] = useState(null);
+  const reducedMotion = useReducedMotion();
+  const loadTimeRef = useRef(Date.now());
 
   // command registry (used for help + command-name autocomplete)
   const COMMANDS = useMemo(
@@ -297,6 +471,11 @@ export default function TerminalController() {
       { name: "echo", usage: "echo <text>", desc: "print text back" },
       { name: "history", usage: "history", desc: "show command history" },
       { name: "date", usage: "date", desc: "print the current date and time" },
+      { name: "neofetch", usage: "neofetch", desc: "show system info + logo" },
+      { name: "roll", usage: "roll [category]", desc: "random pick from games/books/movies/shows" },
+      { name: "theme", usage: "theme [name]", desc: `switch palette (${THEMES.join(", ")})` },
+      { name: "matrix", usage: "matrix", desc: "follow the white rabbit" },
+      { name: "pineapple", usage: "pineapple", desc: "🍍 (you'll see)" },
       { name: "clear", usage: "clear", desc: "clear the screen" },
     ],
     []
@@ -358,8 +537,9 @@ export default function TerminalController() {
     });
   };
 
-  // initial scrollback: a short banner + `ls` of home
-  const [terminalLineData, setTerminalLineData] = useState(() => [
+  // The welcome banner + an initial `ls` of home. Shown after the boot
+  // sequence (or immediately when reduced motion is preferred).
+  const buildWelcomeBlock = () => [
     <TerminalOutput key={nextKey()}>
       <StyledSpan color={colors.purple.hex}>Welcome to mattkearns.dev</StyledSpan> — type{" "}
       <BoldItalicSpan>help</BoldItalicSpan> to get started.
@@ -372,7 +552,52 @@ export default function TerminalController() {
     <TerminalInput key={nextKey()}>ls</TerminalInput>,
     ...listingLines([], ROOT),
     <TerminalOutput key={nextKey()}></TerminalOutput>,
-  ]);
+  ];
+
+  // Scrollback starts empty; the boot effect fills it in on mount.
+  const [terminalLineData, setTerminalLineData] = useState([]);
+
+  // Boot sequence — type out a short fake boot log, then the welcome block.
+  // Skipped (jumps straight to welcome) when the user prefers reduced motion.
+  // No guard ref is needed: under StrictMode's mount→unmount→remount the
+  // cleanup clears the first (unfired) timer batch before it runs, so the
+  // remount schedules a single clean run. The reduced-motion branch replaces
+  // (not appends) the scrollback, so it's idempotent too.
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      setTerminalLineData(buildWelcomeBlock());
+      return;
+    }
+
+    const bootLines = [
+      "mattkearns.dev BIOS v4.8 — POST … OK",
+      "Detecting hardware … coffee machine [FOUND]",
+      "Mounting /home/matt … OK",
+      "Starting mattsh … OK",
+      "",
+    ];
+    const timers = [];
+    bootLines.forEach((line, i) => {
+      timers.push(
+        setTimeout(() => {
+          setTerminalLineData((prev) => [
+            ...prev,
+            <TerminalOutput key={nextKey()}>
+              <Pre style={{ color: colors.grey.hex }}>{line}</Pre>
+            </TerminalOutput>,
+          ]);
+        }, i * 140)
+      );
+    });
+    timers.push(
+      setTimeout(() => {
+        setTerminalLineData((prev) => [...prev, ...buildWelcomeBlock()]);
+      }, bootLines.length * 140 + 120)
+    );
+    return () => timers.forEach(clearTimeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // --- autocomplete (path-aware) -----------------------------------------
   const buildSuggestionList = (inputValueRaw) => {
@@ -428,6 +653,21 @@ export default function TerminalController() {
         .filter((n) => n.startsWith(base) && n !== base)
         .slice(0, 6)
         .map((n) => `man ${n}`);
+    }
+
+    if (cmd === "theme") {
+      const base = argRaw.toLowerCase();
+      return THEMES.filter((t) => t.startsWith(base) && t !== base)
+        .slice(0, 6)
+        .map((t) => `theme ${t}`);
+    }
+
+    if (cmd === "roll" || cmd === "random") {
+      const base = argRaw.toLowerCase();
+      return ["games", "books", "movies", "shows", "projects"]
+        .filter((c) => c.startsWith(base) && c !== base)
+        .slice(0, 6)
+        .map((c) => `${cmd} ${c}`);
     }
 
     return [];
@@ -583,6 +823,7 @@ export default function TerminalController() {
           });
           blank();
           out("Tip: click any highlighted entry, or press Tab to autocomplete.", colors.grey.hex);
+          out("psst… a few commands aren't on this list. Poke around. 🥚", colors.grey.hex);
           break;
         }
 
@@ -638,6 +879,20 @@ export default function TerminalController() {
                 </TerminalOutput>
               );
             });
+          } else if (isPosterDir(node)) {
+            ld.push(
+              <TerminalOutput key={nextKey()}>
+                <StyledSpan color={colors.grey.hex}>
+                  {Object.values(node.children).length} items — click a cover, or{" "}
+                  <BoldItalicSpan>cat &lt;name&gt;</BoldItalicSpan> for one
+                </StyledSpan>
+              </TerminalOutput>
+            );
+            ld.push(
+              <TerminalOutput key={nextKey()}>
+                {posterGrid(targetSegs, node, handleInput)}
+              </TerminalOutput>
+            );
           } else {
             listingLines(targetSegs, node).forEach((line) => ld.push(line));
           }
@@ -691,7 +946,7 @@ export default function TerminalController() {
           if (node.kind === "project") {
             ld.push(<TerminalOutput key={nextKey()}>{ProjectResponse(node.data)}</TerminalOutput>);
           } else if (node.kind === "poster") {
-            ld.push(<TerminalOutput key={nextKey()}>{PosterResponse(node)}</TerminalOutput>);
+            ld.push(<TerminalOutput key={nextKey()}>{PosterCard(node)}</TerminalOutput>);
           } else if (node.kind === "text") {
             ld.push(
               <TerminalOutput key={nextKey()}>
@@ -868,6 +1123,164 @@ export default function TerminalController() {
           break;
         }
 
+        case "neofetch": {
+          const secs = Math.max(0, Math.round((Date.now() - loadTimeRef.current) / 1000));
+          const uptime = secs < 60 ? `${secs}s` : `${Math.floor(secs / 60)}m ${secs % 60}s`;
+          ld.push(
+            <TerminalOutput key={nextKey()}>
+              {renderNeofetch({ themeName, uptime, cmdCount: historyRef.current.length + 1 })}
+            </TerminalOutput>
+          );
+          blank();
+          break;
+        }
+
+        case "roll":
+        case "random": {
+          const want = normalize(argStr);
+          const cats =
+            want && ["games", "books", "movies", "shows", "projects"].includes(want)
+              ? [want]
+              : ["games", "books", "movies", "shows"];
+          const pool = [];
+          cats.forEach((c) => {
+            const dn = nodeAt([c]);
+            if (dn) Object.values(dn.children).forEach((child) => pool.push(child));
+          });
+          if (!pool.length) {
+            errorLine(`roll: nothing to pick from`);
+            break;
+          }
+          const pick = pool[Math.floor(Math.random() * pool.length)];
+          out(`🎲 You rolled: ${pick.display}`, colors.purple.hex);
+          ld.push(
+            <TerminalOutput key={nextKey()}>
+              {pick.kind === "project" ? ProjectResponse(pick.data) : PosterCard(pick)}
+            </TerminalOutput>
+          );
+          blank();
+          break;
+        }
+
+        case "theme": {
+          const want = normalize(argStr);
+          if (!want) {
+            out(`Available themes: ${THEMES.join(", ")}`, colors.green.hex);
+            out(`Current: ${themeName}. Usage: theme <name>`, colors.grey.hex);
+            break;
+          }
+          if (!THEMES.includes(want)) {
+            errorLine(`theme: unknown theme '${want}'. Try: ${THEMES.join(", ")}`);
+            break;
+          }
+          setThemeName(want);
+          out(`Theme set to ${want}.`, colors.green.hex);
+          break;
+        }
+
+        case "matrix": {
+          if (reducedMotion) {
+            out("matrix: animation skipped (reduced motion is on).", colors.grey.hex);
+            break;
+          }
+          out("Wake up, Neo… press any key (or click) to exit.", colors.green.hex);
+          setMatrixCfg({ glyphs: MATRIX_CHARS, fontSize: 16 });
+          break;
+        }
+
+        case "pineapple":
+        case "pineapples": {
+          if (reducedMotion) {
+            out("pineapple: animation skipped (reduced motion is on).", colors.grey.hex);
+            break;
+          }
+          out("🍍 Raining pineapples… press any key (or click) to exit.", colors.yellow.hex);
+          setMatrixCfg({ glyphs: PINEAPPLE_CHARS, fontSize: 28 });
+          break;
+        }
+
+        // ---- easter eggs (intentionally not in `help`) ----
+        case "sudo": {
+          errorLine("matt is not in the sudoers file. This incident will be reported.");
+          break;
+        }
+
+        case "rm": {
+          const joined = argTokens.join(" ");
+          if (/-\w*[rf]\w*/.test(joined) && /(~|\/|\*)/.test(joined)) {
+            out("Deleting everything …", colors.red.hex);
+            out("rm: just kidding. Nice try though. 😏", colors.green.hex);
+          } else {
+            errorLine("rm: this is a read-only portfolio — nothing to remove.");
+          }
+          break;
+        }
+
+        case "fortune": {
+          out(facts[Math.floor(Math.random() * facts.length)], colors.green.hex);
+          break;
+        }
+
+        case "cowsay": {
+          const text = argStr || facts[Math.floor(Math.random() * facts.length)];
+          ld.push(
+            <TerminalOutput key={nextKey()}>
+              <Pre style={{ color: colors.green.hex }}>{cowsay(text)}</Pre>
+            </TerminalOutput>
+          );
+          break;
+        }
+
+        case "hire":
+        case "hireme": {
+          out("Matt Kearns — full-stack dev who ships and sticks the landing.", colors.purple.hex);
+          out("Available for interesting problems. Let's talk:", colors.green.hex);
+          ld.push(
+            <TerminalOutput key={nextKey()}>
+              <StyledSpan color={colors.green.hex}>
+                <StyledLink href="mailto:matt.kearns39@gmail.com">
+                  matt.kearns39@gmail.com
+                </StyledLink>
+                {" · "}
+                <StyledLink href="https://github.com/clocktower39" target="_blank" rel="noreferrer">
+                  GitHub
+                </StyledLink>
+                {" · "}
+                <StyledLink
+                  href="https://www.linkedin.com/in/matthew-kearns-6b8865117/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  LinkedIn
+                </StyledLink>
+              </StyledSpan>
+            </TerminalOutput>
+          );
+          blank();
+          break;
+        }
+
+        case "exit":
+        case "logout": {
+          out("There is no escape… but fine. 👋 (click the yellow dot to reopen)", colors.grey.hex);
+          setTerminalHeight("0px");
+          break;
+        }
+
+        case "make": {
+          if (normalize(argStr) === "coffee") {
+            out("☕  Brewing… done. (HTTP 418: I'm a teapot, but I tried.)", colors.green.hex);
+          } else {
+            errorLine(`make: *** No rule to make target '${argStr || ""}'.  Try 'make coffee'.`);
+          }
+          break;
+        }
+
+        case "sl": {
+          out("🚂💨  woo woo! (you meant 'ls', didn't you?)", colors.yellow.hex);
+          break;
+        }
+
         case "clear": {
           return [];
         }
@@ -923,7 +1336,7 @@ export default function TerminalController() {
   const onGreenButtonClick = () => setTerminalHeight("100vh");
 
   return (
-    <div className="w-full">
+    <div className="w-full" data-term-theme={themeName}>
       <Terminal
         name={`MattKearns: ${pathLabel}`}
         onInput={handleInput}
@@ -937,6 +1350,13 @@ export default function TerminalController() {
       >
         {terminalLineData}
       </Terminal>
+      {matrixCfg && (
+        <MatrixRain
+          onDone={setMatrixCfg}
+          glyphs={matrixCfg.glyphs}
+          fontSize={matrixCfg.fontSize}
+        />
+      )}
     </div>
   );
 }

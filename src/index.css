@@ -290,6 +290,149 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
+   Terminal: theme palettes. The shell sets `data-term-theme` on its
+   wrapper; these override the library chrome + base text colour.
+   ───────────────────────────────────────────────────────────── */
+[data-term-theme="dracula"] .react-terminal-wrapper {
+  background: rgba(40, 42, 54, 0.96) !important;
+  border-color: rgba(189, 147, 249, 0.4);
+}
+[data-term-theme="dracula"] .react-terminal {
+  color: #f8f8f2 !important;
+}
+[data-term-theme="solarized"] .react-terminal-wrapper {
+  background: rgba(0, 43, 54, 0.96) !important;
+  border-color: rgba(38, 139, 210, 0.4);
+}
+[data-term-theme="solarized"] .react-terminal {
+  color: #93a1a1 !important;
+}
+[data-term-theme="amber"] .react-terminal-wrapper {
+  background: rgba(20, 12, 2, 0.96) !important;
+  border-color: rgba(255, 176, 0, 0.45);
+}
+[data-term-theme="amber"] .react-terminal {
+  color: #ffb000 !important;
+}
+[data-term-theme="matrix"] .react-terminal-wrapper {
+  background: rgba(0, 8, 0, 0.96) !important;
+  border-color: rgba(34, 197, 94, 0.5);
+}
+[data-term-theme="matrix"] .react-terminal {
+  color: #22c55e !important;
+}
+
+/* Terminal: full-screen matrix-rain overlay (the `matrix` command).
+   Portaled to <body>, so `fixed` resolves against the viewport. */
+.term-matrix {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #000;
+  cursor: pointer;
+}
+.term-matrix-hint {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100000;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #22c55e;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  pointer-events: none;
+  animation: blink 1.4s steps(1) infinite;
+}
+
+/* Terminal: poster gallery shown by `ls` of games/books/movies/shows. */
+.term-poster-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 6px 0 2px;
+}
+.term-poster {
+  width: 92px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.term-poster:hover {
+  transform: translateY(-3px) scale(1.03);
+  border-color: rgba(115, 217, 13, 0.6);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+.term-poster img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+.term-poster-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  padding: 4px;
+  font-size: 10px;
+  text-align: center;
+  color: #8a93a0;
+}
+.term-poster-label {
+  display: block;
+  padding: 4px 6px;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #cdd3da;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Terminal: `cat <poster>` card + `neofetch` layout. */
+.term-poster-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 6px 0;
+}
+.term-poster-card .term-poster-cover {
+  width: 150px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.term-neofetch {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 4px 0;
+}
+.term-neofetch-info {
+  line-height: 1.55;
+}
+.term-neofetch-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────
    Terminal ghost-input (inline autocomplete preview). The shell logic
    reads `.terminal-ghost` and the `--ghost-left` var, so keep these
    exact. (Moved verbatim from the old App.css / index.css.)
