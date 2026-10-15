@@ -57,7 +57,7 @@ const SKILLS = [
       "Helm",
       "Flux GitOps",
       "Docker",
-      "GitHub Actions",
+      "CI/CD (GitHub Actions)",
       "Signed images (cosign)",
       "NGINX",
       "Cloudflare",
@@ -75,17 +75,15 @@ const SKILLS = [
     label: "AI & Agents",
     items: [
       "LLM agent workflows",
-      "Human-in-the-loop approvals",
+      "Prompt engineering",
       "Generative image pipelines",
       "Vision-language models",
       "CLIP embeddings & vector search",
       "Gemini",
       "Replicate",
       "Hugging Face",
-      "LiteLLM",
       "Claude Code",
       "OpenAI Codex",
-      "AI code review in CI",
       "Agent evals",
     ],
   },
@@ -97,9 +95,9 @@ const EXPERIENCE = [
     org: "Zeroth Technology · Pyrana",
     dates: "Jun 2026 – Present",
     blurb:
-      "Pyrana is an enterprise agentic application platform where people and AI agents share the same pages, data, and audit record. Each client app is a versioned configuration on shared layers for orchestration, approval policies, durable workflows, and context, running in a dedicated private environment.",
+      "Pyrana is an enterprise agentic application platform where people and AI agents share the same pages, data, and audit record, with approval policies, durable workflows, and a dedicated private environment for each client.",
     bullets: [
-      "Build client-facing agentic apps end to end: Next.js pages and server-side API routes in TypeScript, agent and workflow configuration, and Python backend extensions that run as durable services next to the platform.",
+      "Work directly with client stakeholders to turn requirements into agentic apps, built end to end: Next.js pages and server-side API routes in TypeScript, agent and workflow configuration, and Python backend extensions that run as durable services next to the platform.",
       "Build review-and-approve experiences where agents propose work and people decide: review queues, action cards with evidence attached, and scheduled Temporal workflows that fan out to agents and publish results back into the app.",
       "Build data-heavy dashboards and reporting pages with Gantt timelines, risk ranking, period-over-period trend indicators, AI-written summaries, and print-ready layouts.",
       "Build integrations that write safely to external systems of record, with idempotent outbound actions, sync-state reconciliation, and a confirmation step before anything that could duplicate work.",
@@ -126,11 +124,9 @@ const EXPERIENCE = [
     dates: "Dec 2017 – Aug 2024",
     bullets: [
       "Grew from contractor (Dec 2017, through a staffing agency) to direct hire as a REMS Service Representative (Jul 2018), then promoted to Operations Support Lead (Mar 2019).",
-      "Automated recurring reports and manual operations workflows with scripts, SharePoint, and browser automation, replacing repetitive hand-done steps.",
+      "Automated recurring reports and manual operations workflows with scripts, SharePoint, and browser automation, and analyzed program data to guide performance improvements.",
       "Acted as the operations team's liaison to IT, diagnosing customer-facing issues and supporting production triage.",
-      "Led team meetings and training, and rewrote SOPs and work instructions.",
-      "Supervised and trained seasonal staff as Operations Supervisor (seasonal, Sep 2021 – Feb 2022), running QA checks and coaching on accuracy to meet service-level goals.",
-      "Analyzed program data and built reports that informed performance improvements.",
+      "Led team meetings, training, and SOP rewrites. As seasonal Operations Supervisor (Sep 2021 – Feb 2022), supervised staff, ran QA checks, and coached on accuracy to meet service-level goals.",
     ],
   },
 ];
@@ -162,6 +158,15 @@ function ContactItem({ icon: Icon, href, children }) {
 }
 
 export default function Resume() {
+  // Browsers name the saved PDF after the page title.
+  useEffect(() => {
+    const previous = document.title;
+    document.title = "Matt_Kearns_Resume";
+    return () => {
+      document.title = previous;
+    };
+  }, []);
+
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [hidePicture, setHidePicture] = useState(false);
   const [hideSectionIcons, setHideSectionIcons] = useState(false);
@@ -212,7 +217,7 @@ export default function Resume() {
     >
       <div className="resume-doc mx-auto max-w-4xl overflow-hidden bg-white text-[#111] shadow-xl [print-color-adjust:exact] [-webkit-print-color-adjust:exact] dark:border dark:border-white/10 dark:bg-ink-900 dark:text-fg sm:rounded-xl print:shadow-none">
         {/* header */}
-        <header className="resume-header relative bg-[#263544] px-6 pb-6 pt-12 text-white dark:border-b dark:border-green/20 dark:bg-ink-800 sm:px-8 sm:pt-7 print:pt-6">
+        <header className="resume-header relative bg-[#263544] print:static px-6 pb-6 pt-12 text-white dark:border-b dark:border-green/20 dark:bg-ink-800 sm:px-8 sm:pt-7 print:pt-6">
           <Link
             to="/"
             aria-label="Back to home"
@@ -322,8 +327,8 @@ export default function Resume() {
                 clients mean comfort owning a product alone, from requirements and
                 design through hosting and support. Learned to code by hand years before
                 AI tools and still enjoys the craft: readable code, sound data models,
-                and careful debugging. Uses AI coding agents as one tool among many,
-                not a replacement for engineering judgment.
+                and careful debugging. Uses AI coding agents as a tool, not a
+                substitute for judgment.
               </p>
             </section>
 
@@ -378,38 +383,13 @@ export default function Resume() {
                     LinkedIn Learning:
                   </span>{" "}
                   115 courses completed (200+ hours), including the App Development
-                  with the MERN Stack learning path (29 hours). Selected courses:
+                  with the MERN Stack learning path (29 hours). Selected: Software
+                  Architecture: From Developer to Architect · React: Design Patterns ·
+                  Node.js: Testing and Code Quality · Node.js: Securing RESTful APIs ·
+                  React: Securing Applications · AWS Essential Training for Developers ·
+                  Learning Docker · DevOps Foundations · Learning TypeScript · Learning
+                  Python.
                 </p>
-                <ul className="mt-1 list-disc space-y-0.5 pl-5 leading-relaxed marker:text-[#263544]/60 dark:marker:text-green/60">
-                  <li>
-                    <span className="font-medium text-[#111] dark:text-fg">
-                      Architecture &amp; quality:
-                    </span>{" "}
-                    Software Architecture: From Developer to Architect · React: Design
-                    Patterns · Node.js: Testing and Code Quality
-                  </li>
-                  <li>
-                    <span className="font-medium text-[#111] dark:text-fg">
-                      Security:
-                    </span>{" "}
-                    Node.js: Securing RESTful APIs · React: Securing Applications ·
-                    Penetration Testing Essential Training
-                  </li>
-                  <li>
-                    <span className="font-medium text-[#111] dark:text-fg">
-                      Cloud &amp; DevOps:
-                    </span>{" "}
-                    AWS Essential Training for Developers · Learning Docker · DevOps
-                    Foundations
-                  </li>
-                  <li>
-                    <span className="font-medium text-[#111] dark:text-fg">
-                      Languages:
-                    </span>{" "}
-                    Learning TypeScript · Learning Python · JavaScript: Async ·
-                    JavaScript: Closures
-                  </li>
-                </ul>
               </div>
             </section>
           </main>

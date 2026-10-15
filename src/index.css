@@ -458,7 +458,63 @@
    a clean, natural light document regardless of the screen theme —
    these !important rules beat the dark-mode media styles at print time.
    ───────────────────────────────────────────────────────────── */
+@page {
+  size: letter;
+  margin: 0.45in 0.5in;
+}
+
 @media print {
+  /* The site's dark background otherwise prints under the last page. */
+  html,
+  body {
+    background: #ffffff !important;
+  }
+  .resume-doc {
+    max-width: none !important;
+    border-radius: 0 !important;
+  }
+  .resume-header {
+    padding: 14px 18px !important;
+  }
+  .resume-side,
+  .resume-main {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .resume-side {
+    padding-top: 14px !important;
+    padding-bottom: 0 !important;
+  }
+  .resume-main {
+    padding-top: 14px !important;
+    padding-bottom: 0 !important;
+  }
+  /* Tailwind v4 space-y-* spaces siblings with margin-bottom. */
+  .resume-main > section:not(:last-child) {
+    margin-bottom: 14px !important;
+  }
+  .resume-main li:not(:last-child) {
+    margin-bottom: 2px !important;
+  }
+  .resume-main .space-y-6 > :not(:last-child) {
+    margin-bottom: 12px !important;
+  }
+  /* Wide letter-spacing makes some PDF parsers split headings ("SKI L LS"),
+     so ATS may not recognize the sections. */
+  .resume-body h2 {
+    margin-bottom: 8px !important;
+    letter-spacing: normal !important;
+  }
+  /* 10pt body and 11pt role titles: standard resume sizes, and enough to
+     keep the PDF to two pages. */
+  .resume-body .text-sm,
+  .resume-body .text-\[13px\] {
+    font-size: 10pt !important;
+    line-height: 1.45 !important;
+  }
+  .resume-body .text-base {
+    font-size: 11pt !important;
+  }
   .resume-doc,
   .resume-doc * {
     color: #1d1d1d !important;
@@ -487,8 +543,14 @@
   .resume-body {
     display: block !important;
   }
-  .resume-body section,
-  .resume-body .resume-block {
+  /* Keep small pieces whole but let long sections flow across pages, so a
+     tall Experience section doesn't jump to page 2 and leave a gap. */
+  .resume-side .resume-block,
+  .resume-body li {
     break-inside: avoid;
+  }
+  .resume-body h2,
+  .resume-body h3 {
+    break-after: avoid;
   }
 }
