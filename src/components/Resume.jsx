@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import {
   ArrowLeft,
   Printer,
-  Code,
   UserRound,
   Briefcase,
-  Building2,
   GraduationCap,
+  Mail,
+  MapPin,
+  Globe,
 } from "lucide-react";
 import { GithubGlyph, LinkedinGlyph } from "@/components/icons/Brand";
 import { cn } from "@/lib/utils";
@@ -15,35 +16,148 @@ import img from "../img/avatar.jpg";
 
 const THEME_OPTIONS = ["system", "light", "dark"];
 
-const CORE_SKILLS = [
+const SKILLS = [
+  {
+    label: "Languages",
+    items: ["TypeScript", "JavaScript", "Python", "SQL", "HTML/CSS"],
+  },
   {
     label: "Frontend",
-    items: "React, TypeScript, Next.js, Vite, Redux, Tailwind CSS, MUI, HTML, CSS",
+    items: [
+      "React",
+      "Next.js (App Router)",
+      "Tailwind CSS",
+      "TanStack Query",
+      "Zod",
+      "Storybook",
+      "Redux",
+      "MUI",
+    ],
   },
   {
-    label: "Backend",
-    items: "Node.js, Express, MongoDB, PostgreSQL, Mongoose, REST APIs, JWT, Socket.IO",
+    label: "Backend & Data",
+    items: [
+      "FastAPI",
+      "Pydantic",
+      "Temporal",
+      "Node.js / Express",
+      "PostgreSQL",
+      "Convex",
+      "Neo4j",
+      "MongoDB",
+      "OpenFGA",
+      "REST APIs",
+    ],
   },
   {
-    label: "Infrastructure",
-    items:
-      "Docker, NGINX, Linux, AWS (Lightsail, S3, CloudFront), Cloudflare (DNS/SSL), Raspberry Pi",
+    label: "Cloud & DevOps",
+    items: [
+      "Azure (AKS, ACR, Key Vault)",
+      "Kubernetes",
+      "Helm",
+      "Flux GitOps",
+      "Docker",
+      "GitHub Actions",
+      "Signed images (cosign)",
+      "NGINX",
+      "Cloudflare",
+    ],
   },
   {
-    label: "Engineering",
-    items:
-      "Refactoring, performance optimization, debugging production issues, SEO/SSG/SSR, CI/CD, AI coding agents (Claude Code, Codex)",
+    label: "Observability",
+    items: ["Prometheus", "Grafana", "Loki", "Tempo"],
+  },
+  {
+    label: "Testing",
+    items: ["Vitest", "Playwright (visual regression)", "pytest"],
+  },
+  {
+    label: "AI & Agents",
+    items: [
+      "LLM agent workflows",
+      "Human-in-the-loop approvals",
+      "Generative image pipelines",
+      "Vision-language models",
+      "CLIP embeddings & vector search",
+      "Gemini",
+      "Replicate",
+      "Hugging Face",
+      "LiteLLM",
+      "Claude Code",
+      "OpenAI Codex",
+      "AI code review in CI",
+      "Agent evals",
+    ],
+  },
+];
+
+const EXPERIENCE = [
+  {
+    role: "Forward Deployed Engineer (Contract)",
+    org: "Zeroth Technology · Pyrana",
+    dates: "Jun 2026 – Present",
+    blurb:
+      "Pyrana is an enterprise agentic application platform where people and AI agents share the same pages, data, and audit record. Each client app is a versioned configuration on shared layers for orchestration, approval policies, durable workflows, and context, running in a dedicated private environment.",
+    bullets: [
+      "Build client-facing agentic apps end to end: Next.js pages and server-side API routes in TypeScript, agent and workflow configuration, and Python backend extensions that run as durable services next to the platform.",
+      "Build review-and-approve experiences where agents propose work and people decide: review queues, action cards with evidence attached, and scheduled Temporal workflows that fan out to agents and publish results back into the app.",
+      "Build data-heavy dashboards and reporting pages with Gantt timelines, risk ranking, period-over-period trend indicators, AI-written summaries, and print-ready layouts.",
+      "Build integrations that write safely to external systems of record, with idempotent outbound actions, sync-state reconciliation, and a confirmation step before anything that could duplicate work.",
+      "Build grounded LLM agents with guardrails that tie every answer to source data and keep restricted information out of external responses.",
+      "Prototyped generative-AI and computer-vision features for client solutions: consistent image generation across design variations, vision-language models that read images and documents, embedding-based similarity search, and automated quality checks on model output.",
+      "Contribute to shared platform packages used across client apps, including the app shell, navigation, per-client theming, and UI components, backed by component tests, Storybook, and Playwright visual-regression baselines.",
+      "Run releases for client environments: cut versioned, signed release candidates, promote them from QA to production with GitOps on Kubernetes, check database migrations before rollout, and help diagnose production issues across the UI, workflow engine, and database.",
+      "Improve team practices with AI tooling and security work: AI code review on every pull request, shared Claude Code skills with routing evals, synthetic test data in place of client data, secret redaction in agent error reports, and dependency cooldown windows in pnpm and uv.",
+    ],
+  },
+  {
+    role: "Full-Stack Web Developer",
+    org: "Independent / Freelance",
+    dates: "2018 – Present",
+    bullets: [
+      "Firebelly Fitness (2021 – present): built and run a live trainer/client coaching platform covering programming, workout logging with personal-record detection, training-load analytics, scheduling, and invoicing with a hard guard against double billing (React, Node.js, Express, MongoDB, Socket.IO).",
+      "Dauntless Athletics (2024 – present): replaced a gym's WordPress site with React and TypeScript, and built a PostgreSQL-backed operations dashboard for rosters, attendance, seasons, signed waivers, household billing, and accounts receivable.",
+      "Own each client's full lifecycle: requirements, design, JWT auth with role-based access, hosting on Oracle Cloud and AWS Lightsail behind NGINX and Cloudflare, and ongoing support.",
+    ],
+  },
+  {
+    role: "Operations Support Lead",
+    org: "McKesson Specialty Health · Scottsdale, AZ",
+    dates: "Dec 2017 – Aug 2024",
+    bullets: [
+      "Grew from contractor (Dec 2017, through a staffing agency) to direct hire as a REMS Service Representative (Jul 2018), then promoted to Operations Support Lead (Mar 2019).",
+      "Automated recurring reports and manual operations workflows with scripts, SharePoint, and browser automation, replacing repetitive hand-done steps.",
+      "Acted as the operations team's liaison to IT, diagnosing customer-facing issues and supporting production triage.",
+      "Led team meetings and training, and rewrote SOPs and work instructions.",
+      "Supervised and trained seasonal staff as Operations Supervisor (seasonal, Sep 2021 – Feb 2022), running QA checks and coaching on accuracy to meet service-level goals.",
+      "Analyzed program data and built reports that informed performance improvements.",
+    ],
   },
 ];
 
 function SectionHeading({ icon: Icon, children, hideIcon }) {
   return (
-    <h2 className="mb-1.5 flex items-center gap-2 text-2xl font-semibold text-[#111] dark:text-fg">
-      {!hideIcon && (
-        <Icon size={20} className="text-[#263544] dark:text-green" />
-      )}
+    <h2 className="mb-3 flex items-center gap-2 border-b border-[#263544]/15 pb-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#263544] dark:border-white/10 dark:text-green">
+      {!hideIcon && <Icon size={15} />}
       {children}
     </h2>
+  );
+}
+
+function ContactItem({ icon: Icon, href, children }) {
+  const content = (
+    <>
+      <Icon size={14} className="shrink-0 opacity-80" />
+      {children}
+    </>
+  );
+  const cls = "inline-flex items-center gap-1.5";
+  return href ? (
+    <a href={href} target="_blank" rel="noreferrer" className={cn(cls, "hover:text-white")}>
+      {content}
+    </a>
+  ) : (
+    <span className={cls}>{content}</span>
   );
 }
 
@@ -96,9 +210,9 @@ export default function Resume() {
         isDark && "dark"
       )}
     >
-      <div className="resume-doc mx-auto max-w-3xl overflow-hidden bg-white text-[#111] shadow-xl [print-color-adjust:exact] [-webkit-print-color-adjust:exact] dark:border dark:border-white/10 dark:bg-ink-900 dark:text-fg sm:rounded-xl print:shadow-none">
+      <div className="resume-doc mx-auto max-w-4xl overflow-hidden bg-white text-[#111] shadow-xl [print-color-adjust:exact] [-webkit-print-color-adjust:exact] dark:border dark:border-white/10 dark:bg-ink-900 dark:text-fg sm:rounded-xl print:shadow-none">
         {/* header */}
-        <header className="resume-header relative bg-[#263544] px-6 py-5 text-white dark:border-b dark:border-green/20 dark:bg-ink-800">
+        <header className="resume-header relative bg-[#263544] px-6 pb-6 pt-12 text-white dark:border-b dark:border-green/20 dark:bg-ink-800 sm:px-8 sm:pt-7 print:pt-6">
           <Link
             to="/"
             aria-label="Back to home"
@@ -107,23 +221,49 @@ export default function Resume() {
             <ArrowLeft size={18} />
           </Link>
 
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center">
+          <div
+            className={cn(
+              "flex flex-col items-center gap-5 sm:flex-row",
+              hidePicture && "sm:justify-center"
+            )}
+          >
             {!hidePicture && (
               <img
                 src={img}
                 alt="Matt Kearns"
-                className="h-28 w-28 shrink-0 rounded-full object-cover dark:ring-2 dark:ring-green/50"
+                className="h-24 w-24 shrink-0 rounded-full object-cover ring-2 ring-white/30 dark:ring-green/50 print:hidden"
               />
             )}
-            <div className={hidePicture ? "w-full text-center" : ""}>
-              <h1 className="text-3xl font-bold leading-tight">Matt Kearns</h1>
+            <div className={cn("text-center", !hidePicture && "sm:text-left print:text-left")}>
+              <h1 className="text-3xl font-bold leading-tight tracking-tight">
+                Matt Kearns
+              </h1>
               <p className="text-lg text-white/90">
-                Senior Frontend / Full-Stack Engineer
+                Full-Stack Software Engineer · Agentic AI
               </p>
-              <p className="mt-1 text-sm text-white/70">
-                Gilbert, AZ • Open to Onsite / Hybrid / Remote
-              </p>
-              <p className="text-sm text-white/70">matt.kearns39@gmail.com</p>
+              <div
+                className={cn(
+                  "mt-2 flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-white/75",
+                  !hidePicture && "sm:justify-start print:justify-start"
+                )}
+              >
+                <ContactItem icon={MapPin}>Gilbert, AZ · Remote / Hybrid / Onsite</ContactItem>
+                <ContactItem icon={Mail} href="mailto:matt.kearns39@gmail.com">
+                  matt.kearns39@gmail.com
+                </ContactItem>
+                <ContactItem icon={GithubGlyph} href="https://www.github.com/clocktower39">
+                  github.com/clocktower39
+                </ContactItem>
+                <ContactItem
+                  icon={LinkedinGlyph}
+                  href="https://www.linkedin.com/in/matthew-kearns-6b8865117/"
+                >
+                  linkedin.com/in/matthew-kearns-6b8865117
+                </ContactItem>
+                <ContactItem icon={Globe} href="https://mattkearns.dev">
+                  mattkearns.dev
+                </ContactItem>
+              </div>
             </div>
           </div>
 
@@ -147,231 +287,76 @@ export default function Resume() {
         </header>
 
         {/* body */}
-        <div className="resume-body grid md:grid-cols-3">
+        <div className="resume-body grid md:grid-cols-[15rem_1fr]">
           {/* sidebar */}
-          <aside className="resume-side bg-[#F3F3F3] p-5 text-[#1D1D1D] dark:bg-ink-800 dark:text-fg md:col-span-1">
-            <h2 className="mb-2 text-lg font-semibold">Core Skills</h2>
-            <div className="space-y-3">
-              {CORE_SKILLS.map((group) => (
-                <div key={group.label}>
-                  <h3 className="text-sm font-semibold dark:text-green">
+          <aside className="resume-side bg-[#F3F5F7] p-6 sm:px-8 md:px-6 print:px-8 print:pb-0 text-[#1D1D1D] dark:bg-ink-800 dark:text-fg">
+            <h2 className="mb-3 border-b border-[#263544]/15 pb-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#263544] dark:border-white/10 dark:text-green">
+              Skills
+            </h2>
+            <div className="space-y-4 print:space-y-1">
+              {SKILLS.map((group) => (
+                <div key={group.label} className="resume-block print:flex print:gap-2">
+                  <h3 className="mb-1 text-sm font-semibold text-[#111] dark:text-fg print:mb-0 print:w-32 print:shrink-0">
                     {group.label}
                   </h3>
-                  <p className="text-sm text-[#333] dark:text-fg-muted">
-                    {group.items}
+                  <p className="text-[13px] leading-relaxed text-[#444] dark:text-fg-muted">
+                    {group.items.join(" · ")}
                   </p>
                 </div>
               ))}
             </div>
-
-            <div className="mt-5 print:hidden">
-              <h2 className="mb-2 text-lg font-semibold">Social</h2>
-              <div className="flex gap-2">
-                <a
-                  href="https://www.github.com/clocktower39"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-black/15 text-[#263544] transition-colors hover:bg-black/5 dark:border-white/15 dark:text-green dark:hover:bg-white/5"
-                >
-                  <GithubGlyph size={18} />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/matthew-kearns-6b8865117/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-black/15 text-[#263544] transition-colors hover:bg-black/5 dark:border-white/15 dark:text-green dark:hover:bg-white/5"
-                >
-                  <LinkedinGlyph size={18} />
-                </a>
-              </div>
-            </div>
           </aside>
 
           {/* main */}
-          <main className="resume-main space-y-6 bg-white p-5 text-[#111] dark:bg-ink-900 dark:text-fg md:col-span-2">
+          <main className="resume-main space-y-7 bg-white p-6 text-[#111] dark:bg-ink-900 dark:text-fg sm:p-8">
             <section>
               <SectionHeading icon={UserRound} hideIcon={hideSectionIcons}>
                 Summary
               </SectionHeading>
-              <p className="pl-6 text-sm leading-relaxed text-[#222] dark:text-fg-muted">
-                Systems-focused software engineer building and refactoring production
-                web applications since 2018. Strong in React/TypeScript frontends and
-                full-stack JavaScript, with an emphasis on reliability, performance, and
-                maintainability. Comfortable owning features end-to-end — from frontend
-                architecture through backend APIs and infrastructure — and increasingly
-                using AI coding agents to ship faster.
+              <p className="text-sm leading-relaxed text-[#222] dark:text-fg-muted">
+                Full-stack software engineer building production web applications since
+                2018, now focused on enterprise agentic AI. At Zeroth Technology, works with
+                clients and the platform team to build apps on Pyrana end to end: React, TypeScript, and
+                Next.js interfaces, Python and Temporal backend workflows, and releases
+                to Kubernetes. Years of building and running apps for small-business
+                clients mean comfort owning a product alone, from requirements and
+                design through hosting and support. Learned to code by hand years before
+                AI tools and still enjoys the craft: readable code, sound data models,
+                and careful debugging. Uses AI coding agents as one tool among many,
+                not a replacement for engineering judgment.
               </p>
             </section>
 
             <section>
-              <SectionHeading icon={Code} hideIcon={hideSectionIcons}>
-                Selected Projects
-              </SectionHeading>
-              <div className="space-y-4 pl-6 text-sm text-[#222] dark:text-fg-muted">
-                <div>
-                  <h3 className="text-base font-semibold text-[#111] dark:text-fg">
-                    Firebelly Fitness (Trainer/Client Platform)
-                  </h3>
-                  <p className="text-[#555] dark:text-fg-faint">
-                    React, Redux, shadcn/ui, Node.js, MongoDB, Socket.IO, JWT ·
-                    Oracle Cloud VPS, Cloudflare
-                  </p>
-                  <ul className="mt-1 space-y-1">
-                    <li>
-                      • Built a trainer/client platform with secure role-based access,
-                      real-time updates, scheduling, and shared visibility across both
-                      sides of the product.
-                    </li>
-                    <li>
-                      • Added client dashboards, body metrics tracking, and group
-                      workout workflows to support ongoing coaching and progress
-                      tracking in one system.
-                    </li>
-                    <li>
-                      • Implemented predictable state management to reduce
-                      client/server desynchronization and keep real-time workout data
-                      consistent.
-                    </li>
-                    <li>
-                      • Deployed on an Oracle Cloud VPS behind Cloudflare (DNS, SSL,
-                      CDN) and modernized the frontend with shadcn/ui components.
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold text-[#111] dark:text-fg">
-                    Dauntless Athletics (Site Migration + Infra)
-                  </h3>
-                  <p className="text-[#555] dark:text-fg-faint">
-                    React, TypeScript, MUI, Postgres, AWS Lightsail, NGINX, Cloudflare
-                  </p>
-                  <ul className="mt-1 space-y-1">
-                    <li>
-                      • Migrated a WordPress site to a custom React + TypeScript
-                      frontend to improve maintainability and support custom
-                      application workflows.
-                    </li>
-                    <li>
-                      • Built an admin dashboard backed by Postgres to manage athletes,
-                      schools, teams, employees, and surveys from a single internal
-                      interface.
-                    </li>
-                    <li>
-                      • Configured NGINX, SSL, and DNS routing for stable deployments
-                      and stronger site performance.
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold text-[#111] dark:text-fg">
-                    Lil Miss Soy Sauce (Athlete Brand Site)
-                  </h3>
-                  <p className="text-[#555] dark:text-fg-faint">
-                    React, Vite, responsive design
-                  </p>
-                  <ul className="mt-1 space-y-1">
-                    <li>
-                      • Designed and built a fast, mobile-first personal brand and
-                      highlight site for a competitive cheer &amp; tumbling athlete.
-                    </li>
-                    <li>
-                      • Focused on clean performance, easy content updates, and a
-                      playful identity that still loads quickly on any device.
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            <section>
               <SectionHeading icon={Briefcase} hideIcon={hideSectionIcons}>
-                Experience
+                Professional Experience
               </SectionHeading>
-              <div className="pl-6 text-sm text-[#222] dark:text-fg-muted">
-                <h3 className="text-base font-semibold text-[#111] dark:text-fg">
-                  Senior Web Developer / Systems Engineer (Freelance / Independent)
-                </h3>
-                <p className="text-[#555] dark:text-fg-faint">2018 - Present</p>
-                <ul className="mt-1 space-y-1.5 pl-3">
-                  <li>
-                    • Designed, built, and maintained production React and full-stack
-                    applications for small businesses and real users.
-                  </li>
-                  <li>
-                    • Owned end-to-end delivery: requirements → implementation →
-                    deployment → monitoring and bug fixes.
-                  </li>
-                  <li>
-                    • Built real-time workflows (messaging, presence, updates) using
-                    Socket.IO with server-side authorization checks.
-                  </li>
-                  <li>
-                    • Migrated WordPress sites to modern static/hybrid architectures
-                    (Vite/SSG + CDN) to improve performance and SEO.
-                  </li>
-                  <li>
-                    • Implemented authentication and role-based access control using
-                    JWT and secure backend patterns.
-                  </li>
-                  <li>
-                    • Diagnosed and resolved infrastructure issues involving NGINX,
-                    SSL, DNS, and reverse proxies.
-                  </li>
-                  <li>
-                    • Reduced recurring production issues via targeted refactors (state
-                    ownership, data flow cleanup, and component reuse).
-                  </li>
-                </ul>
-              </div>
-            </section>
-
-            <section>
-              <SectionHeading icon={Building2} hideIcon={hideSectionIcons}>
-                Additional Experience
-              </SectionHeading>
-              <div className="space-y-3 pl-6 text-sm text-[#222] dark:text-fg-muted">
-                <div>
-                  <h3 className="text-base font-semibold text-[#111] dark:text-fg">
-                    Operations Support Lead — McKesson Specialty Health (Scottsdale, AZ)
-                  </h3>
-                  <p className="text-[#555] dark:text-fg-faint">2019 - 2024</p>
-                  <ul className="mt-1 space-y-1.5 pl-3">
-                    <li>
-                      • Automated reporting and operational workflows using SharePoint,
-                      scripting, and browser automation/web scraping.
-                    </li>
-                    <li>
-                      • Acted as operations liaison to IT to diagnose customer-facing
-                      issues and support production triage.
-                    </li>
-                    <li>
-                      • Led team meetings, training, and documentation improvements
-                      (SOPs/work instructions).
-                    </li>
-                    <li>
-                      • Performed data analysis and reporting to support program
-                      performance improvements.
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold text-[#111] dark:text-fg">
-                    Seasonal Supervisor — McKesson Specialty Health (Scottsdale, AZ)
-                  </h3>
-                  <p className="text-[#555] dark:text-fg-faint">2021 - 2022</p>
-                  <ul className="mt-1 space-y-1.5 pl-3">
-                    <li>
-                      • Supervised and trained team members; ran QA checks and coached
-                      on accuracy and process improvements.
-                    </li>
-                    <li>
-                      • Coordinated training sessions and improved team communication
-                      to meet service-level goals.
-                    </li>
-                  </ul>
-                </div>
+              <div className="space-y-6">
+                {EXPERIENCE.map((job) => (
+                  <div key={job.role + job.org} className="resume-block">
+                    <div className="flex flex-col justify-between gap-x-4 sm:flex-row sm:items-baseline">
+                      <h3 className="text-base font-semibold text-[#111] dark:text-fg">
+                        {job.role}
+                      </h3>
+                      <p className="shrink-0 text-sm tabular-nums text-[#555] dark:text-fg-faint">
+                        {job.dates}
+                      </p>
+                    </div>
+                    <p className="text-sm font-medium text-[#263544] dark:text-green">
+                      {job.org}
+                    </p>
+                    {job.blurb && (
+                      <p className="mt-1.5 text-sm italic leading-relaxed text-[#555] dark:text-fg-faint">
+                        {job.blurb}
+                      </p>
+                    )}
+                    <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-[#222] marker:text-[#263544]/60 dark:text-fg-muted dark:marker:text-green/60">
+                      {job.bullets.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
             </section>
 
@@ -379,14 +364,50 @@ export default function Resume() {
               <SectionHeading icon={GraduationCap} hideIcon={hideSectionIcons}>
                 Education
               </SectionHeading>
-              <div className="pl-6 text-sm text-[#222] dark:text-fg-muted">
+              <div className="resume-block text-sm text-[#222] dark:text-fg-muted">
                 <h3 className="text-base font-semibold text-[#111] dark:text-fg">
-                  Self-taught software engineer
+                  Self-Taught Software Engineer
                 </h3>
-                <ul className="mt-1 space-y-1 pl-3">
+                <p className="mt-1 leading-relaxed">
+                  Self-directed study in web architecture, system design, and
+                  infrastructure since 2018, applied through production work for real
+                  clients.
+                </p>
+                <p className="mt-1.5 leading-relaxed">
+                  <span className="font-medium text-[#111] dark:text-fg">
+                    LinkedIn Learning:
+                  </span>{" "}
+                  115 courses completed (200+ hours), including the App Development
+                  with the MERN Stack learning path (29 hours). Selected courses:
+                </p>
+                <ul className="mt-1 list-disc space-y-0.5 pl-5 leading-relaxed marker:text-[#263544]/60 dark:marker:text-green/60">
                   <li>
-                    • Ongoing independent study in web architecture, system design, and
-                    infrastructure.
+                    <span className="font-medium text-[#111] dark:text-fg">
+                      Architecture &amp; quality:
+                    </span>{" "}
+                    Software Architecture: From Developer to Architect · React: Design
+                    Patterns · Node.js: Testing and Code Quality
+                  </li>
+                  <li>
+                    <span className="font-medium text-[#111] dark:text-fg">
+                      Security:
+                    </span>{" "}
+                    Node.js: Securing RESTful APIs · React: Securing Applications ·
+                    Penetration Testing Essential Training
+                  </li>
+                  <li>
+                    <span className="font-medium text-[#111] dark:text-fg">
+                      Cloud &amp; DevOps:
+                    </span>{" "}
+                    AWS Essential Training for Developers · Learning Docker · DevOps
+                    Foundations
+                  </li>
+                  <li>
+                    <span className="font-medium text-[#111] dark:text-fg">
+                      Languages:
+                    </span>{" "}
+                    Learning TypeScript · Learning Python · JavaScript: Async ·
+                    JavaScript: Closures
                   </li>
                 </ul>
               </div>
@@ -435,7 +456,7 @@ export default function Resume() {
                 onChange={(e) => setHidePicture(e.target.checked)}
                 className="h-4 w-4 accent-[#263544] dark:accent-green"
               />
-              Hide profile picture
+              Hide profile picture (always left out of the PDF)
             </label>
             <label className="flex items-center gap-2.5 text-sm">
               <input
