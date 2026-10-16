@@ -19,6 +19,9 @@ echo "  source: $REPO_ROOT"
 
 cd "$REPO_ROOT"
 
+# Pull from GitHub and refresh the Steam numbers before anything is built.
+"$SCRIPT_DIR/sync-before-build.sh"
+
 echo "• Installing deps (yarn, frozen lockfile)…"
 yarn install --frozen-lockfile
 
