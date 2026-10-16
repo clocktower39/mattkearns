@@ -1,0 +1,424 @@
+{
+  "generatedAt": "2026-10-16T09:02:33.584Z",
+  "source": "Steam Web API (api.steampowered.com)",
+  "profile": {
+    "steamID64": "76561198099664952",
+    "username": "Nude Pineapple",
+    "realName": "Matt",
+    "customURL": "NudePineapple",
+    "profileUrl": "https://steamcommunity.com/id/NudePineapple/",
+    "friendCode": "139399224",
+    "avatar": "https://avatars.steamstatic.com/babeccfd31815d014712e990fb5f8852c7fe1fcd_full.jpg",
+    "onlineState": "snooze",
+    "currentGame": null,
+    "memberSince": "2013-07-24",
+    "yearsOnSteam": 13,
+    "level": 15,
+    "gamesOwned": 191
+  },
+  "cornerStats": [
+    {
+      "label": "Games owned",
+      "value": 191,
+      "icon": "🎮"
+    },
+    {
+      "label": "Steam level",
+      "value": 15,
+      "detail": "2,084 XP",
+      "icon": "⭐"
+    },
+    {
+      "label": "Lifetime playtime",
+      "value": "4,682h",
+      "detail": "6.4 months in-game",
+      "icon": "⏳"
+    },
+    {
+      "label": "Most played",
+      "value": "Halo: The Master Chief Collection",
+      "detail": "534h",
+      "icon": "🏆"
+    },
+    {
+      "label": "On Steam since",
+      "value": "2013",
+      "detail": "13 years in",
+      "icon": "📅"
+    },
+    {
+      "label": "Last 2 weeks",
+      "value": "55.5h",
+      "detail": "across 11 games",
+      "icon": "⏱"
+    },
+    {
+      "label": "Account standing",
+      "value": "Clean",
+      "detail": "No VAC / trade bans",
+      "icon": "✅"
+    }
+  ],
+  "recentlyPlayed": [
+    {
+      "name": "Red Dead Redemption 2",
+      "url": "https://steamcommunity.com/app/1174180",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/1174180/5106abd9c1187a97f23295a0ba9470c94804ec6c.jpg",
+      "hoursOnRecord": 74.7,
+      "lastPlayed": "2026-10-15",
+      "lastPlayedLabel": "Oct 15",
+      "shared": false
+    },
+    {
+      "name": "Saints Row The Third Remastered",
+      "url": "https://steamcommunity.com/app/978300",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/978300/115fd158b792354987fb64f7cbcceadfa2f43b8b.jpg",
+      "hoursOnRecord": 10,
+      "lastPlayed": "2026-10-15",
+      "lastPlayedLabel": "Oct 15",
+      "shared": false
+    },
+    {
+      "name": "Forza Horizon 5",
+      "url": "https://steamcommunity.com/app/1551360",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/1551360/6c1d20c62c4613263548323052c62cece488876b.jpg",
+      "hoursOnRecord": 209.8,
+      "lastPlayed": "2026-10-15",
+      "lastPlayedLabel": "Oct 15",
+      "shared": false
+    },
+    {
+      "name": "Halo: The Master Chief Collection",
+      "url": "https://steamcommunity.com/app/976730",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/976730/196a45d8df1981ff6b6b1872a38dc38f6c22875d.jpg",
+      "hoursOnRecord": 534,
+      "lastPlayed": "2026-10-15",
+      "lastPlayedLabel": "Oct 15",
+      "shared": false
+    },
+    {
+      "name": "SUPERHOT VR",
+      "url": "https://steamcommunity.com/app/617830",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/617830/5bb403a4548a6e95e0d8115d2df8bee782ef6b71.jpg",
+      "hoursOnRecord": 12.5,
+      "lastPlayed": "2026-10-13",
+      "lastPlayedLabel": "Oct 13",
+      "shared": false
+    },
+    {
+      "name": "Half-Life: Alyx",
+      "url": "https://steamcommunity.com/app/546560",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/546560/225032ac2ad1aca8f5fd98baa2b9daf1eebea5ca.jpg",
+      "hoursOnRecord": 10.6,
+      "lastPlayed": "2026-10-11",
+      "lastPlayedLabel": "Oct 11",
+      "shared": false
+    },
+    {
+      "name": "Pavlov Shack",
+      "url": "https://steamcommunity.com/app/3504270",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/3504270/07fb1a6519fd5d4e1b7ecf4f4d5d8d739bb0f551.jpg",
+      "hoursOnRecord": 0.8,
+      "lastPlayed": "2026-10-02",
+      "lastPlayedLabel": "Oct 2",
+      "shared": false
+    },
+    {
+      "name": "Pavlov VR",
+      "url": "https://steamcommunity.com/app/555160",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/555160/d537afd8696affb4b2294aed07be5e13bcfc5d87.jpg",
+      "hoursOnRecord": 0.3,
+      "lastPlayed": "2026-10-02",
+      "lastPlayedLabel": "Oct 2",
+      "shared": false
+    },
+    {
+      "name": "Google Earth VR",
+      "url": "https://steamcommunity.com/app/348250",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/348250/6e7575ca3c5ac486c5b6e3520c5b881a0cb61db0.jpg",
+      "hoursOnRecord": 2.7,
+      "lastPlayed": "2026-10-01",
+      "lastPlayedLabel": "Oct 1",
+      "shared": false
+    },
+    {
+      "name": "Tabletop Simulator",
+      "url": "https://steamcommunity.com/app/286160",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/286160/19f5b90e3c7084758f885ded843631b13929fa26.jpg",
+      "hoursOnRecord": 4.9,
+      "lastPlayed": "2026-10-01",
+      "lastPlayedLabel": "Oct 1",
+      "shared": false
+    },
+    {
+      "name": "ANIMAL WELL",
+      "url": "https://steamcommunity.com/app/813230",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/813230/860b275ec0e63d6a74f6f3f9fc8dd75a49065f07.jpg",
+      "hoursOnRecord": 21.5,
+      "lastPlayed": "2026-09-28",
+      "lastPlayedLabel": "Sep 28",
+      "shared": false
+    },
+    {
+      "name": "BONEWORKS",
+      "url": "https://steamcommunity.com/app/823500",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/823500/9b62f85582df2290373d034b585d683c0e66993e.jpg",
+      "hoursOnRecord": 2.8,
+      "lastPlayed": "2026-09-27",
+      "lastPlayedLabel": "Sep 27",
+      "shared": false
+    },
+    {
+      "name": "Fallout 4 VR",
+      "url": "https://steamcommunity.com/app/611660",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/611660/89b2962822182ad86ffd940e1222c087278d6e37.jpg",
+      "hoursOnRecord": 4.5,
+      "lastPlayed": "2026-09-27",
+      "lastPlayedLabel": "Sep 27",
+      "shared": false
+    },
+    {
+      "name": "HELLDIVERS™ 2",
+      "url": "https://steamcommunity.com/app/553850",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/553850/5236dcc5d02b1f7aa199eef56253d20be87baef3.jpg",
+      "hoursOnRecord": 36,
+      "lastPlayed": "2026-09-24",
+      "lastPlayedLabel": "Sep 24",
+      "shared": false
+    },
+    {
+      "name": "Sons Of The Forest",
+      "url": "https://steamcommunity.com/app/1326470",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/1326470/bd28fe592b339cff5a3eef743f31e3166c984c68.jpg",
+      "hoursOnRecord": 42.4,
+      "lastPlayed": "2026-09-19",
+      "lastPlayedLabel": "Sep 19",
+      "shared": false
+    },
+    {
+      "name": "Assassin's Creed Odyssey",
+      "url": "https://steamcommunity.com/app/812140",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/812140/4b6cf0715b30669411bf204bce7ed99a9c84671b.jpg",
+      "hoursOnRecord": 98.3,
+      "lastPlayed": "2026-09-17",
+      "lastPlayedLabel": "Sep 17",
+      "shared": false
+    },
+    {
+      "name": "Hollow Knight",
+      "url": "https://steamcommunity.com/app/367520",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/367520/f6ab055c2366237200b1a31cccbd6cf81e436d72.jpg",
+      "hoursOnRecord": 26.9,
+      "lastPlayed": "2026-09-17",
+      "lastPlayedLabel": "Sep 17",
+      "shared": false
+    },
+    {
+      "name": "Starfield",
+      "url": "https://steamcommunity.com/app/1716740",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/1716740/b4d5828937b2d29b875405dce97bbae0a5d01bbe.jpg",
+      "hoursOnRecord": 260.8,
+      "lastPlayed": "2026-09-17",
+      "lastPlayedLabel": "Sep 17",
+      "shared": false
+    },
+    {
+      "name": "Halo: Campaign Evolved",
+      "url": "https://steamcommunity.com/app/2806050",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/2806050/abe495b3c48b435e4ed7229fe9f50417c14381ba.jpg",
+      "hoursOnRecord": 25.4,
+      "lastPlayed": "2026-09-09",
+      "lastPlayedLabel": "Sep 9",
+      "shared": false
+    },
+    {
+      "name": "BeamNG.drive",
+      "url": "https://steamcommunity.com/app/284160",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/284160/34f8997c32b2f463caf2014aab4a95109a896ecc.jpg",
+      "hoursOnRecord": 8.7,
+      "lastPlayed": "2026-09-07",
+      "lastPlayedLabel": "Sep 7",
+      "shared": false
+    },
+    {
+      "name": "Bar After Bar",
+      "url": "https://steamcommunity.com/app/4596010",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/4596010/4a017634c978245c7f723378ac8626545998ab2c.jpg",
+      "hoursOnRecord": 1.1,
+      "lastPlayed": "2026-09-04",
+      "lastPlayedLabel": "Sep 4",
+      "shared": false
+    },
+    {
+      "name": "The Witcher: Enhanced Edition",
+      "url": "https://steamcommunity.com/app/20900",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/20900/746d1cd48fb2e57d579b05b6e9eccba95859e549.jpg",
+      "hoursOnRecord": 2.1,
+      "lastPlayed": "2026-08-10",
+      "lastPlayedLabel": "Aug 10",
+      "shared": false
+    },
+    {
+      "name": "Prey",
+      "url": "https://steamcommunity.com/app/480490",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/480490/5ef565e374f039469e4a5c332cd51584af7ec5db.jpg",
+      "hoursOnRecord": 28.1,
+      "lastPlayed": "2026-08-10",
+      "lastPlayedLabel": "Aug 10",
+      "shared": false
+    },
+    {
+      "name": "Batman: Arkham City GOTY",
+      "url": "https://steamcommunity.com/app/200260",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/200260/746ecf3ce44b2525eb7ad643e76a3b60913d2662.jpg",
+      "hoursOnRecord": 12.3,
+      "lastPlayed": "2026-07-25",
+      "lastPlayedLabel": "Jul 25",
+      "shared": false
+    },
+    {
+      "name": "MECCHA CHAMELEON",
+      "url": "https://steamcommunity.com/app/4704690",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/4704690/fbef288370f6ae51cb0a5066d7fb13d26147c94a.jpg",
+      "hoursOnRecord": 8.2,
+      "lastPlayed": "2026-07-22",
+      "lastPlayedLabel": "Jul 22",
+      "shared": false
+    },
+    {
+      "name": "GROUND BRANCH",
+      "url": "https://steamcommunity.com/app/16900",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/16900/61d821abae6880b59dd17ac99901279ed1d4968b.jpg",
+      "hoursOnRecord": 118.8,
+      "lastPlayed": "2026-07-17",
+      "lastPlayedLabel": "Jul 17",
+      "shared": false
+    },
+    {
+      "name": "Deep Rock Galactic",
+      "url": "https://steamcommunity.com/app/548430",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/548430/e033e23c29a192a17c16a7645a2b423ac64ff447.jpg",
+      "hoursOnRecord": 19.8,
+      "lastPlayed": "2026-06-03",
+      "lastPlayedLabel": "Jun 3",
+      "shared": false
+    },
+    {
+      "name": "Test Drive Unlimited Solar Crown",
+      "url": "https://steamcommunity.com/app/1249970",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/1249970/e248a0a8c7cf3dc18fe3070cd11ced11f7844f5a.jpg",
+      "hoursOnRecord": 44.1,
+      "lastPlayed": "2026-06-01",
+      "lastPlayedLabel": "Jun 1",
+      "shared": false
+    },
+    {
+      "name": "The Binding of Isaac: Rebirth",
+      "url": "https://steamcommunity.com/app/250900",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/250900/16d46c8630499bfc54d20745ac90786a302cd643.jpg",
+      "hoursOnRecord": 126.6,
+      "lastPlayed": "2026-04-28",
+      "lastPlayedLabel": "Apr 28",
+      "shared": false
+    },
+    {
+      "name": "PICO PARK",
+      "url": "https://steamcommunity.com/app/1509960",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/1509960/738c7b1a12275d8b792f9a01a6c174453cd9770e.jpg",
+      "hoursOnRecord": 2.8,
+      "lastPlayed": "2026-04-26",
+      "lastPlayedLabel": "Apr 26",
+      "shared": false
+    },
+    {
+      "name": "Pummel Party",
+      "url": "https://steamcommunity.com/app/880940",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/880940/0e2e222010d009ca46b575cc5c53a23250434341.jpg",
+      "hoursOnRecord": 7.6,
+      "lastPlayed": "2026-04-26",
+      "lastPlayedLabel": "Apr 26",
+      "shared": false
+    },
+    {
+      "name": "Teenage Mutant Ninja Turtles: Splintered Fate",
+      "url": "https://steamcommunity.com/app/2996040",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/2996040/52873169f648846aadf836fefa8b6a4305c8dab9.jpg",
+      "hoursOnRecord": 2.2,
+      "lastPlayed": "2026-04-14",
+      "lastPlayedLabel": "Apr 14",
+      "shared": false
+    },
+    {
+      "name": "Wolfenstein II: The New Colossus",
+      "url": "https://steamcommunity.com/app/612880",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/612880/fd5c894c47b49a7d5e46e7ed60d6f1fdf60d210d.jpg",
+      "hoursOnRecord": 3.3,
+      "lastPlayed": "2026-03-25",
+      "lastPlayedLabel": "Mar 25",
+      "shared": false
+    },
+    {
+      "name": "Resident Evil 5",
+      "url": "https://steamcommunity.com/app/21690",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/21690/26108f5caff3638c9f522dd79ee84a12761f373a.jpg",
+      "hoursOnRecord": 2.8,
+      "lastPlayed": "2026-03-05",
+      "lastPlayedLabel": "Mar 5",
+      "shared": false
+    },
+    {
+      "name": "High On Life",
+      "url": "https://steamcommunity.com/app/1583230",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/1583230/edf77785498d06effc5d8c4db72c0d364978b66f.jpg",
+      "hoursOnRecord": 1.8,
+      "lastPlayed": "2026-02-26",
+      "lastPlayedLabel": "Feb 26",
+      "shared": false
+    },
+    {
+      "name": "Keep Talking and Nobody Explodes",
+      "url": "https://steamcommunity.com/app/341800",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/341800/932d3af4bd34d38ac47cf47dd0ea1ed624d242e4.jpg",
+      "hoursOnRecord": 1.4,
+      "lastPlayed": "2026-02-07",
+      "lastPlayedLabel": "Feb 7",
+      "shared": false
+    },
+    {
+      "name": "Fallout 4",
+      "url": "https://steamcommunity.com/app/377160",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/377160/779c4356ebe32af2af7c9f0bbba595dfe872cd7f.jpg",
+      "hoursOnRecord": 432.6,
+      "lastPlayed": "2026-02-06",
+      "lastPlayedLabel": "Feb 6",
+      "shared": false
+    },
+    {
+      "name": "Fallout",
+      "url": "https://steamcommunity.com/app/38400",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/38400/df0001a1aa011e6c7a8f38a65908070eba3d2f61.jpg",
+      "hoursOnRecord": 3.6,
+      "lastPlayed": "2026-02-02",
+      "lastPlayedLabel": "Feb 2",
+      "shared": false
+    },
+    {
+      "name": "Half-Life 2",
+      "url": "https://steamcommunity.com/app/220",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/220/fcfb366051782b8ebf2aa297f3b746395858cb62.jpg",
+      "hoursOnRecord": 19.5,
+      "lastPlayed": "2026-01-31",
+      "lastPlayedLabel": "Jan 31",
+      "shared": false
+    },
+    {
+      "name": "Castle Crashers",
+      "url": "https://steamcommunity.com/app/204360",
+      "icon": "https://shared.akamai.steamstatic.com/community_assets/images/apps/204360/9b7625f9b70f103397fd0416fd92abb583db8659.jpg",
+      "hoursOnRecord": 3.8,
+      "lastPlayed": "2026-01-20",
+      "lastPlayedLabel": "Jan 20",
+      "shared": false
+    }
+  ]
+}
