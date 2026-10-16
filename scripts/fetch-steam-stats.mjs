@@ -205,8 +205,8 @@ async function viaWebApi() {
 
   const recentlyPlayed = [...sharedPlayed, ...ownedPlayed]
     .filter(({ g }) => !HIDE_FROM_RECENT.test(g.name ?? ""))
+    // Every played game — the site's list scrolls, so there is no reason to cut.
     .sort((a, b) => b.sortKey - a.sortKey)
-    .slice(0, 40)
     .map(({ g, shared }) => ({
       name: g.name,
       url: `https://steamcommunity.com/app/${g.appid}`,

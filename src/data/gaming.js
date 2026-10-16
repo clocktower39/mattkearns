@@ -95,11 +95,10 @@ export const favoriteGames = [
   },
 ];
 
-// Recently played — the five most recent from the live list (VR tools and
-// video players are already filtered out by the fetch script); falls back to
-// the hand-typed list below.
-const RECENT_SHOWN = 5;
-const liveRecent = (steamStats.recentlyPlayed ?? []).slice(0, RECENT_SHOWN).map((g) => ({
+// Recently played — the whole live list, most recent first (VR tools and
+// video players are already filtered out by the fetch script); the card
+// scrolls. Falls back to the hand-typed list below.
+const liveRecent = (steamStats.recentlyPlayed ?? []).map((g) => ({
   title: g.name,
   hours: `${Math.round(g.hoursOnRecord ?? 0).toLocaleString("en-US")}h`,
   url: g.url,
